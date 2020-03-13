@@ -1,6 +1,6 @@
 ---
 title: "Gyakorlati segédanyag Biosztatisztika gyakorlathoz"
-author: "Vörös Dániel"
+author: "Könnyű Balázs, Radványi Ádám, Vörös Dániel"
 date: "2019/20/2"
 output: pdf_document
 always_allow_html: yes
@@ -1016,7 +1016,9 @@ kable(kutyus)
 
 ### Adatok szűrése indexeléssel
 
-Az indexelés bemutatásra került a korábbi fejezetekben. Egy kis ismétlés azonban sosem árt. *Matrix* és *data.frame* indexelése során a táblázat neve után indexelő karaktereket (**[ ]**) írunk, amit egy vesszővel választunk el. A vessző elé az indexelendő sorszámot, míg utána az indexelendő oszlopszámot írjuk: `valtozonev[ sorszam , oszlopszam ]`. Ha a sor- és oszlopszámot üresen hagyjuk, akkor az **R** úgy veszi, mintha mindent ki akarnánk íratni.
+Sokszor ez elemezni kívánt adatokat nagy adatfájlokban tárolják, melyekben több adat van, mint amennyit mi egy adatelemzés során felhasználni szeretnénk. Ekkor az megfelelő statisztikai elemzéshez az adatainkat szűrni kell. Ebben a fejezetben részletesen végigvesszük hogyan célszerű csinálni, majd a fejezet végén röviden összefoglaljuk.  
+
+Az indexelés bemutatásra került a korábbi fejezetekben. Egy kis ismétlés azonban sosem árt. *Matrix* és *data.frame* indexelése során a táblázat neve után indexelő karaktereket (**[ ]**) írunk, amit egy vesszővel választunk el (`valtozonev[ , ]`). A vessző elé az indexelendő sorszámot, míg utána az indexelendő oszlopszámot írjuk: `valtozonev[ sorszam , oszlopszam ]`. Ha a sor- és oszlopszámot üresen hagyjuk, akkor az **R** úgy veszi, mintha mindent ki akarnánk íratni.
 
 ```{r}
 kutyus[ , ]
@@ -1086,26 +1088,26 @@ Megszámoljuk:
 sum(kutyus$marmagassag > 30)
 ```
 
-Logikai müveletekkel pedig megnézhetjük melyik nőstény kutyák marmagassága nagyobb mint 30 cm. Ehhez először is tudnunk kell melyikük nőstények, aztán tudnunk kell melyik nagyobb mint 30 cm és azokat kell látnunk, amikben ez a két tulajdonság egyszerre megvan. Ezt a logikai *ÉS* művelttel tudjuk megtenni.
+Logikai müveletekkel pedig megnézhetjük melyik 1-es mintázatú kutyák marmagassága nagyobb mint 30 cm. Ehhez először is tudnunk kell melyikük nőstények, aztán tudnunk kell melyik nagyobb mint 30 cm és azokat kell látnunk, amikben ez a két tulajdonság egyszerre megvan. Ezt a logikai *ÉS* művelettel tudjuk megtenni.
 
 ```{r}
-kutyus$nem == "N" & kutyus$marmagassag > 30
+kutyus$mintazat == 1 & kutyus$marmagassag > 30
 ```
 
 Számoljuk meg, hány ilyen kutya van!
 
 ```{r}
-sum(kutyus$nem == "N" & kutyus$marmagassag > 30)
+sum(kutyus$mintazat == 1 & kutyus$marmagassag > 30)
 ```
 
-Láthatjuk, hogy csak egy olyan kutya van, amelyik nőstény és magas is egyszerre. Azonban jó lenne tudni ennek a kutyának az adatait is! Ehhez az indexelést kell segítségül hívni. Ezt úgy tudjuk megtenni, hogy van egy logikai vektorunk a logikai lekérdezés eredményeként, tehát ezt berakhatjuk a sorszámok helyére!
+Láthatjuk, hogy csak egy olyan kutya van, amelyiknek 1-es számú mintázata van és magas is egyszerre. Azonban jó lenne tudni ennek a kutyának az adatait is! Ehhez az indexelést kell segítségül hívni. Ezt úgy tudjuk megtenni, hogy van egy logikai vektorunk a logikai lekérdezés eredményeként, tehát ezt berakhatjuk a sorszámok helyére!
 
 ```{r}
 kutyus$nem == "N" & kutyus$marmagassag > 30
-kutyus[kutyus$nem == "N" & kutyus$marmagassag > 30 , ]
+kutyus[kutyus$mintazat == 1 & kutyus$marmagassag > 30 , ]
 ```
 
-Ha minden egyéb eredményre vagyunk kíváncsiak, tehát minden olyan kutyára, ami vagy hím, vagy nőstény, de alacsonyabb mint 30 cm, akkor a logikai **NEM** operátort használjuk.
+Ha minden egyéb eredményre vagyunk kíváncsiak, tehát minden olyan kutyára, aminek nem 1-es számú mintázata van, vagy az van, de alacsonyabb mint 30 cm, akkor a logikai **NEM** operátort használjuk.
 
 ```{r}
 ! (kutyus$nem == "N" & kutyus$marmagassag > 30)
