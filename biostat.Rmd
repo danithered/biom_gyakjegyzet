@@ -798,9 +798,12 @@ round(1/3, 2)
 
 ## Mappák
 
-Ezt a fejezetet hagyják ki, akik ismerik a következő fogalmakat: "mappa", "elérési útvonal"!    
-A mai operációs rendszerek a háttértáron tárolt fájlokat egy mappastuktúrába rendezik. Ez a mappastruktúra azért létezik, hogy a mi tájékozódásunkat segítse a fájljaink között. Az emberi elme ugyanis szereti hierarchikusan rendezni / rendszerezni a dolgokat. A mappastruktúrában a mappákat mint rendszerező "dobozokat" lehet elképzelni.  
-Képzeljük el, hogy van 100 darab legódarabkánk és azt szeretnénk elérni, hogy gyorsan ki tudjuk mindig keresni a megfelelő legódarabot. Ekkor elrakhatjuk úgy is a legóinkat, hogy veszünk két dobozt: az egyikre ráírjuk, hogy "lapos", a másikra pedig, hogy "magas". Azonban a legók nem csak vastagságban térnek el, így a már meglévő dobozokon belül új dobozokat helyezhetünk el a legó egységek számának jelzésére: "1", "2x2", "2x3", stb. De a "vastag", "2x2" -es legók sem egyformák, így rakhatunk újabb dobozokat a kis dobozokon belülre is, mondjuk a színek szerint: "sárga", "szürke", "fehér". Most, hogy van sok dobozunk, elhelyezhetjük a legóinkat, úgy, hogy ha kell egy nagy fehér 2x3-as elem, egyből tudjuk, hogy sorra a "vastag", "2x2" és "fehér" dobozokat kell kinyitnunk. Ezzel a módszerrel sokkal gyorsabban kereshetünk, mintha 100 összekevert eltérő kocka közül kéne kiválogatni a megfelelőt. Persze az is lehet, hogy van egy vastag 1-es elem, aminek különleges hupikék színe van. Ennek nem biztos, hogy érdemes új dobozt nyitni, mert csak egy van belőle, így az dobhatjuk a "vastag" dobozon belüli "1" -es dobozba is. Tehát egy doboz tartalmazhat más dobozokat és legókockákat is egyszerre. A számítógépek mappastruktúráját is így lehet elképzelni.  
+Ezt a fejezetet hagyják ki, akik ismerik a következő fogalmakat: "mappa", "elérési útvonal"!   
+
+A mai operációs rendszerek a háttértáron tárolt fájlokat egy mappastuktúrába rendezik. Ez a mappastruktúra azért létezik, hogy a mi tájékozódásunkat segítse a fájljaink között. Az emberi elme ugyanis szereti hierarchikusan rendezni / rendszerezni a dolgokat. A mappastruktúrában a mappákat mint rendszerező "dobozokat" lehet elképzelni. 
+
+Képzeljük el, hogy van 100 darab legódarabkánk és azt szeretnénk elérni, hogy gyorsan ki tudjuk mindig keresni a megfelelő legódarabot. Ekkor elrakhatjuk a legóinkat úgy is, hogy veszünk két dobozt: az egyikre ráírjuk, hogy "lapos", a másikra pedig, hogy "magas". Azonban a legók nem csak vastagságban térnek el, így a már meglévő dobozokon belül új dobozokat helyezhetünk el a legó egységek számának jelzésére: "1", "2x2", "2x3", stb. De a "vastag", "2x2" -es legók sem egyformák, így rakhatunk újabb dobozokat a kis dobozokon belülre is, mondjuk a színek szerint: "sárga", "szürke", "fehér". Most, hogy van sok dobozunk, elhelyezhetjük a legóinkat, úgy, hogy ha kell egy nagy fehér 2x3-as elem, egyből tudjuk, hogy sorra a "vastag", "2x2" és "fehér" dobozokat kell kinyitnunk. Ezzel a módszerrel sokkal gyorsabban kereshetünk, mintha 100 összekevert eltérő kocka közül kéne kiválogatni a megfelelőt. Persze az is lehet, hogy van egy vastag 1-es elem, aminek különleges hupikék színe van. Ennek nem biztos, hogy érdemes új dobozt nyitni, mert csak egy van belőle, így az dobhatjuk a "vastag" dobozon belüli "1" -es dobozba is. Tehát egy doboz tartalmazhat más dobozokat és legókockákat is egyszerre. A számítógépek mappastruktúráját is így lehet elképzelni.  
+
 Vegyünk egy példa mappastruktúrát:
 
 ```{r dirtree, fig.cap="Példa mappastruktúra \\label{dirtree}", echo=FALSE}
@@ -831,11 +834,12 @@ cat(dirtree_path, sep="\n")
 ```
 
 Itt a fájlok nevei előtt hierarchikusan a gyökértől kezdve fel vannak sorolva a mappák, amikben vannak. Így pontosan tudjuk milyen mappákat milyen sorrendben kell megnyitni, hogy megtaláljuk a keresett fájlt.
+
 Fontos megjegyezni, hogy például a webcímek is elérési útvonalak. Például a kurzus honlapja: "http://plantsys.elte.hu/drupal/hu/oktatas/biometria" esetén a "biometria" az oldal, amit el akarunk érni, a "http://" rész megmondja a számítógépnek, hogy milyen protokolt használjon az oldal eléréséhez, a "plantsys.elte.hu" a szerver neve, azon belül a "drupal", a "hu" és "oktatas" mappákban van a "biometria" oldal.
 
 ## Az **R** munkakönyvtára
 
-Az **R** jó linuxos programként mindig egy adott könyvtárban dolgozik. Alapértelmezettként innen olvas és ide ír fájlokat. Ezt hívjuk munkakönyvtárnak (working directory). Ha meg akajuk tudni melyik ez a könyvtár:
+Az **R** jó linuxos programként mindig egy adott könyvtárban dolgozik. Alapértelmezettként innen olvas és ide ír fájlokat. Ezt hívjuk munkakönyvtárnak (*working directory*). Ha meg akajuk tudni melyik ez a könyvtár:
 
 ```{r getwd, eval=F}
 getwd()
@@ -845,7 +849,7 @@ getwd()
 print("/gyoker/mappaB/mappaBA")
 ```
 
-Meg is változtathatjuk a working directory-t. Ha egy almappát akarunk megtenni munkakönyvtárnak, akkor elég az almappa nevét megadni **szövegként**:
+Meg is változtathatjuk a *working directory*-t. Ha egy almappát akarunk megtenni munkakönyvtárnak, akkor elég az almappa nevét megadni **szövegként** (*realtív fájlelérési útvonal*: csak egy adott könyvtárszinthez képest adjuk meg a *working directory*-t):
 
 ```{r setwd, eval=F}
 setwd("mappaBAB") #a "mappaBAB" helyére egy valós mappanevet írjanak!
@@ -861,7 +865,7 @@ getwd()
 print("/gyoker/mappaB/mappaBA/mappaBAB")
 ```
 
-Ha nem almappára akarjuk változtatni a munkakönyvtárat, akkor **teljes** elérési útvonalat is meg lehet neki adni:
+Ha nem almappára akarjuk változtatni a munkakönyvtárat, akkor **teljes** (vagy *aboszulút*) elérési útvonalat is meg lehet neki adni (ez a *gyökérkönyvtárhoz képest adja meg a fájl helyét*):
 
 ```{r setwd2, eval=F}
 setwd("/gyoker/mappaB/mappaBA") #ez nem valos eleresi utvonal!
@@ -875,12 +879,13 @@ getwd()
 print("/gyoker/mappaB/mappaBA")
 ```
 
-FONTOS: windows alatt az elérési útvonalban lévő "\\" perjeleket le kell cserélni "/" perjelre!
+FONTOS: *wMS Windows* alatt az elérési útvonalban lévő "\\" perjeleket le kell cserélni "/" perjelre!
+
 Ha *Asztal*-on vagy *Dokumentumok*-ban vannak a fájlok, akkor úgy kell kikeresni az elérési útvonalat, hogy a "C:" gyökérkönyvtárból indultok ki (C:/Users/felhasznalo/stb), nem pedig a gyorsgombbal! 
 
 ## Táblázatok beolvasása **R**-ben
 
-A gyakorlat, valamint jövőbeli adatelemzéseitek során legtöbbször szöveges adattáblából kell az adataitokat beolvasni. Ezek (.txt, .dat, .csv, .tsv) kiterjesztésűek.
+A gyakorlat, valamint jövőbeli adatelemzéseitek során legtöbbször szöveges adattáblából kell az adataitokat beolvasni. Ezek (*.txt, .dat, .csv, .tsv*) kiterjesztésűek.
 
 Először is a beolvasandó fájl elérési útvonalát kell megkeresni. Két lehetoseg van "OPCIÓ 1" es "OPCIÓ 2", mindenki azt válassza, amelyik számára szimpatikusabb! A jegyzet írója a további fejezetekben az "OPCIÓ 1"-et fogja használni.
 
@@ -894,14 +899,15 @@ getwd() #megadja, melyik mappabol van inditva az R
 
 Ha nem megfelelő a mappa, másikban vannak az adatok:
 
-  1. keresd ki a mappa helyét egy fájlböngészővel!
-  2. másold be a `setwd()` függvénybe. Mivel szöveg, kell az idézőjel!
+  * 1. keresd ki a mappa helyét egy fájlböngészővel!
+  
+  * 2. másold be a `setwd()` függvénybe. Mivel szöveg, kell az idézőjel!
  
 ```{r setwd3, eval=F}
 setwd("/gyoker/mappaB/mappaBA") #ez nem valos eleresi utvonal!
 ```
 
-  3. ellenőrzés getwd() függvénnyel!
+  * 3. ellenőrzés `getwd()` függvénnyel!
  
 ```{r getwd6, eval=FALSE}
 getwd() #megadja, melyik mappabol van inditva az R
@@ -912,7 +918,7 @@ print("/gyoker/mappaB/mappaBA")
 utvonal1 <- "/gyoker/mappaB/mappaBA/csor.csv"
 ```
 
-Két féle elérési útvonalat kell megkülönböztetnünk: relatív és abszolút. Relatív hivatkozás alatt a munkakönyvtárból kiinduló útvonalat értjük. Tehát ha a munkakönyvtáram a "/gyoker/mappaB", akkor a "csor.csv" fájlhoz a relatív elérési útvonalam a következő: "mappaBA/csor.csv". Ha viszont a munkakönyvtáram a "/gyoker/mappaB/mappaBA", akkor ugyanahhoz a fájlhoz a relatív elérési útvonalam csak ennyi: "csor.csv". A relatív elérési útvonal tehát változik attól függően, hogy mi a munkakönyvtáram. Ellenben az abszolút elérés útvonal a gyökérkönyvtárhoz képest adja meg a fájlom helyét: "/gyoker/mappaB/mappaBA/csor.csv". Így ez független attól, hogy mi az elérési útvonalam. Az abszolút elérési útvonalat úgy is megkaphatjuk, hogy egy fájlböngészőben kikertessük a megnyitni szándékozott fájlt, kijelöljük és másoljuk (CTRL + C, vagy jobbklikk -> Másolás), majd belemegyünk az **RStudio** valamelyik szöveges felületére, és "beillesztjük" a fájlt. Ekkor egy ehhez hasonló elérési útvonalat kapunk: "file:///gyoker/mappaB/mappaBA/csor.csv". Ez ebben a formában is használható, még Windows esetén is.  
+Két féle elérési útvonalat kell megkülönböztetnünk: relatív és abszolút. Relatív hivatkozás alatt a munkakönyvtárból kiinduló útvonalat értjük. Tehát ha a munkakönyvtáram a "/gyoker/mappaB", akkor a "csor.csv" fájlhoz a relatív elérési útvonalam a következő: "mappaBA/csor.csv". Ha viszont a munkakönyvtáram a "/gyoker/mappaB/mappaBA", akkor ugyanahhoz a fájlhoz a relatív elérési útvonalam csak ennyi: "csor.csv". A relatív elérési útvonal tehát változik attól függően, hogy mi a munkakönyvtáram. Ellenben az abszolút elérés útvonal a gyökérkönyvtárhoz képest adja meg a fájlom helyét: "/gyoker/mappaB/mappaBA/csor.csv". Így ez független attól, hogy mi az elérési útvonalam. Az abszolút elérési útvonalat úgy is megkaphatjuk, hogy egy fájlböngészőben kikertessük a megnyitni szándékozott fájlt, kijelöljük és másoljuk (CTRL + C, vagy jobbklikk -> Másolás), majd belemegyünk az **RStudio** valamelyik szöveges felületére, és "beillesztjük" a fájlt. Ekkor egy ehhez hasonló elérési útvonalat kapunk: `"file:///gyoker/mappaB/mappaBA/csor.csv"`. Ez ebben a formában is használható, még Windows esetén is.  
 Ha megvan az elérési útvonalunk, akkor `read.table()` függvénnyel tudjuk beolvasni.
 
 ```{r filechoose_0, eval=FALSE}
@@ -920,11 +926,11 @@ read.table("csor.csv")
 #read.table("csor.csv", sep=";", header=TRUE,	dec="." )
 ```
 
-A `read.table()` függvény további argomentumai is szükségesek, hogy megfelelően beolvassuk a fájlt, ezek a "A táblázat beolvasása" fejezetben lesznek tárgyalva.
+A `read.table()` függvény további argumentumai is szükségesek, hogy megfelelően beolvassuk a fájlt, ezek a "A táblázat beolvasása" fejezetben lesznek tárgyalva.
 
-### OPCIO 2 - file.choose() - kezdő megoldás
+### OPCIO 2 - `file.choose()` - kezdő megoldás
 
-A `file.choose()` függvénnyel megkapjuk a fájl teljes elérési útvonalát szövegként
+A `file.choose()` függvény hatására megnyílik egy új ablak, ami a számítógép fájl rendszerét mutatja (pontosabban az aktuális munkakönyvtárat mutatja). Itt megkereshető a fájl, amivel dolgozni szeretnénk és kimásolja a fájl teljes elérési útvonalát szövegként. *Megjegyzés.* Gykori, hogy a `file.choose()` hatásár megnyiló új ablak az **RStudio** ablaka mögé kerül.
 
 ```{r filechoose_1, eval=FALSE}
 utvonal1 <- file.choose()
@@ -934,7 +940,7 @@ utvonal1 <- file.choose()
 utvonal1 # nezzetek meg tenyleg jo fajlra mutat-e!
 ```
 
-Elmentjük ezt az utvonalat egy változóba. Ez azért kell, hogy később ha szórakoztok a beolvasással ne kelljen minden alkalommal újra kikeresni a fájlt.
+Elmentjük ezt az utvonalat egy változóba. Ez azért célszerű, hogy később ha gond lenne a beolvasással ne kelljen minden alkalommal újra kikeresni a fájlt.
 
 A fájlt ekkor így olvassuk be:
 
@@ -943,12 +949,13 @@ read.table(utvonal1)
 #read.table(utvonal1, sep=";", header=TRUE,	dec="." )
 ```
 
-Fontos megjegyezni, hogy ekkor nem kell idézőjel az *utvonal1* mellé, hisz az egy változó, ami szöveget tartalmaz, nem pedig szöveg! A `read.table()` függvény további argomentumai is szükségesek, hogy megfelelően beolvassuk a fájlt, ezek a következő fejezetben lesznek tárgyalva. Azonban a következő fejezetet már az "OPCIÓ1" szerint fogjuk tárgyalni, ahol az útvonalat szöveként tesszük be az első argomentumba!
+Fontos megjegyezni, hogy ekkor nem kell idézőjel az *utvonal1* mellé, hisz az egy változó, ami szöveget tartalmaz, nem pedig szöveg! A `read.table()` függvény további argumentumai is szükségesek, hogy megfelelően beolvassuk a fájlt, ezek a következő fejezetben lesznek tárgyalva. Azonban a következő fejezetet már az "OPCIÓ1" szerint fogjuk tárgyalni, ahol az útvonalat szöveként tesszük be az első argumentumként!
 
 ### A táblázat beolvasása
 
-Ezután megnézzük a fájlunkat egyszerű szövegszerkesztővel. (Windows: fájl kijelöl -> jobbklikk -> Társitás -> Jegyzettömb vagy Notepad++; Linux: ugyanez csak más programokkal, pl. Kate, gedit) Fontos, hogy ne nyissuk meg MS Excel vagy LibreOffice Calc programmal, mert ezek nem fogják megmutatni nekünk azokat a tulajdonságokat, amikre kíváncsiak vagyunk, valamint gyakran átírják magát a fájlt is!
-Jegyzeteljök le magunknak a következő adatokat: mező elválasztó jel, decimális karakter, van-e fejléc(header).
+Mielőtt beolvasnánk az adattáblát nézzük meg a fájlunkat egyszerű szövegszerkesztővel. (Windows: fájl kijelöl -> jobbklikk -> Társitás -> Jegyzettömb vagy Notepad++; Linux: ugyanez csak más programokkal, pl. Kate, gedit) Fontos, hogy ne nyissuk meg MS Excel vagy LibreOffice Calc programmal, mert ezek nem fogják megmutatni nekünk azokat a tulajdonságokat, amikre kíváncsiak vagyunk, valamint gyakran átírják magát a fájlt is!
+
+Jegyzeteljük le magunknak a következő adatokat: mező elválasztó jel, decimális karakter, van-e fejléc(header).
  
 Például, ha van egy ilyen fájlunk:
 
@@ -960,10 +967,12 @@ cat(readLines("csor.csv", n=10), sep="\n")
 akkor:
 
   * **fejléc**: megnézzük, hogy az első sor más adatokat tartalmaz-e, mint a többi sor, vagyis, hogy az első sorban vannak-e megadva az oszlopok nevei. Ebben az esetben láthatjuk, hogy míg az első sorban csak nevek vannak, addig a másodikban bőven vannak számadatok is, szóval van fejlécünk!
+  
   * **mező elválasztó karakter**: a szöveges adattáblákban egy karakterrel szokták elválasztani a különböző mezőket egy soron belül. A fájlok kiterjesztései néha szoktak erre támpontot adni, azonban ez gyakran hamis, tehát mindig meg kell nézni a fájlt magát. Az elválasztó karakter szinte **bármilyen** karakter lehet!!! Ebben az esetben az elválasztó karakter a pontosvessző (**;**). Láthatjuk, hogy minden pontosvessző után egy másfajta adat kezdődik. 
+  
   * **decimális karakter**: ha van az adattáblánkban tizedestört, akkor jó tudni, hogy milyen karakterrel választja el az egészrészt és a tizedesrészt. A decimális karakter lehet pont (**.**) vagy vessző (**,**). Ebben az esetben pont.
 
-A `read.table()` függvénnyel beolvassuk és elmentjük a fájlt:
+A `read.table()` függvénnyel beolvassuk és elmentjük a fájlt a `coradat` változóba:
 
 ```{r csor_beolvas}
 # ahol a sep, dec es header utan behelyettesititek a megfelelo karaktert / logikai erteket
@@ -975,22 +984,25 @@ csoradat <- read.table("csor.csv", sep=";", header=TRUE,	dec="." )
 csoradat <- read.table("/gyoker/mappaB/mappaBA/csor.csv", sep=";", header=TRUE,	dec="." )
 ```
 
-Első helyre a beolvasandó fájl elérési útját, a `sep` argomentumban a mező elválasztó karaktert, a `dec` argomentumban a decimális karaktert adjuk meg, míg a `header` logikai argomentum azt adja meg, hogy van-e fejléce az adatoknak (TRUE) vagy nincs (FALSE).
+Első helyre a beolvasandó fájl elérési útját, a `sep` argumentumban a mező elválasztó karaktert, a `dec` argumentumban a decimális karaktert adjuk meg, míg a `header` logikai argumentum azt adja meg, hogy van-e fejléce az adatoknak (`TRUE`) vagy nincs (`FALSE`).
 
 ### Beolvasás ellenőrzése
 
-A beolvasott fájlt mindig ellenőrizzük az `str()` függvény segítségével!!
+A beolvasott fájlt mindig ellenőrizzük az `str()` függvény segítségével!! Az `str()` függvény adja a legbővebb információt, de lehet azon kívűl a `head()` és a `tail()` függvényeket is használi lsád később.
 
 ```{r}
 str(csoradat)
 ```
 
-Itt láthatjuk, hogy 2600 adatunk van és öt változónk. Ez eddig rendben van. Ha több változót vártunk volna, akkor az azt jelenti, hogy nem sikerült megtalálnunk a megfelelő mező szeparátor karaktert!  
-Az első változó a *Faj*, ami egy faktor, aminek elemei olyanok, hogy "harkalypinty", "harkalypinty_fogs1", stb. Ez jó, ezek szöveges adatok, nem is vártunk volna numerikus változót.  
-A második változó a *Csorhossz* numerikus változó, melynek értékei tizedestörtek. Ez így szintén jó, de ha ezt faktornak írta volna, az azt jelentette volna, hogy elrontottuk valamelyik argomentum megadását.  
+Itt láthatjuk, hogy a változó ami az adatainkat tartalmazza  `data.frame` típusú, 2600 rekorddal (sorral), és öt mezővel (oszloppal). Ez eddig rendben van. Ha több változót vártunk volna, vagy kevesebbet kaptunk volna, akkor az azt jelenti, hogy nem sikerült megtalálnunk a megfelelő mező szeparátor karaktert!  
+
+Az első változó a *Faj* faktor típusú, elemei pl. "harkalypinty", "harkalypinty_fogs1", stb. Ez jó, ezek szöveges adatok, nem is vártunk volna numerikus változót.
+
+A második változó a *Csorhossz* numerikus változó, melynek értékei tizedestörtek. Ez így szintén jó, de ha ezt faktornak írta volna, az azt jelentette volna, hogy elrontottuk valamelyik argumentum megadását.  
+
 Így végignézzük az `str()` függvény kimenetelét és eldöntjük úgy olvastuk-e be a függvényünket, ahogy szerettük volna.
 
-További hasznos függvények is vannak az adataink megnézésére (a korábban tanult `View()` mellett). Hosszú adatsorok esetén megnézhetjük a táblázat elejét és végét a következő függvényekkel:
+További hasznos függvények is vannak az adataink megnézésére (a korábban tanult `View()` mellett). Hosszú adatsorok esetén megnézhetjük a táblázat elejét és végét a következő függvényekkel, melyek az első ill. az utolsó pár rekordot írják ki a képernyőre:
 
 ```{r}
 head(csoradat) # tablazat elso par sora
@@ -1002,14 +1014,14 @@ tail(csoradat) # tablazat utolso par sora
 
 ## Táblázatok kiírása **R**-ben
 
-Az **R** belső adatstruktúráit ki is lehet írni szöveg alapú táblázatokba. Ezt a `write.table()` paranccsal tudjuk megtenni, ahol az argomentumok:
+Az **R** belső adatstruktúráit ki is lehet írni szöveg alapú táblázatokba. Ezt a `write.table()` paranccsal tudjuk megtenni, ahol az argumentumok:
 
   * a kiírandó változó neve
   * **file**: a létrehozandó fájl neve (relatív vagy abszolút elérési útvonal)
   * **sep**: mező elválasztó karakter
   * **dec**: decimális karakter
-  * **row.names** és **col.names**: ha TRUE, akkor kiírja a sor-, illetve az oszlopneveket a fájlba
-  * **quote**: ha TRUE, akkor idézőjelbe teszi a szöveg és a faktor típusú cellák tartalmát
+  * **row.names** és **col.names**: ha `TRUE`, akkor kiírja a sor-, illetve az oszlopneveket a fájlba
+  * **quote**: ha `TRUE`, akkor idézőjelbe teszi a szöveg és a faktor típusú cellák tartalmát
 
 ```{r write_table_1, eval=FALSE}
 write.table(csoradat, file="ujcsor.txt", sep="\t", dec=".")
@@ -1028,7 +1040,7 @@ kutyus <- data.frame(
   , mintazat=c(1,1,2,3,4,2,3,4)
   , marmagassag=c(22.5, 41.2, 33.6,10.6, 54.8, 35.1, 30.0,29.1)
   , kor=c(1,5,6,NA,5,7,3,2)
-  , ivartalanitott=c(F, T, T, T, F, F, NA, T)
+  , ivartalanitott=c(FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, NA, TRUE)
 )
 
 ```
@@ -1053,23 +1065,23 @@ Ha arra vagyunk kíváncsiak, hogy, a 2. számú kutyának milyen adatai vannak,
 kutyus[2, ]
 ```
 
-Ha arra vagyunk kíváncsiak, hogy a másodiktól a negyedikig sorban mik az adatai a kutyáknak, akkor vektorként tesszük bele:
+Ha arra vagyunk kíváncsiak, hogy a másodiktól a negyedik rekordig milyen adatai vannak a kutyáknak, akkor vektorként tesszük bele:
 
 ```{r}
 kutyus[2:4, ]
 kutyus[c(2,3,4), ] #egyenertekuek
 ```
 
-Ha pedig arra vagunk kíváncsiak, hogy a második kivételével mik vannak benne, akkor azt egy mínusz (**-**) előjellel jelezzzük.
+Ha pedig arra vagyunk kíváncsiak, hogy a második kivételével, milyen adatok vannak a rekordban, akkor azt egy mínusz (**-**) előjellel jelezzzük.
 
 ```{r}
 kutyus[-2, ]
 ```
 
-Logikai értékekkel is jelezhetjük melyik sorok adatait akarjuk látni. Ez a logikai vektor (`F, T, T, T, F, F, F`) például azt jelenti, hogy csak a 2,. 3. és 4. sort írja ki, vagyis ahol `TRUE` van.
+Logikai értékekkel is jelezhetjük melyik sorok adatait akarjuk látni. Ez a logikai vektor (`FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE`) például azt jelenti, hogy csak a 2,. 3. és 4. sort írja ki, vagyis ahol `TRUE` van.
 
 ```{r}
-kutyus[c(F, T, T, T, F, F, F), ]
+kutyus[c(FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE), ]
 ```
 
 Oszlopok esetén ennél több lehetőségünk van (legalábbis, ha *data.frame*-ről beszélünk). Példaként vegyük ki az első oszlop adatait! Ezt megtehetjük az oszlop számának jelzésével, vagy az oszlop nevével is.
@@ -1123,7 +1135,7 @@ Számoljuk meg, hány ilyen kutya van!
 sum(kutyus$nem == "N" & kutyus$marmagassag > 30)
 ```
 
-Láthatjuk, hogy csak egy olyan kutya van, amelyik nőstény és magas is egyszerre. Azonban jó lenne tudni ennek a kutyának az adatait is! Ehhez az indexelést kell segítségül hívni. Ezt úgy tudjuk megtenni, hogy van egy logikai vektorunk a logikai lekérdezés eredményeként, tehát ezt berakhatjuk a sorszámok helyére!
+Láthatjuk, hogy csak egy olyan kutya van, amelyik nőstény és magas is egyszerre. Azonban jó lenne tudni ennek a kutyának az adatait is! Ehhez az indexelést kell segítségül hívni. Ezt úgy tudjuk megtenni, hogy van egy logikai vektorunk a logikai lekérdezés eredményeként, tehát ezt berakhatjuk a sorszm helyére!
 
 ```{r}
 kutyus$nem == "N" & kutyus$marmagassag > 30
@@ -1157,7 +1169,40 @@ stack, as.factor,
 
 ### Hiányzó adatok kezelése
 
-  na.omit
+Hiányzó adatok felderítésre több lehetőség is kínálkozik
+
+* \texttt(summary()) függvény minden változóra kiszámol bizonyos statisztikai mérőszámokat (\emph{átlagot, mediánt, kvartiliseket, min.}, és \emph{max.}, lásd később) és feltüntei a hiányzó adatok számát
+
+```{r}
+summary(kutyus)
+```
+
+* \texttt{which()+is.na()} amellek knkráten megkereshető hol van ahiányzó adat. Ez akkor lehet hasznos ha kiderül, hogy az adat valójában nem is hányzik, csak valamit rosszúl rögzitettünk
+
+```{r NA2, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+index <- which(is.na(kutyus)==TRUE, arr.ind = TRUE)
+index
+kutyus[index]
+```
+
+az \texttt{is.na} minden változótól \'\'megkérdezi, hogy hiányzó adat-e\'\' ha igen akkor az érték \texttt{TRUE}, ha nem akkor \texttt{FALSE}. Ezt lehet felhasználni, a \texttt{which()} függvény segítségével, hogy beazonosítsuk az adatbázisban az NA-k pontos helyét. Érdemes \texttt{arr.ind = TRUE} opciót alaklamazni, mely kigyűjti az `NA` pontos sor és oszlop index értékét. Elmentjük hiányzó adat pontos elhelyezkedését egy változóba (\texttt{index}).
+
+Azt kell eldönteni, hogy az elemzás során, hogy csak azt az egy hiányzó adatot nem használjuk fel, vagy kihagyjuk az elemzásből az egész rekordot (sort). Az előbbire jó megoldás a számos függvény argumentum listájában megtalálható `na.rm` opció. Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából ahiánys rekordokat. A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot  `TRUE`, az egy vagy több hányzó adatot tartalamzó rekordot `FALSE` jelöli. Ha ezt tesszükmeg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
+
+```{r}
+sum(kutyus$kor)
+sum(kutyus$kor, na.rm = TRUE)
+```
+
+```{r}
+kutyus2 <- na.omit(kutyus)
+kutyus3 <- kutyus[complete.cases(kutyus),]
+str(kutyus)
+str(kutyus2)
+str(kutyus3)
+```
+
+
 
 ## Alap adatábrázolás
 
@@ -1174,11 +1219,14 @@ colors()
 
 ### Eloszlások szemléltetése
 
-Először is olvassunk be egy adatbázist!
+Először is olvassunk be adatbázisokat, melyeket a példákban bemutatunk!
 
 ```{r huntbeolvas}
 hunt <- read.table("cells_huntington.dat", sep="\t", header=TRUE, dec=",")
 str(hunt)
+
+beka <- read.table("beka.csv", sep=",", header=TRUE, dec=".")
+str(beka)
 ```
 
 Szűrjünk rá az adatainkra, hogy csak a "TD_MPS1.3" kultúrából származó primer vezikulák kerületadatait lássuk! 
@@ -1214,7 +1262,7 @@ vezik
 hist(vezik)
 ```
 
-A hisztogramra alkalmazhatjuk azokat az argomentumokat, amiket a `plot()` parancs esetén. A `col` itt az oszlopok színeit adja meg. Ami nincs bent a `plot()` argomentumai között, az a `breaks` argomentum, amiben megadhatjuk hány oszlopra tördelje a függvény az adatokat. Se a túl sok, se a túl kevés oszlop nem adja ki jól az adatok eloszlását, így megéri próbálgatni különböző értékekre!
+A hisztogramra alkalmazhatjuk azokat az argumentumokat, amiket a `par()` parancsban találhatok (help intenzív tanulmányozása javallott). A `col` itt az oszlopok színeit adja meg. Az ábra specifikus argumentumok az adott ábra készítő függvényben taláálható pl. a hisztogram esetén a `hist()` függvény `breaks` argumentuma, amiben megadhatjuk hány oszlopra tördelje a függvény az adatokat. A se túl sok, se túl kevés oszlop nem adja ki jól az adatok eloszlását, így megéri próbálgatni különböző értékekre!
 
 ```{r}
 hist(vezik
@@ -1238,19 +1286,53 @@ hist(vezik
 
 ```
 
-Sűrűségdiagram:
+Simított hisztogram:
 
 ```{r}
 plot( density(vezik) )
 ```
 
-Boxplot: 
+Boxplot:
+ Öt pontos ábrázolásnak is nevezik mert alapvetően öt értéket ábrázol
+
+```{r boxplpot, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+par(mfrow=c(2,2))
+boxplot(beka$thossz, main= "Alap beállítás", cex.main = 0.7)
+boxplot(beka$thossz,range = 0, main = "min-Q1-median-Q3-max", cex.main = 0.7)
+boxplot(beka$thossz,range = 1, main = "(Q1-1*IQR)-Q1-median-Q3-(Q3+1*IQR)", cex.main = 0.7)
+boxplot(beka$thossz,range = 1.5, main = "(Q1-1.5*IQR)-Q1-median-Q3-(Q3+1.5*IQR)", cex.main = 0.7)
+par(mfrow=c(1,1))
+```
+
+Láthatók a kiugró adatok (körök), és látható az eloszlás ferdesége (medián helyzete alapján), elnyúltsága a \'\'szálkák\'\' alapján). Ez itt most eléggé szimmetrikus és nincs nagy elnyúlása
+
+Lehet csinosítgatni a `par()` függvényben található argumentumok megadásával/beéllításával
+
+```{r boxplpot2, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+boxplot(beka$thossz, col = "red", las = 1)
+```
+
+Ez az aábrázolás arra nagyon jó hogy több csoportot össze lehessen hasonlítani, ekkor a tulajdonság és a csoportosító változó közé egy $\sim$ vonalat kell írni. Ez kb. annak felel meg, hogy azt mondjuk \'\'a \texttt{tomeg}  értéke függ a \texttt{faj} értékétől\'\' -- ezt a jelölést még sokszor fogjuk használni!
+
+```{r boxplpot3, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+boxplot(beka$tomeg ~ beka$faj, col = 2:4, las = 1, xlab = "", ylab = "Tömeg [g]")
+```
+
+Amit lehet látni, hogy a piros, és a kék viszonylag szimmetrikus, de a zöld ferdébb és elnyúltabb. 
 
 ### Barplot és hisztogram
 
+Az oszlopdiagrammal (`barplot()`-tal) az adpott értékek gyakoriságát lehet megjeleníteni. Éppen ezért az adatokat előtte táblázatba kell gyűjteni
+
+```{r }
+barplot(table(beka$faj), las = 1, xlab = "", ylab = "Gyakoriság")
+```
+
+A hisztogram (`hist()` függvény) osztlygyakoriságokat ábrézol: egy adott intervallumb eső esetek gyakorisága (lásd korábban)
+
 ### Függvények rajzolása
 
-Függvényeket a `curve()` paranccsal tudunk ábrázolni. Első argomentumaként egy **R** képletet kell megadni (nem idézőjelben!), melyben csak az *x* szerepel, mint változó. Alapértelmezettként 0 és 1 között ábrázol, így szükséges megadni az x tengely kiterjedését az `xlim` argomentummal. A `plot()` argomentumai itt is használhatók.
+Függvényeket a `curve()` paranccsal tudunk ábrázolni. Első argumentumaként egy **R** képletet kell megadni (nem idézőjelben!), melyben csak az *x* szerepel, mint változó. Alapértelmezettként 0 és 1 között ábrázol, így szükséges megadni az x tengely kiterjedését az `from` és `to` argumentumokkal. A `par()` argumentumai itt is használhatók.
 
 ```{r}
 curve(x^2, xlim=c(-2,2))
@@ -1259,6 +1341,7 @@ curve(x^2, xlim=c(-2,2))
 ### Kördiagram
 
 Kördiagramot csak nagyon speciális esetekben alkalmazzunk, mert használata sokszor megtévesztő (nehezen becsülnek az emberek szögeket)!  
+
 Ha mondjuk ábrázolni akarjuk a csőr adatbázisunk csőrhossz kategóriának arányát kördiagramon, akkor először is meg kell számolnunk hány egyed esik az egyes kategóriákba.
 
 ```{r}
@@ -1271,4 +1354,184 @@ Ezeket a számokat már ábrázolhatjuk.
 pie(table(csoradat$Csorhossz_kat))
 ```
 
-A `plot()` paraméterei közül most is legtöbb használható. Ami különleges: a `labels` argomentumban meghatározhatjuk a különböző kategóriákhoz írt címkéket, a `clockwise = TRUE`-val pedig megváltoztathatjuk a körcikkek irányát.
+A `plot()` és `par()` argimantumai közül most is legtöbb használható. Ami különleges: a `labels` argomentumban meghatározhatjuk a különböző kategóriákhoz írt címkéket, a `clockwise = TRUE`-val pedig megváltoztathatjuk a körcikkek irányát.
+
+# Mérőszámok
+
+## Átlag
+
+Képlete:
+
+$$ \bar x = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+
+```{r atlag, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+mean(beka$tomeg)
+mean(beka$tomeg, na.rm = TRUE)
+```
+
+Újfet felhívjuk a figyelmet, hogy a hiányzó adatot valamilyen módon kezelni kell ha van aza datbázisban. Kezelés hiányában az eredmény \texttt{NA}, az \texttt{NA}-któl megszabadulni az \texttt{na.rm = TRUE} opcióval lehet. 
+
+## Medián
+
+```{r median, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+median(beka$tomeg)
+median(beka$tomeg, na.rm = TRUE)
+```
+
+## Módusz
+
+Gyakoriság táblázatot kell készíteni (\texttt{table(beka\$tomeg)}) és a leggyakoribb elemet kell kiválasztani
+
+## Terjedelem
+
+\texttt{max-min} értéke a változónak
+
+```{r range, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+range(beka$tomeg, na.rm = TRUE) ## ez nem fogadható el ZH-n a terjedelemre
+range(beka$tomeg, na.rm = TRUE)[2]-range(beka$tomeg, na.rm = TRUE)[1]
+max(beka$tomeg, na.rm = TRUE)-min(beka$tomeg, na.rm = TRUE)
+```
+
+## Quantilisek, quartilisek és percentilisek
+
+A nagyság szerint sorba rendezett adatokat adott arányban ketté vágjuk
+
+Adott arány lehet: 
+
+* 50-50% -> medián  ($Q_2$)
+
+* 25-75% -> alsó quartilis ($Q_1$)
+
+* 75-25% -> felső quartilis  ($Q_3$)
+
+* bármilyen arány pl. 10-90% ezek a quantilisek vagy percentilsek (A quartilis \'\'speciális\'\' quantilis!) 
+
+```{r quantile, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+#quantile(c(0.25,0.75),beka$thossz) # hibas kod
+quantile(probs=c(0.25,0.75),beka$tomeg, na.rm = TRUE) # Q1 és Q3
+quantile(beka$thossz,probs=c(0.5,0.15,0.45,0.95), na.rm = TRUE)
+```
+
+## Inter quartilis terjedelem (IQR)
+
+Definicó szerint a felső és az alsó kvartilis különbsége: $Q_3 - Q1$
+
+```{r iqr, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+IQR(beka$tomeg, na.rm = TRUE)
+```
+
+## Eltérés négyzetösszeg (\emph{Sum of Square})
+
+Képelete: 
+
+$$\sum (x_i-\bar x)^2$$
+
+Erre nincs függvény (legalábbis az alap **R**-ben), ki kell számolni  a képlet alapján
+
+```{r ss, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+ss <- sum((beka$thossz-mean(beka$thossz))^2) 
+ss
+```
+
+## Variancia 
+
+Képlete:
+
+$$ var(x) = \frac{1}{n-1} \sum_{i=1}^{n} (x_i-\bar x)^2$$
+
+Ez mindig a torzítatlant számolja (azaz \emph{n-1= minta elemszám-1}-el oszt) és ez az, amit gyakorlatilag használunk 
+
+```{r var, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+var(beka$thossz)
+```
+
+de kiszámolható az eltérés négyzetösszegből is (minta elem száma a \texttt{length()} függvénnyel adható meg)
+
+```{r var2, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+ss <- sum((beka$thossz-mean(beka$thossz))^2) 
+ss/(length(beka$thossz)-1)
+```
+
+a torzított variancia pedig
+
+$$ var(x) = \frac{1}{n} \sum_{i=1}^{n} (x_i-\bar x)^2$$
+
+```{r var3, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+ss <- sum((beka$thossz-mean(beka$thossz))^2) 
+ss/(length(beka$thossz))
+```
+
+
+## Szórás
+
+a variancia négyzetgyöke (\texttt{sqrt()} függvény)
+
+$$ sd(x) = \sqrt{var(x)} = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (x_i-\bar x)^2} $$
+
+```{r sd, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+sd(beka$thossz)
+sqrt(var(beka$thossz))
+```
+
+## Variációs koefficiens
+
+Képlet alapján számoljuk:
+
+$$CV = \frac{sd_x}{\bar X}$$
+
+```{r cv, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+sd(beka$thossz)/mean(beka$thossz)
+# VAGY
+sd(beka$thossz)/mean(beka$thossz) * 100
+```
+
+# Konfidenciaintervallumok (*KI* vagy *CI*)
+
+Ez nem bonyolultabb, mint amikor annak a tartományka a határoló értékeit kerestük, ami az átlag körüli x%-ot tartalmazza és szimmetrikus az átlagra. Akkor a \texttt{q..()} függvényeket használtuk az intervallum határainak kiszámításához. Hogy milyen valószínűségnél kell kiszámítani? Ehhoz csak azt tudjuk tanácsolni hogy rajzoljátok le az eloszlást és a kérdéses tartományt. Most annyival lesz újabb a számolás, hogy 
+
+* 1) az átlag esetén normális eloszlásból, vagy t-eloszlásból számolunk, attól függően, hogy ismert-e (ez a ritkább) vagy nem ismert a statisztikai populáció szórása
+
+```{r tnorm, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+curve(dnorm(x, mean = 0,sd = 1), from =-4, to = 4, col = "red", las = 1, lty = 1, lwd = 2, ylab = "Sűrűség")
+curve(dt(x, df = 3), from =-4, to = 4, col = "blue", las = 1, lty = 2, lwd = 2, add = TRUE)
+legend("topleft", c("t-eloszlás", "normalis eloszlás"), lwd = c(2,2), lty = c(1,2), col = c("red", "blue"))
+```
+
+
+* 2) a variancia esetén $\chi^2$ eloszlásból számolunk 
+
+```{r chi, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+curve(dchisq(x, df = 3), from =0, to = 15, col = "red", las = 1, lty = 1, lwd = 2, ylab = "Sűrűség", main = "Khi^2 eloszlás")
+
+```
+
+Alap esetben a képletet nekünk kell beírnunk, de a félév során mutatun  más módszert is, hogyan lehet kinyerni az adatokból a konfidenciaintervallumot
+
+## Az átlag 95\%-os konfidenciaintervalluma (\emph{CI})
+
+$$CI_{1} = \bar x - t_{\alpha/2, df}\cdot \frac{sd}{\sqrt{n}}$$ és
+$$CI_{2} = \bar x + t_{1-\alpha/2, df}\cdot \frac{sd}{\sqrt{n}}$$
+
+Az quantilis értékeket (az eloszlás \emph{x} tengelyének értékeit)  2.5\%-nál és a 97.5\%-nál keressük \emph{n-1} szabadságfokú t-eloszlásból. 
+
+```{r CIMean, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+m <- mean(beka$thossz) # a minta átlaga
+s <- sd(beka$thossz) # a minta szórása
+n <- length(beka$thossz) # a minta elemszám
+tKrit <- qt(c(0.025,0.975), df = n-1) # kvantiliseka t-eloszlásból
+m+tKrit*(s/sqrt(n)) # CI
+```
+
+## A variancia 95\%-os konfidenciaintervalluma
+
+$$CI_{1} = \frac{(n-1) \cdot var(x)}{\chi^2_{\alpha/2, df= n-1}}$$ és
+$$CI_{2} = \frac{(n-1) \cdot var(x)}{\chi^2_{1-\alpha/2, df= n-1}}$$
+
+A quantilis értékeket (az eloszlás \emph{x} tengelyének értékeit)  2.5\%-nál és a 97.5\%-nál keressük \emph{n-1} szabadságfokú $\chi^2$-eloszlásból. 
+
+```{r CIVar, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+v <- var(beka$thossz) # a minta varianciája
+n <- length(beka$thossz) # a minat elemszáma
+chKrit <- qchisq(c(0.025,0.975), df = n-1) # kvantiliseka Khi^2-eloszlásból
+((n-1)*v)/chKrit # CI
+```
