@@ -48,7 +48,7 @@ Ha egy hosszabb számsorozat (pl. egy vektor) tagjainak az összegét akarjuk ki
 $$ x_1 + x_2 + x_3 + ... +x_n $$, a
 ahol egy sorozat tagjait összeadjuk az első tagtól az *n*-edikig. A alsó indexbe tett számok a számsoroozat tagjait jelölik (*index*). A *szumma* ($\sum$) operátor azonban, erre egy sokkal egyszerűbb és kényelmesebb megoldást nyújt. A *szumma* operátor után következő kifejezés megadja az összeadandó produktum tagjait, míg az operátor alatt és felett sorra megadhatjuk egy új (az *index*) változó segítségével, hogy a számsorozat mely tagjait kívánjuk összeadni. Például az előző kifejezés a *szumma* operátor segítségével leírva így nézne ki:
 $$ \sum_{i=1}^{n}{x_i} = x_1 + x_2 + x_3 + \dots +x_n $$
-Itt az $x_i$ jelöli a sorozat tagjait, az $i$ pedig az *index* változó, amit a *szumma* jel alatt és felett definiáltunk. A *szumma* jel alatt szoktuk definiálni az új változó kezdeti értékét, felette pedig az utolsó értékét. Itt például az $i$ 1-től $n$-ig fut: 1, 2, 3, ..., $n$. Tegyük fel, hogy $x$ egy vektor:
+Itt az $x_i$ jelöli a számsorozat tagjait, az $i$ pedig az *index* változó, amit a *szumma* jel alatt és felett definiáltunk. A *szumma* jel alatt szoktuk definiálni az új változó kezdeti értékét, felette pedig az utolsó értékét. Itt például az $i$ 1-től $n$-ig fut: 1, 2, 3, ..., $n$. Tegyük fel, hogy $x$ egy vektor:
 
 \begin{equation}
 x =
@@ -69,7 +69,7 @@ Ha nincs semmi a *szumma* operátor alá és fölé írva, akkor az összes tago
 
 $$ \sum{x_i} = \sum_{i=1}^{n}{x_i} $$
 
-Ha csak a második és a harmadik tag összegét akarjuk kiszámolni, azt így tesszük:
+Ha csak a második és a harmadik tag összegét akarjuk kiszámolni, azt így tehetjük meg:
 
 $$ \sum_{i=2}^{3}{x_i} = x_2 + x_3 = 20+30 = 50 $$
 
@@ -80,31 +80,31 @@ $$ \sum_{i=1}^{n}{x_i^2} = x_1^2 + x_2^2 + x_3^2 + ... +x_n^2 = 10^2+20^2+30^2+\
 Nem csak előre megadott sorozatokra lehet alkalmazni a *szumma* operátort:
 
 $$ \sum_{i=1}^{5}{i} = 1 +2 +3+4+5=15$$
-Itt az összeadandó tagok az $i$ értékei voltak, azokat pedig az operátoron belül definiáltuk.
+Itt az $i$ index értékei voltak az összeadandó tagok, amit az operátoron belül definiáltuk.
 Egy bonyolultabb példa: 
 
 $$ \sum_{j=1}^{3}{(10^i+1)} = (10^1+1)+(10^2+1)+(10^3+1)=11+101+1001= 1113$$
-Ha $i$ helyébe eslőször behelyettesítünk 1-et, akkor $10^1+1$-et kapunk, ha 2-őt, akkor $10^2+1$-et, stb. és aztán ezeket mind összeadjuk.
+Ha az $i$ index helyébe először behelyettesítünk 1-et, akkor $10^1+1$-et kapunk, ha 2-őt, akkor $10^2+1$-et, stb. és aztán ezeket mind összeadjuk.
 Az előbbi egyenletet át is alakíthatjuk:
 
 $$ \sum_{j=1}^{3}{(10^i+1)} = \sum_{j=1}^{3}{10^i} + \sum_{j=1}^{3}{1}=\sum_{j=1}^{3}{10^i} + 3 = \\ = 10+100+1000+3=1113 $$
-Az összegből először kiemeljük az $i$-t tartalmazó tagokat, így kapjuk a két *szummás* tagot, melyből a második egy konstans szám (1) háromszori összeadása követkzik (amit elég könnyen kiszámíthatunk). Ugyan ennél az egyenletnél ez felesleges rendezgetésnek tűnhet, de később még hasznos lesz a gyakorlat során.  
+Az összegből először kiemeljük az $i$-t tartalmazó tagokat, így kapjuk a két *szummás* tagot, melyből a második egy konstans szám (1) háromszori összeadása követkzik (amit elég könnyen kiszámíthatunk). Ugyanennél az egyenletnél ez felesleges rendezgetésnek tűnhet, de később még hasznos lesz a gyakorlat során.  
 Egy másik átrendezős példa:
 
 $$\sum_{i=2}^{4}{i/3} = 2/3+3/3+4/3= 0.667 + 1.000 + 1.333 = 3$$
 A gyakorlottabbak a bonyolult tizedes törtekkel való dolgozás helyett így is megoldható:
 
-$$\sum_{i=2}^{4}{i/3} = 2/3+3/3+4/3 = {2+3+4 \over 3} = {9 \over 3} =3 $$,
+$$\sum_{i=2}^{4}{i/3} = 2/3+3/3+4/3 = \frac{1}{3}(2+3+4)= {2+3+4 \over 3} = {9 \over 3} =3 $$,
 egy számítógép azonban  nem fog nekiállni átrendezni az egyenleteinket, hanem egyesével kiszámolja a tagokat és összeadja, így kettővel több osztási műveletet végezne el, mint ami feltétlenül szükséges. Így érdemes formailag is átrendezni az egyenletet:
 
-$$\sum_{i=2}^{4}{i/3} = {\sum_{i=2}^{4}{i} \over 3} = {2+3+4 \over 3} =3 $$
+$$\sum_{i=2}^{4}{i/3} = \sum_{i=2}^{4}{1 \over 3}{i} ={1 \over 3} \sum_{i=2}^{4}{i}  ={\sum_{i=2}^{4}{i} \over 3} = {2+3+4 \over 3} =3 $$
 
 A *szumma* műveleteket egymásba is ágyazhatjuk, tehát a külső operátort egy belső operátorra alkalmazzuk:
 
 $$\sum_{a=0}^{2}{ \sum_{b=10}^{12}{b^a} } = \sum_{a=0}^{2}{ (10^a + 11^a +12^a) } = $$
 $$ = (10^0 + 11^0 +12^0) + (10^1 + 11^1 +12^1) + (10^2 + 11^2 +12^2)= $$ 
 $$ = 1+1+1+10+11+12+100+121+144 = 401$$
-Ilyen esetekben először vesszük a külső *szumma* első értékét (ami itt 0), majd elvégezzük a belső *szumma* operátort úgy, hogy $a$ értékét 0-nak veszzük (ez itt $10^0 + 11^0 +12^0$ lesz). Majd vesszük $a$ értékét 1-nek, elvégezzük vele a belső operátort (eredmény: $10^1 + 11^1 +12^1$) és ezt hozzáadjuk az előző eredményekhez (eddig: $10^0 + 11^0 +12^0 + 10^1 + 11^1 +12^1$). És ezt folytatjuk amíg tart a külső operátor számlálója, vagyis $a = 2$-ig.
+Ilyen esetekben először vesszük a külső *szumma* első értékét (ami itt 0), majd elvégezzük a belső *szumma* operátor alapján az összeadást, úgy, hogy $a$ értékét 0-nak veszzük (ez itt $10^0 + 11^0 +12^0$ lesz). Majd vesszük $a$ értékét 1-nek, elvégezzük vele a belső operátor alapján az összeadást újra (eredmény: $10^1 + 11^1 +12^1$), és ezt az összeget hozzáadjuk az előző eredményekhez (eddig: $10^0 + 11^0 +12^0 + 10^1 + 11^1 +12^1$). Ezt folytatjuk mindaddíg, amíg tart a külső operátor számlálója, vagyis $a = 2$-ig.
 
 ## A *produktum* operátor
 
