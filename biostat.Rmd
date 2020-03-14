@@ -561,6 +561,25 @@ Matematikai értelemben vett vektor és mátrixműveletek is vannak az **R**-ben
 
 : **Fontos** megjegyezni, hogy az **R**-ben a vektorok alapértelmezettként mindig oszlopvektorok, mégha az **R** nem is úgy jeleníti meg őket!
 
+### Az *eleme-e* operátor
+
+Az *eleme-e* operátor egy különleges lekérdezés, azt nézi meg, hogy egy $x$ változó eleme-e egy $\boldsymbol{H}$ halmaznak.
+
+$$x \in \boldsymbol{H}$$
+
+Az $\in$ jel az **R**-ben az `%in%` operátornak felel meg. Például a "B" vagy az "X" eleme-e az {"A", "B", "C", "D"} halmaznak?
+
+```{r}
+"B" %in% c("A", "B", "C", "D")
+"X" %in% c("A", "B", "C", "D")
+```
+
+Ha az $x$ helyére egy vektort teszünk, akkor a vektor elemeit sorra végignézi és eldönti, hogy eleme-e a az adott elem a $\boldsymbol{H}$ halmaznak, így visszatérési értéke egy az $x$ elemszámának megfelelő hosszú logikai vektor lesz.
+
+```{r}
+c("B", "X") %in% c("A", "B", "C", "D")
+```
+
 ### Mátrixok
 
 Mátrixokat a **matrix()** függvény segítségével hozunk létre. Változónak megadjuk a mátrix elemeit. Argomentumnak beírhatjuk az oszlopok számát (*ncol*) és a sorok számát (*nrow*).
@@ -1001,7 +1020,7 @@ kutyus <- data.frame(
   nev=c("Bloki", "Kutya", "Fifi", "Rex", "Vakarcs", "Fifi", "Jumurdzsak", "Hogolyo")
   , nem=c("N", "H", "H", "N", "N", "H", "N", "N")
   , mintazat=c(1,1,2,3,4,2,3,4)
-  , marmagassag=c(22.5, 41.2, 33.6,10.6, 54.8, 35.1, 30.0,29.1)
+  , marmagassag=c(22.5, 41.2, 33.6,10.6, 54.8, 35.1, 30.1,29.1)
   , kor=c(1,5,6,NA,5,7,3,2)
   , ivartalanitott=c(F, T, T, T, F, F, NA, T)
 )
@@ -1103,51 +1122,355 @@ sum(kutyus$mintazat == 1 & kutyus$marmagassag > 30)
 Láthatjuk, hogy csak egy olyan kutya van, amelyiknek 1-es számú mintázata van és magas is egyszerre. Azonban jó lenne tudni ennek a kutyának az adatait is! Ehhez az indexelést kell segítségül hívni. Ezt úgy tudjuk megtenni, hogy van egy logikai vektorunk a logikai lekérdezés eredményeként, tehát ezt berakhatjuk a sorszámok helyére!
 
 ```{r}
-kutyus$nem == "N" & kutyus$marmagassag > 30
+kutyus$mintazat == 1 & kutyus$marmagassag > 30
 kutyus[kutyus$mintazat == 1 & kutyus$marmagassag > 30 , ]
 ```
 
 Ha minden egyéb eredményre vagyunk kíváncsiak, tehát minden olyan kutyára, aminek nem 1-es számú mintázata van, vagy az van, de alacsonyabb mint 30 cm, akkor a logikai **NEM** operátort használjuk.
 
 ```{r}
-! (kutyus$nem == "N" & kutyus$marmagassag > 30)
-kutyus[! (kutyus$nem == "N" & kutyus$marmagassag > 30) , ]
+! (kutyus$mintazat == 1 & kutyus$marmagassag > 30)
+kutyus[! (kutyus$mintazat == 1 & kutyus$marmagassag > 30) , ]
 ```
 
-Visszatérve a 30 cm-nél magasabb nőstény kutyákra, tegyük fel, hogy minket csak ennek a kutyának a neve érdekel. Ekkor berakjuk a megfelelő oszlopnevet az indexelő operátorba, a vessző után.
+Visszatérve a 30 cm-nél magasabb 1-es számú mintázatú kutyákra, tegyük fel, hogy minket csak ennek a kutyának a neve érdekel. Ekkor berakjuk a megfelelő oszlopnevet az indexelő operátorba, a vessző után.
 
 ```{r}
-kutyus[kutyus$nem == "N" & kutyus$marmagassag > 30 , "nev"]
+kutyus[kutyus$mintazat == 1 & kutyus$marmagassag > 30 , "nev"]
 ```
 
 Ha viszont a neve és a kora is érdekel:
 
 ```{r}
-kutyus[kutyus$nem == "N" & kutyus$marmagassag > 30 , c("nev", "kor") ]
+kutyus[kutyus$mintazat == 1 & kutyus$marmagassag > 30 , c("nev", "kor") ]
 ```
 
-Ha 
+Előfordulhat az is, hogy egy faktor elemei közül nem csak egyre vagyok kíváncsi, hanem egyszerre többre is. Például, ha nem csak ez 1-es mintázatú kutyák érdekelnek, hanem a hármasok is. Ezt egyrészt megcsinálhatjuk a *logikai vagy* operátorral (**|**)
+
+```{r}
+kutyus$mintazat == 1 | kutyus$mintazat == 3
+```
+
+Ekkor felsoroljuk az eseteket amik érdekelnek és elválasztjuk őket a *logikai vagy* operátorral. Az eredmény az lett, hogy egyszerre látjuk azokat amiknek 1-es és 3-as mintázatuk van.  
+Sok kondíció esetén viszont belátható módon ez kényelmetlen megoldás, mert sok-sok kondíciót kell beírni és előbb-utóbb elveszünk a sok kódban. Ezért használhatjuk az *eleme-e* operátort (**%in%**)! Így az előző kóddal egyenértékű lesz ez:
+
+```{r}
+kutyus$mintazat %in% c(1, 3)
+```
+
+Tehát itt az történt, hogy minden sor `$mintazat` adatára megkérdeztük, hogy eleme-e az ${1, 3}$ halmaznak.
+
+Nézzük meg ezen kutyák adatait!
+
+```{r}
+kutyus[kutyus$mintazat %in% c(1, 3), ]
+```
+
+Most már csak be kell írnunk a többi feltételt (és legyen 30 cm-nél magasabb) valamint, hogy mely adatokra vagyunk kíváncsiak (név és kor)!
+
+```{r}
+kutyus[kutyus$mintazat %in% c(1, 3) & kutyus$marmagassag > 30, c("nev", "kor")]
+```
+
+**Összefoglalva:** ha adatbázisban szűrni akarunk, leírjuk az adatbázis nevét, majd utána az indexelő operátorokat, elválasztva a vesszővel (`valtozonev[ , ]`). A vessző elé beírjuk, hogy mely sorokra vagyunk kíváncsi, utána pedig, hogy mely oszlopokra/mezőkre (`valtozonev[ sor , oszlop ]`). A sorokat logikai lekérdezésekkel (**==, !=, <, > <=, >=, %in%**) adjuk meg, melyeket logikai operátorokkal köthetünk össze (**&, |, !**). A kívant oszlopokat pedig a nevükkel vagy sorszámukkal adjuk meg (ha többre vagyunk kíváncsiak, természetesen vektorként!).
 
 ### Adatok rendezése
 
-stack, as.factor,
+Sok esetben az adatbevitelt végző személy úgy adja meg az adatokat, hogy a csoport nem külön változóként van megadva, hanem az oszlop száma jelöli. Ilyen az *asztal.csv* adatbázis is.
+
+```{r}
+asztal <- read.table("asztal.csv", sep="_", dec=",", header=TRUE)
+str(asztal)
+```
+
+```{r show_asztal, echo=FALSE, fig.cap="Az asztal.csv fájl első pár sora"}
+kable(head(asztal))
+```
+
+Ez az adatformátum sok esetben nehezíti az adatok elemzését. Erre használható a `stack()` parancs, ami átalakítja nekünk az adatbázist könnyebben kezelhető formába. Fontos, hogy csak akkor használjuk ezt a függvényt, ha tényleg szükségünk van rá!
+
+```{r}
+asztal2 <- stack(asztal)
+str(asztal2)
+```
+
+
+```{r show_asztal2, echo=FALSE, fig.cap="Az asztal2 data.frame pár középső sora"}
+kable(asztal2[(nrow(asztal2)*0.4):(nrow(asztal2)*0.6),])
+```
+
+### Oszloptípusok megváltoztatása
+
+Bizonyos adatelemzési módszerek megkövetelik, hogy egy *data.frame* oszlopai megfelő formátumúak legyenek. A különböző formátumok:
+
+  * *int* és *num*: akkor használjuk, ha mint arány-, intervallum skálás adatként vagy rangként akarjuk az adatot kezelni. Ezzel találkozunk a legtöbbet.
+  * *logi*: binomiális adatok jelenlét - távollét, igen - nem formában.
+  * *character*: csak akkor használjuk, ha karakterműveleteket akarunk az adott mezővel végezni, vagy ki akarjuk íratni. Így ez a statisztikai elemzések során legritkábban használt adattípus.
+  * *factor*: ha az adat egy nominális skálájú változó, mely csoportba való tartozást jelöl. Vigyázni kell vele, mert gyakran keveredik az előző kategóriákkal, gondot okozva az adatelemzésben.
+
+Az oszlopok típusait az `str()` paranccsal célszerű ellenőrizni.
+
+```{r}
+str(kutyus)
+```
+
+A *kutyus* adatbázisban a *nev* és a *nem* szerepel faktorként. Ez jól is van, nem akarjuk ezeket számként kezelni. Esetleg elgondolkozhatunk azon, hogy a kutya neve szöveg is lehetne.  
+A *marmagassag* és a *kor* számként vannak tárolva, ami jó is, mivel valószínűleg számként fogunk vele számolni.  
+Az *ivartalanitott* oszlop logikai értékeket tartalmaz, ezt is lehet mint csoportmegadást használni például az ivartalanított kutyák vizsgálatból való kizárására. 
+A *mintazat* oszlop típusa *num*. Ez nem biztos, hogy jó, tudni kell mit jelölnek a számok. Ha mondjuk foltok számát a szemben, akkor valahogy talán lehet értelme mint számot kezelni, viszont ha a mérést végző személy csak sorszámokkal jelölte a különböző a különböző mintázatokat (pl. 1 = dalmata, 2 = foltos, stb.), akkor mint *factor* lehet csak kezelni!!  
+
+Alakítsuk át az oszloptípusokat. Ezt az `as.factor()`, `as.numeric()`, `as.integer()`, `as.character()` és `as.logical()` függvények segítségével tudjuk megtenni. Először ki kell választanunk a megváltoztatandó oszlopot, majd felülírjuk ugyanennek az oszlopnak az előző függvényekkel átalakított másával.  
+Először is, alakítsuk át a *nev* oszlopot karakter típusúvá!
+
+```{r}
+kutyus$nev <- as.character(kutyus$nev)
+str(kutyus)
+```
+
+Láthatjuk, csak a *nev* oszlop lett most karakter, a többi maradt az eredeti. Feltételezve, hogy a *mintazat* oszlopban csak számmal jelölt nominális kategóriák vannak, alakítsuk át faktorrá!
+
+```{r}
+kutyus$mintazat <- as.factor(kutyus$mintazat)
+str(kutyus)
+```
+
+Ha közben esetleg kiderülne, hogy a *mintazat*-ban a számok értéke jelentéssel bír, visszaalakíthajuk.
+
+```{r}
+kutyus$mintazat <- as.numeric(kutyus$mintazat)
+str(kutyus)
+```
 
 ### Hiányzó adatok kezelése
 
-  na.omit
+Van, hogy nem minden cellában szerepel adat, pl. mert a vizsgálatot nem lehetett elvégezni, vagy mert elveszett az adat. Az ilyen cellákat *NA*-val jelöljük meg. Különböző módszerek vannak az ilyen esetek kezelésére, de a legegyszerűbb az, ha egyszerűen kivesszük a vizsgálatból azokat az objektumokat, amikből hiányzik az adat. Erre legegyszerűbb az `na.omit()` függvény. Vigyázat, ez a függvény minden olyan sort töröl, amiben *NA* van!
+
+```{r}
+kutyus_na.omit <- na.omit(kutyus)
+str(kutyus_na.omit)
+```
+
+```{r show_kutyus_na.omit , echo=FALSE}
+kable(kutyus_na.omit)
+```
+
+Alkalmazhatunk logikai lekérdezést is, ha csak azokat a sorokat akarjuk kivenni a vizsgálatból, melyeknek csak egy bizonyos oszlopában van *NA*. Az `is.na()` megmondja minden egyes értékre, hogy `NA`-e? Ha ezt párosítjuk a *logikai nem* operátorral (**!**), akkor megkapjuk azokat az elmeket, melyek *NA*-k.
+
+```{r}
+is.na( c(2,4,NA,0) )
+!is.na( c(2,4,NA,0) )
+```
+
+Erre már csak szűrni kell.
+
+```{r}
+kutyus_no_NA_in_kor <- kutyus[!is.na(kutyus$kor), ]
+str(kutyus_no_NA_in_kor)
+```
+
+```{r show_kutyus_no_NA_in_kor, echo=FALSE}
+kable(kutyus_no_NA_in_kor)
+```
+
+Vannak függvények, amikbe bele van építve az *NA* kezelése. Ilyen például a `sum()` függvény. Alap esetben ha *NA* van az argomentumok közt, a visszatérési értéke *NA* lesz.
+
+```{r}
+sum(2,3,4,NA,6)
+```
+
+Ha viszont az `na.rm = TRUE` -t beállítjuk, egyszerűen kiveszi a számolásból az *NA*-kat.
+
+```{r}
+sum(2,3,4,NA,6, na.rm = TRUE)
+```
 
 ## Alap adatábrázolás
 
+Az **R** alapcsomagjai elegendőek ahhoz, hogy a kurzus során szükséges ábrákat létre tudjuk hozni. **RStudio**-ban pedig a készített ábráink a jobb oldali **Plots** panelban fognak feltűnni alapértelmezetten (szóval nem kell definiálni grafikus eszközt).
+
 ### A *plot()* függvény használata
 
-Az **R** alapcsomagjai elegendőek ahhoz, hogy a kurzus során szükséges ábrákat létre tudjuk hozni. **RStudio**-ban pedig a készített ábráink a jobb oldali **Plots** panelban fognak feltűnni alapértelmezetten (szóval nem kell definiálni grafikus eszközt).
+A `plot()` függvény egy általános adatábrázoló függvény. Viselkedése attól függ, hogy milyen adatokat adunk meg argomentumaként, de leggyakrabban pont- vagy vonaldiagram rajzolásához használjuk. Ha egyetlen számsort adunk meg változóként, akkor a számsor tagjait fogja sorban ábrázolni, *X* tengelyen, hogy hányadik a számsorban, *Y* tengelyen a szám számértékét. Ezt viszonyleg ritkán szeretnénk ábrázolni, a jegyzetben azért van bent, hogy tudjuk mi történt, ha ilyesmit látunk.
+
+```{r}
+x <- c(1,2,3,2,1,1)
+plot(x)
+```
+
+Ha két vektort adunk meg neki változóként, akkor pontokként ábrázolja őket, úgy hogy az első argomentumból hívja be az *X* koordinátákat, míg a másodikból az *Y* koordinátákat.
+
+```{r myfirstplot, fig.cap="Pontdiagram"}
+x <- 1:10
+y <- sqrt(1:10)
+x
+y
+plot(x, y)
+```
+
+Ha beleírjuk az `x` és az `y` helyére a számokat, akkor is ezt fogjuk kapni, csak a tengelyfeliratok változnak meg.
+
+```{r myfirstplot_short, fig.cap="Pontdiagram a vektorok közvetlen megadásával"}
+plot(1:10, sqrt(1:10))
+```
+
+Megadhatunk címet és alcímet az ábránknak a `main` és `sub` argomentumokkal.
+
+```{r, myfirstplot_cimek, fig.cap="Pontdiagram címmel és alcímmel"}
+plot(x, y
+     , main = "Ez egy cim"
+     , sub = "negyzetgyok"
+)
+```
+
+Testreszabhatjuk a tengelyfeliratokat az `xlab` és `ylab` argomentumokkal.
+
+```{r, myfirstplot_tfelirat, fig.cap="Pontdiagram címmel, alcímmel és tengelyfeliratokkal"}
+plot(x, y
+     , main = "Ez egy cim"
+     , sub = "negyzetgyok"
+     , xlab = "x tengely"
+     , ylab = "y tengely"
+)
+```
+
+A `type` argomentummal megadhatjuk, hogy milyen ábrázolási módodot szeretnénk:
+
+  * "p": pontdiagram, ez az alapértelmezett
+  * "l": vonaldiagram
+  * "b": pont és vonaldiagram is (**b**oth), a pontok nincsenek a vonallal áthúzva
+  * "c": az előző típus vonalai kizárólag
+  * "o": pont és vonaldiagram is, a pontok át vannak húzva a vonallal
+  * "h": a pontokat oszlopk jelzik az *X* tengely felől
+  
+```{r myfirstplot_l, fig.cap="Vonaldiagram"}
+plot(x, y, type="l")
+```
+
+```{r myfirstplot_b, fig.cap="Vonal- és pontdiagram, nem metszik egymást"}
+plot(x, y, type="l")
+```
+
+```{r myfirstplot_c, fig.cap="Vonaldiagram, a pontoknál ki van hagyva a vonal"}
+plot(x, y, type="c")
+```
+
+```{r myfirstplot_o, fig.cap="Vonal- és pontdiagram, a pontokon átmegy a vonal"}
+plot(x, y, type="o")
+```
+
+```{r myfirstplot_h, fig.cap="Oszlopdiagram szerű ábrázolás"}
+plot(x, y, type="h")
+```
+
+Ha szeretnénk egyéb pontokat is hozzáadni a már létező ábránkhoz, akkor a `points()` függvényt használhatjuk, ami ugyanúgy működik, mint a `plot()` függvényhez hasonlóan működik, azzal a kivétellel, hogy egy már előzőleg létező ábrára rajzol.
+
+```{r, myfirstplot_points, fig.cap="Pontdiagram hozzáadott pontokkal"}
+z <- (1:10)^(1/3)
+z
+plot(x, y)
+points(x, z)
+```
+
+Hasonlóképpen hozzáadhatunk vonalakat is a `lines()` függvénnyel.
+
+```{r, myfirstplot_lines, fig.cap="Pontdiagram hozzáadott vonalakkal"}
+z <- (1:10)^(1/3)
+z
+plot(x, y)
+lines(x, z)
+```
+
+Az **R** alap grafikai függvényei az első plottolási parancsban lévő adatokhoz igazítják az ábrázolt területet. Ezt azonban meg lehet változtatni az `xlim` és `ylim` argomentumokkal. Ezeknek egy két elemből álló numerikus vektort kell megadni, ami meghatározza, hogy mettől meddig tartson az ábrázolandó terület az *X* és *Y* tengelyen.
+
+```{r myfirstplot_lim, fig.cap="Pontdiagram beállított plotterülettel"}
+plot(x, y
+     , xlim = c(2, 8) # x tengely minimuma es maximuma
+     , ylim = c(0, 4) # y tengely minimuma es maximuma
+     )
+```
 
 ### Paraméterek
 
-?par
-?points
-lehetseges szinnevek:
+A plottolás és egyéb grafikus kimenetelek paramétereit a `par()` függvénnyel érhetjük el és módosíthatjuk. Ha valamit állítani szeretnénk a plotunkon, akkor érdemes lefuttatni a `?par` parancsot és a help-ből kikeresni a számunkra fontos paramétert a különböző beállítási lehetőségek hosszú listájából. Ebben a fejezetben csak a fontosabbakat fogjuk tárgyalni.
+
+A paraméterek alapértelmezett beállításait úgy tudjuk elérni, hogy vagy lefuttatjuk a `par()` parancsot argomentum nélkül és kikeressük a listából az egyes paramétereket, vagy beírjuk a paraméter nevét a függvénybe. Például:
+
+```{r}
+par("col")
+```
+
+Átállítani úgy tudjuk, hogy argomentumnak írjuk be a paramétert a `par()` függvénybe és értéket adunk neki. Ha át akajuk állítani például az ábrázolás színét pirosra, akkor:
+
+```{r myfirstplot_par, fig.cap="Pontdiagram ha az alapértelmezett szín a vörös"}
+par(col="red")
+plot(x, y)
+plot(x, y, col="black")
+```
+
+Innentől az összes ábrázolás alapértelmezetten piros lesz, amíg meg nem változtatjuk újra. Azonban az alapértelmezettől eltérhetünk, ha az ábrázoló függvényben megadjuk.  
+A legtöbbször használt paraméterek:
+
+  * col: az ábrázolás színe
+  * pch: a pontok alakja
+  * lty: vonalak típusa
+  * lwd: vonalak vastagsága
+  * cex: a betűk mérete
+  * las: a tengelycímkék iránya
+  * mar: margók mérete
+  * xlog, ylog: tengelyek logaritmizálása
+  
+A színeket megadhatjuk RGB kódokként is meg színnevekkel is. A használható színneveket így listázhatjuk:
+
+```{r list_colors, output.lines=10}
 colors()
+```
+
+Ha több színt akarunk megadni, akkor vektorként tegyük. Ha elfogytak a megadott színek, az **R** szekvenciálisan újrahasznosítja a vektort, az elejétől kezdve.
+
+```{r myfirstplot_col3, fig.cap="Pontdiagram színezett pontokkal"}
+plot(x, y
+     , col = c("purple", "tomato", "navy")
+     )
+```
+
+A különböző pontalakokat a `pch` (point character) paraméterrel lehet megadni. Ez lehet egy szám (mely különböző karaktereket jelöl) vagy egy karakter is (ebben az esetben maga a karakter kerül kiírásra). Vigyázzunk, hogy egy vektornak csak egyfajta elemei lehetnek, így egyszerre csak egyik módszer használható! Az alap karaktereket a `?points` help oldalon lehet kikeresni egy táblázatból. A színekhez hasonlóan itt is több karaktert lehet megadni, melyeket az **R** újrahasznosíthat. 
+
+```{r myfirstplot_pch, fig.cap="Pontdiagram, személyre szabott pontokkal"}
+plot(x, y
+     , pch = c(5, 19, 15)
+     )
+points(x, z
+       , pch = c(1, "a", "@")
+       )
+```
+
+Vonalak típusát (`lty`, azaz linetype) is megadhatjuk számokkal, vagy karakterekkel: 0 = "blank" (üres), 1 = solid (folytonos), 2 = "dashed" (szaggaott), 3 = "dotted" (pontozott), 4 = "dotdash" (pontos és szaggatott), 5 = "longdash" (hosszú szaggatott), 6 = "twodash" (pontos és szaggatott). A vonalak vastagságát (`lwd`, azaz line width) pedig számmal adhatjuk meg. A vonalakat is lehet színezni a `col` paraméterrel.
+
+```{r}
+plot(x, y
+     , type = "l"
+     , lty = 3 # type of line
+     , col = "violet" # color of line
+     , lwd = 2 # width of line
+     )
+lines(x, z
+      , lty = "dotted" # also type of line
+      , lwd = 3
+      )
+```
+
+A `cex`-el beállíthatjuk a karaktereink nagyságát. A `las` paraméter egy 0 és 3 közti szám, ami megadja, hogy állnak a tengelyek címkéi. Leggyakrabban a `las=1` opciót használják, ami minden feliratot horizontálisba fordít.
+
+```{r}
+plot(x, y
+     , cex = 3
+     , las = 1
+     )
+```
+
+
+  * mar: margók mérete
+  * xlog, ylog: tengelyek logaritmizálása
 
 ### Eloszlások szemléltetése
 
