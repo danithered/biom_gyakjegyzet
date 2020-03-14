@@ -1297,11 +1297,24 @@ index
 kutyus[index]
 ```
 
-az \texttt{is.na} minden változótól \'\'megkérdezi, hogy hiányzó adat-e\'\' ha igen akkor az érték \texttt{TRUE}, ha nem akkor \texttt{FALSE}. Ezt lehet felhasználni, a \texttt{which()} függvény segítségével, hogy beazonosítsuk az adatbázisban az NA-k pontos helyét. Érdemes \texttt{arr.ind = TRUE} opciót alkalmazni, mely kigyűjti az `NA` pontos sor és oszlop index értékét. Elmentjük a hiányzó adat pontos elhelyezkedését egy változóba (\texttt{index}).
+az \texttt{is.na()} minden változótól \'\'megkérdezi, hogy hiányzó adat-e\'\' ha igen akkor az érték \texttt{TRUE}, ha nem akkor \texttt{FALSE}. Ezt lehet felhasználni, a \texttt{which()} függvény segítségével, hogy beazonosítsuk az adatbázisban az NA-k pontos helyét. Érdemes \texttt{arr.ind = TRUE} opciót alkalmazni, mely kigyűjti az `NA` pontos sor és oszlop index értékét. Elmentjük a hiányzó adat pontos elhelyezkedését egy változóba (\texttt{index}).
 
-Különböző módszerek vannak az ilyen esetek kezelésére, de a legegyszerűbb az, ha egyszerűen kivesszük a vizsgálatból azokat az objektumokat, amikből hiányzik az adat. Erre legegyszerűbb az `na.omit()` függvény. Vigyázat, ez a függvény minden olyan sort töröl, amiben *NA* van!
+Különböző módszerek vannak az ilyen esetek kezelésére, de a legegyszerűbb az, ha egyszerűen kivesszük a vizsgálatból azokat az objektumokat, amikből hiányzik az adat. Erre legegyszerűbb az `na.omit()` függvény. Vigyázat, ez a függvény minden olyan sort töröl, amiben `NA` van!
 
-Azt kell eldönteni, hogy az elemzés során csak azt az egy hiányzó adatot nem használjuk fel, vagy kihagyjuk az elemzésből az egész rekordot (sort). Az előbbire jó megoldás a számos függvény argumentum listájában megtalálható `na.rm` opció. Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából a hiánys rekordokat. A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot `TRUE`, az egy vagy több hányzó adatot tartalamzó rekordot `FALSE` jelöli. Ha ezt tesszük meg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
+Azt kell eldönteni, hogy az elemzés során csak azt az egy hiányzó adatot nem használjuk fel, vagy kihagyjuk az elemzésből az egész rekordot (sort). Az előbbire jó megoldás a számos függvény argumentum listájában megtalálható `na.rm` opció. Ilyen például a `sum()` függvény. Alapesetben ha `NA` van az argomentumok közt, a visszatérési értéke `NA` lesz.
+
+```{r}
+sum(2,3,4,NA,6)
+```
+
+Ha viszont az `na.rm = TRUE` -t beállítjuk, egyszerűen kiveszi a számolásból az *NA*-kat.
+
+```{r}
+sum(2,3,4,NA,6, na.rm = TRUE)
+```
+
+
+Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából a hiánys rekordokat. A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot `TRUE`, az egy vagy több hányzó adatot tartalamzó rekordot `FALSE` jelöli. Ha ezt tesszük meg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
 
 ```{r}
 sum(kutyus$kor)
@@ -1343,18 +1356,6 @@ str(kutyus_no_NA_in_kor)
 
 ```{r show_kutyus_no_NA_in_kor, echo=FALSE}
 kable(kutyus_no_NA_in_kor)
-```
-
-Vannak függvények, amikbe bele van építve az *NA* kezelése. Ilyen például a `sum()` függvény. Alap esetben ha *NA* van az argomentumok közt, a visszatérési értéke *NA* lesz.
-
-```{r}
-sum(2,3,4,NA,6)
-```
-
-Ha viszont az `na.rm = TRUE` -t beállítjuk, egyszerűen kiveszi a számolásból az *NA*-kat.
-
-```{r}
-sum(2,3,4,NA,6, na.rm = TRUE)
 ```
 
 ## Alap adatábrázolás
