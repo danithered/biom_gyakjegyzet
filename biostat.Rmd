@@ -1418,7 +1418,7 @@ plot(x, y, type="l")
 ```
 
 ```{r myfirstplot_b, fig.cap="Vonal- és pontdiagram, nem metszik egymást"}
-plot(x, y, type="l")
+plot(x, y, type="b")
 ```
 
 ```{r myfirstplot_c, fig.cap="Vonaldiagram, a pontoknál ki van hagyva a vonal"}
