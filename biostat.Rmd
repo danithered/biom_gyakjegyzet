@@ -1299,8 +1299,6 @@ kutyus[index]
 
 az \texttt{is.na()} minden változótól \'\'megkérdezi, hogy hiányzó adat-e\'\' ha igen akkor az érték \texttt{TRUE}, ha nem akkor \texttt{FALSE}. Ezt lehet felhasználni, a \texttt{which()} függvény segítségével, hogy beazonosítsuk az adatbázisban az NA-k pontos helyét. Érdemes \texttt{arr.ind = TRUE} opciót alkalmazni, mely kigyűjti az `NA` pontos sor és oszlop index értékét. Elmentjük a hiányzó adat pontos elhelyezkedését egy változóba (\texttt{index}).
 
-Különböző módszerek vannak az ilyen esetek kezelésére, de a legegyszerűbb az, ha egyszerűen kivesszük a vizsgálatból azokat az objektumokat, amikből hiányzik az adat. Erre legegyszerűbb az `na.omit()` függvény. Vigyázat, ez a függvény minden olyan sort töröl, amiben `NA` van!
-
 Azt kell eldönteni, hogy az elemzés során csak azt az egy hiányzó adatot nem használjuk fel, vagy kihagyjuk az elemzésből az egész rekordot (sort). Az előbbire jó megoldás a számos függvény argumentum listájában megtalálható `na.rm` opció. Ilyen például a `sum()` függvény. Alapesetben ha `NA` van az argomentumok közt, a visszatérési értéke `NA` lesz.
 
 ```{r}
@@ -1311,35 +1309,27 @@ Ha viszont az `na.rm = TRUE` -t beállítjuk, egyszerűen kiveszi a számolásb�
 
 ```{r}
 sum(2,3,4,NA,6, na.rm = TRUE)
-```
-
-
-Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából a hiánys rekordokat. A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot `TRUE`, az egy vagy több hányzó adatot tartalamzó rekordot `FALSE` jelöli. Ha ezt tesszük meg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
-
-```{r}
-sum(kutyus$kor)
+sum(kutyus$kor) #masik pelda
 sum(kutyus$kor, na.rm = TRUE)
 ```
 
+Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából a hiánys rekordokat. Vigyázat, ez a függvény minden olyan sort töröl, amiben `NA` van! A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot `TRUE`, az egy vagy több hányzó adatot tartalamzó rekordot `FALSE` jelöli. Ha ezt tesszük meg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
+
 ```{r}
-kutyus2 <- na.omit(kutyus)
-kutyus3 <- kutyus[complete.cases(kutyus),]
 str(kutyus)
+kutyus2 <- na.omit(kutyus)
 str(kutyus2)
-str(kutyus3)
-```
-
-
-
-```{r}
-kutyus_na.omit <- na.omit(kutyus)
-str(kutyus_na.omit)
 ```
 
 ```{r show_kutyus_na.omit , echo=FALSE}
-kable(kutyus_na.omit)
-
+kable(kutyus2)
 ```
+
+```{r}
+kutyus3 <- kutyus[complete.cases(kutyus),]
+str(kutyus3)
+```
+
 Alkalmazhatunk logikai lekérdezést is, ha csak azokat a sorokat akarjuk kivenni a vizsgálatból, melyeknek csak egy bizonyos oszlopában van *NA*. Az `is.na()` megmondja minden egyes értékre, hogy `NA`-e? Ha ezt párosítjuk a *logikai nem* operátorral (**!**), akkor megkapjuk azokat az elmeket, melyek *NA*-k.
 
 ```{r}
@@ -1484,14 +1474,14 @@ plot(x, y, col="black")
 Innentől az összes ábrázolás alapértelmezetten piros lesz, amíg meg nem változtatjuk újra. Azonban az alapértelmezettől eltérhetünk, ha az ábrázoló függvényben megadjuk.  
 A legtöbbször használt paraméterek:
 
-  * col: az ábrázolás színe
-  * pch: a pontok alakja
-  * lty: vonalak típusa
-  * lwd: vonalak vastagsága
-  * cex: a betűk mérete
-  * las: a tengelycímkék iránya
-  * mar: margók mérete
-  * xlog, ylog: tengelyek logaritmizálása
+  * `col`: az ábrázolás színe
+  * `pch`: a pontok alakja
+  * `lty`: vonalak típusa
+  * `lwd`: vonalak vastagsága
+  * `cex`, `cex.axis`, `cex.lab`: a karakterek / tengelycímkék / tengelycímek mérete
+  * `las`: a tengelycímkék iránya
+  * `mar`: margók mérete
+  * `xlog`, `ylog`: tengelyek logaritmizálása
   
 A színeket megadhatjuk RGB kódokként is meg színnevekkel is. A használható színneveket így listázhatjuk:
 
@@ -1535,16 +1525,37 @@ lines(x, z
 
 A `cex`-el beállíthatjuk a karaktereink nagyságát. A `las` paraméter egy 0 és 3 közti szám, ami megadja, hogy állnak a tengelyek címkéi. Leggyakrabban a `las=1` opciót használják, ami minden feliratot horizontálisba fordít.
 
-```{r}
+```{r, myfirstplot_cex, fig.cap="Pontdiagram megnövelt karakter és tengelycímke méretekkel, horizontális tengelycímkékkel"}
 plot(x, y
      , cex = 3
+     , cex.axis=2
      , las = 1
      )
 ```
 
+A margók méretének megváltoztatásával a plotterület melletti sáv nagyságát változtathatjuk. Érdemes megjegyezni az eredeti beállítását.
 
-  * mar: margók mérete
-  * xlog, ylog: tengelyek logaritmizálása
+```{r}
+mar_orig <- par("mar")
+mar_orig
+```
+
+Megváltoztatni a `par()` függvénnyel tudjuk. Értéke egy négy tagú numerikus vektor, melynek elemei sorra megmutatják az alsó / bal / felső / jobb oldali margók méretét.
+
+```{r, myfirstplot_mar, fig.cap="Pontdiagram egyéni margókkal"}
+par(mar = c(1,1,0,3) )
+plot(x, y)
+par(mar = mar_orig)
+```
+
+A tengelyek logaritmikus ábrázolása akkor hasznos, ha valamiről úgy gondoljuk, hogy nagyságrendű megváltozása a fontos. Tehát nem az additív távolságok a lényegesek (pl. $x_1$ 2-vel nagyobb, mint $x_2$), hanem a multiplikatív különbségek (pl. $x_1$ 100-szor nagyobb, mint $x_2$). Mindig mérlegeljük, hogy van-e biológiai relevanciája a tengelyek logaritmizálásának!
+
+```{r}
+
+```
+
+### Több ábra egyszerre
+
 
 ### Eloszlások szemléltetése
 
