@@ -1453,6 +1453,12 @@ plot(x, y
      )
 ```
 
+A tengelyek logaritmikus ábrázolása akkor hasznos, ha valamiről úgy gondoljuk, hogy nagyságrendű megváltozása a fontos. Tehát nem az additív távolságok a lényegesek (pl. $x_1$ 2-vel nagyobb, mint $x_2$), hanem a multiplikatív különbségek (pl. $x_1$ 100-szor nagyobb, mint $x_2$). Mindig mérlegeljük, hogy van-e biológiai relevanciája a tengelyek logaritmizálásának! A logaritmizálást a `log` argomentummal tudjuk beállítani: étéke `"xy"`, ha mindkét tengelyt, `"x"`, ha az x és `"y"`, ha az y tengelyt logaritmizáljuk. (Régi **R** verziókban a tengelyeket logaritmizálni sorra a `xlog=TRUE` és `ylog=TRUE` argomentumokkal lehetett.)
+
+```{r myfirstplot_log, fig.cap="Pontdiagram logaritmizált x és y tengelyekkel"}
+plot(x, y, log="xy")
+```
+
 ### Paraméterek
 
 A plottolás és egyéb grafikus kimenetelek paramétereit a `par()` függvénnyel érhetjük el és módosíthatjuk. Ha valamit állítani szeretnénk a plotunkon, akkor érdemes lefuttatni a `?par` parancsot és a help-ből kikeresni a számunkra fontos paramétert a különböző beállítási lehetőségek hosszú listájából. Ebben a fejezetben csak a fontosabbakat fogjuk tárgyalni.
@@ -1481,7 +1487,6 @@ A legtöbbször használt paraméterek:
   * `cex`, `cex.axis`, `cex.lab`: a karakterek / tengelycímkék / tengelycímek mérete
   * `las`: a tengelycímkék iránya
   * `mar`: margók mérete
-  * `xlog`, `ylog`: tengelyek logaritmizálása
   
 A színeket megadhatjuk RGB kódokként is meg színnevekkel is. A használható színneveket így listázhatjuk:
 
@@ -1548,14 +1553,37 @@ plot(x, y)
 par(mar = mar_orig)
 ```
 
-A tengelyek logaritmikus ábrázolása akkor hasznos, ha valamiről úgy gondoljuk, hogy nagyságrendű megváltozása a fontos. Tehát nem az additív távolságok a lényegesek (pl. $x_1$ 2-vel nagyobb, mint $x_2$), hanem a multiplikatív különbségek (pl. $x_1$ 100-szor nagyobb, mint $x_2$). Mindig mérlegeljük, hogy van-e biológiai relevanciája a tengelyek logaritmizálásának!
+### Osztott ábra
 
-```{r}
+Ha egy ábraterületen több ábrát szeretnénk lerajzolni, akkor először el kell döntenünk, hogy hány sorba és hány oszlopba akarjuk. Ezután az `mfrow = c(sor, oszlop)` argomentummal beállítjuk, hogy mekkorára osztjuk a plotterületet. Az argomentum bementi értéke egy két elemből álló numerikus vektor, mely elemek sorra megadják, hogy hány sorba és hány oszlopba szeretnénk ábrázolni. Ezután kiadjuk a megfelelő mennyiségű plot parancsot. A plotok helyei sor szerint töltődnek fel. Ha utána újból egy ábra / egy ábraterületen szeretnénk ábrázolni, akkor vissza is kell állítanunk az argomentumot eredeti állapotába: `mfrow = c(1, 1)`. 
 
+```{r fig.cap="Osztott ábra"}
+par(mfrow=c(3,2)) # 3 sor es 2 oszlop
+plot(x,y
+     , main="Elso plot"
+     )
+plot(x,y
+     , main="Masodik plot"
+     , log="x"
+     )
+plot(x,y
+     , main="Harmadik plot"
+     , log="y"
+     )
+plot(x,y
+     , main="Negyedik plot"
+     , log="xy"
+     )
+plot(log(x),log(y)
+     , main="Otodik plot"
+     )
+plot(x,y
+     , main="Hatodik plot"
+     , type="l"
+     , las=1
+     )
+par(mfrow=c(1,1)) # visszaallitjuk eredeti abrazolasra
 ```
-
-### Több ábra egyszerre
-
 
 ### Eloszlások szemléltetése
 
@@ -1602,7 +1630,7 @@ vezik
 hist(vezik)
 ```
 
-A hisztogramra alkalmazhatjuk azokat az argumentumokat, amiket a `par()` parancsban találhatok (help intenzív tanulmányozása javallott). A `col` itt az oszlopok színeit adja meg. Az ábra specifikus argumentumok az adott ábra készítő függvényben taláálható pl. a hisztogram esetén a `hist()` függvény `breaks` argumentuma, amiben megadhatjuk hány oszlopra tördelje a függvény az adatokat. A se túl sok, se túl kevés oszlop nem adja ki jól az adatok eloszlását, így megéri próbálgatni különböző értékekre!
+A hisztogramra alkalmazhatjuk azokat az argumentumokat, amiket a `par()` parancsban találhatok (help intenzív tanulmányozása javallott). A `col` itt az oszlopok színeit adja meg. Az ábra specifikus argumentumok az adott ábra készítő függvényben találhatók pl. a hisztogram esetén a `hist()` függvény `breaks` argumentuma, amiben megadhatjuk hány oszlopra tördelje a függvény az adatokat. A se túl sok, se túl kevés oszlop nem adja ki jól az adatok eloszlását, így megéri próbálgatni különböző értékekre!
 
 ```{r}
 hist(vezik
@@ -1652,7 +1680,7 @@ Lehet csinosítgatni a `par()` függvényben található argumentumok megadásá
 boxplot(beka$thossz, col = "red", las = 1)
 ```
 
-Ez az aábrázolás arra nagyon jó hogy több csoportot össze lehessen hasonlítani, ekkor a tulajdonság és a csoportosító változó közé egy $\sim$ vonalat kell írni. Ez kb. annak felel meg, hogy azt mondjuk \'\'a \texttt{tomeg}  értéke függ a \texttt{faj} értékétől\'\' -- ezt a jelölést még sokszor fogjuk használni!
+Ez az ábrázolás arra nagyon jó hogy több csoportot össze lehessen hasonlítani, ekkor a tulajdonság és a csoportosító változó közé egy $\sim$ vonalat kell írni. Ez kb. annak felel meg, hogy azt mondjuk \'\'a \texttt{tomeg}  értéke függ a \texttt{faj} értékétől\'\' -- ezt a jelölést még sokszor fogjuk használni!
 
 ```{r boxplpot3, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 boxplot(beka$tomeg ~ beka$faj, col = 2:4, las = 1, xlab = "", ylab = "Tömeg [g]")
@@ -1662,13 +1690,15 @@ Amit lehet látni, hogy a piros, és a kék viszonylag szimmetrikus, de a zöld 
 
 ### Barplot és hisztogram
 
+Gyakran összekeverik ezt a két típust.
+
 Az oszlopdiagrammal (`barplot()`-tal) az adpott értékek gyakoriságát lehet megjeleníteni. Éppen ezért az adatokat előtte táblázatba kell gyűjteni
 
 ```{r }
 barplot(table(beka$faj), las = 1, xlab = "", ylab = "Gyakoriság")
 ```
 
-A hisztogram (`hist()` függvény) osztlygyakoriságokat ábrézol: egy adott intervallumb eső esetek gyakorisága (lásd korábban)
+A hisztogram (`hist()` függvény) osztálygyakoriságokat ábrázol: egy adott intervallumba eső esetek gyakorisága (lásd korábban)
 
 ### Függvények rajzolása
 
