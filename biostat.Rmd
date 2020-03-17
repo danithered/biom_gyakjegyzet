@@ -1690,15 +1690,30 @@ Amit lehet látni, hogy a piros, és a kék viszonylag szimmetrikus, de a zöld 
 
 ### Barplot és hisztogram
 
-Gyakran összekeverik ezt a két típust.
+Gyakran összekeverik ezt a két típust. Amit érdemes megjegyezni, hogy a hisztogram (részletesen előző fejezetben bemutatva) esetén az oszlopok összeérnek, ezzel is jelzik, hogy felosztottak egy folytonos intervallumot darabokra és ezeknek a rövidebb intervallumoknak az összesített gyakoriságát ábrázolják. Ellenben az oszlopdiagrammoknál az oszlopok nem érnek össze, ezzel pedig azt mutatják, hogy ezek diszkrét kategóriák. Az oszlopdiagram értékei nem csak gyakoriságok lehetnek, hanem másfajta változók is. Legegyszerűbb a különbséget akkor megérteni, ha ábrázoljuk ugyanazt az adatot.
 
-Az oszlopdiagrammal (`barplot()`-tal) az adpott értékek gyakoriságát lehet megjeleníteni. Éppen ezért az adatokat előtte táblázatba kell gyűjteni
+```{r}
+par(mfrow=c(1,2))
+hist(vezik, main="Hisztogram")
+barplot(vezik, main="Barplot")
+par(mfrow=c(1,1))
+```
+
+Míg a hisztogram kiszámította a belerakott adatoknak az **eloszlását**, a barplot csak sorra egymás után ábrázolta őket.
+
+```{r fig.cap="Barplot példa"}
+barplot(c(CHF=322.45,EUR=340.17,USD=303.91,AUD=187.48,BGN=173.92,BRL=62.54,CAD=218.72,CNY=43.39), 
+        main="Arfolyamok", ylab="HUF")
+```
+
+Diszkrét adatok adatok gyakoriságát `barplot()`-tal érdemes megjeleníteni. Azzonban az adatokat előtte táblázatba kell gyűjteni, össze kell számolni a gyakoriságukat. Ezt a `table()` függvénnyel tudjuk megtenni.
 
 ```{r }
+table(beka$faj)
 barplot(table(beka$faj), las = 1, xlab = "", ylab = "Gyakoriság")
 ```
 
-A hisztogram (`hist()` függvény) osztálygyakoriságokat ábrázol: egy adott intervallumba eső esetek gyakorisága (lásd korábban)
+A hisztogram (`hist()` függvény) osztálygyakoriságokat ábrázol: egy adott intervallumba eső esetek gyakorisága (lásd korábban).
 
 ### Függvények rajzolása
 
@@ -1726,7 +1741,7 @@ pie(table(csoradat$Csorhossz_kat))
 
 A `plot()` és `par()` argimantumai közül most is legtöbb használható. Ami különleges: a `labels` argomentumban meghatározhatjuk a különböző kategóriákhoz írt címkéket, a `clockwise = TRUE`-val pedig megváltoztathatjuk a körcikkek irányát.
 
-# Mérőszámok
+# Mérőszámok (5. óra)
 
 ## Átlag
 
