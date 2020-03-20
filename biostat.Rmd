@@ -13,7 +13,8 @@ library(knitr)
 library(ggplot2)
 library(data.tree)
 library(plyr)
-library(DiagrammeR)
+#library(DiagrammeR)
+library(kableExtra)
 
 hook_output <- knit_hooks$get("output")
 knit_hooks$set(output = function(x, options) {
@@ -584,7 +585,7 @@ myvektor1 + 100
 
 Matematikai értelemben vett vektor- és mátrixműveletek is vannak az **R**-ben, ezekről azonban egy későbbi órán fogunk beszélni!
 
-: **Fontos** megjegyezni, hogy az **R**-ben a vektorok alapértelmezettként mindig oszlopvektorok jelentenek, mégha ha az **R** nem is úgy jeleníti meg őket!
+**Fontos** megjegyezni, hogy az **R**-ben a vektorok alapértelmezettként mindig oszlopvektorok jelentenek, mégha ha az **R** nem is úgy jeleníti meg őket!
 
 ### Az *eleme-e* operátor
 
@@ -1121,7 +1122,7 @@ kutyus[2:4, 1]
 kutyus[2:4, "nev"]
 ```
 
-Ha arra vagyunk kíváncsiak, hogy melyik kutya nőstény, akkor az logikai lekérdezéssel kaphatjuk meg:
+Ha arra vagyunk kíváncsiak, hogy melyik kutya nőstény, akkor azt logikai lekérdezéssel kaphatjuk meg:
 
 ```{r}
 kutyus$nem == "N"
@@ -1183,13 +1184,13 @@ Ha viszont a neve és a kora is érdekel:
 kutyus[kutyus$mintazat == 1 & kutyus$marmagassag > 30 , c("nev", "kor") ]
 ```
 
-Előfordulhat az is, hogy egy faktor elemei közül nem csak egyre vagyok kíváncsi, hanem egyszerre többre is. Például, ha nem csak ez 1-es mintázatú kutyák érdekelnek, hanem a hármasok is. Ezt egyrészt megcsinálhatjuk a *logikai vagy* operátorral (**|**)
+Előfordulhat az is, hogy egy faktor elemei közül nem csak egyre vagyunk kíváncsiak, hanem egyszerre többre is. Például, ha nem csak ez 1-es mintázatú kutyák érdekelnek, hanem a hármasok is. Ezt egyrészt megcsinálhatjuk a *logikai vagy* operátorral (**|**)
 
 ```{r}
 kutyus$mintazat == 1 | kutyus$mintazat == 3
 ```
 
-Ekkor felsoroljuk az eseteket amik érdekelnek és elválasztjuk őket a *logikai vagy* operátorral. Az eredmény az lett, hogy egyszerre látjuk azokat amiknek 1-es és 3-as mintázatuk van.  
+Ekkor felsoroljuk az eseteket amik érdekelnek és elválasztjuk őket a *logikai vagy* operátorral. Az eredmény az lett, hogy egyszerre látjuk azokat amiknek 1-es vagy 3-as mintázatuk van.  
 Sok kondíció esetén viszont belátható módon ez kényelmetlen megoldás, mert sok-sok kondíciót kell beírni és előbb-utóbb elveszünk a sok kódban. Ezért használhatjuk az *eleme-e* operátort (**%in%**)! Így az előző kóddal egyenértékű lesz ez:
 
 ```{r}
@@ -1255,7 +1256,7 @@ str(kutyus)
 A *kutyus* adatbázisban a *nev* és a *nem* szerepel faktorként. Ez jól is van, nem akarjuk ezeket számként kezelni. Esetleg elgondolkozhatunk azon, hogy a kutya neve szöveg is lehetne.  
 A *marmagassag* és a *kor* számként vannak tárolva, ami jó is, mivel valószínűleg számként fogunk vele számolni.  
 Az *ivartalanitott* oszlop logikai értékeket tartalmaz, ezt is lehet mint csoportmegadást használni például az ivartalanított kutyák vizsgálatból való kizárására. 
-A *mintazat* oszlop típusa *num*. Ez nem biztos, hogy jó, tudni kell mit jelölnek a számok. Ha mondjuk foltok számát a szemben, akkor valahogy talán lehet értelme mint számot kezelni, viszont ha a mérést végző személy csak sorszámokkal jelölte a különböző a különböző mintázatokat (pl. 1 = dalmata, 2 = foltos, stb.), akkor mint *factor* lehet csak kezelni!!  
+A *mintazat* oszlop típusa *num*. Ez nem biztos, hogy jó, tudni kell mit jelölnek a számok. Ha mondjuk foltok számát a szemben, akkor valahogy talán lehet értelme mint számot kezelni, viszont ha a mérést végző személy csak sorszámokkal jelölte a különböző mintázatokat (pl. 1 = dalmata, 2 = foltos, stb.), akkor mint *factor* lehet csak kezelni!!  
 
 Alakítsuk át az oszloptípusokat. Ezt az `as.factor()`, `as.numeric()`, `as.integer()`, `as.character()` és `as.logical()` függvények segítségével tudjuk megtenni. Először ki kell választanunk a megváltoztatandó oszlopot, majd felülírjuk ugyanennek az oszlopnak az előző függvényekkel átalakított másával.  
 Először is, alakítsuk át a *nev* oszlopot karakter típusúvá!
@@ -1272,7 +1273,7 @@ kutyus$mintazat <- as.factor(kutyus$mintazat)
 str(kutyus)
 ```
 
-Ha közben esetleg kiderülne, hogy a *mintazat*-ban a számok értéke jelentéssel bír, visszaalakíthajuk.
+Ha közben esetleg kiderülne, hogy a *mintazat*-ban a számok értéke jelentéssel bír, visszaalakíthatjuk.
 
 ```{r}
 kutyus$mintazat <- as.numeric(kutyus$mintazat)
@@ -1314,7 +1315,7 @@ sum(kutyus$kor) #masik pelda
 sum(kutyus$kor, na.rm = TRUE)
 ```
 
-Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából a hiánys rekordokat. Vigyázat, ez a függvény minden olyan sort töröl, amiben `NA` van! A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot `TRUE`, az egy vagy több hányzó adatot tartalamzó rekordot `FALSE` jelöli. Ha ezt tesszük meg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
+Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából a hiányos rekordokat. Vigyázat, ez a függvény minden olyan sort töröl, amiben `NA` van! A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot `TRUE`, az egy vagy több hányzó adatot tartalamzó rekordot `FALSE` jelöli. Ha ezt tesszük meg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
 
 ```{r}
 str(kutyus)
@@ -1338,6 +1339,14 @@ is.na( c(2,4,NA,0) )
 !is.na( c(2,4,NA,0) )
 ```
 
+Ugyan ez kutya koradatokkal:
+
+```{r}
+kutyus$kor
+is.na(kutyus$kor)
+!is.na(kutyus$kor)
+```
+
 Erre már csak szűrni kell.
 
 ```{r}
@@ -1355,7 +1364,7 @@ Az **R** alapcsomagjai elegendőek ahhoz, hogy a kurzus során szükséges ábr�
 
 ### A *plot()* függvény használata
 
-A `plot()` függvény egy általános adatábrázoló függvény. Viselkedése attól függ, hogy milyen adatokat adunk meg argomentumaként, de leggyakrabban pont- vagy vonaldiagram rajzolásához használjuk. Ha egyetlen számsort adunk meg változóként, akkor a számsor tagjait fogja sorban ábrázolni, *X* tengelyen, hogy hányadik a számsorban, *Y* tengelyen a szám számértékét. Ezt viszonyleg ritkán szeretnénk ábrázolni, a jegyzetben azért van bent, hogy tudjuk mi történt, ha ilyesmit látunk.
+A `plot()` függvény egy általános adatábrázoló függvény. Viselkedése attól függ, hogy milyen adatokat adunk meg argomentumaként, de leggyakrabban pont- vagy vonaldiagram rajzolásához használjuk. Ha egyetlen számsort adunk meg változóként, akkor a számsor tagjait fogja sorban ábrázolni, *X* tengelyen, hogy hányadik a számsorban, *Y* tengelyen a szám számértékét. Ezt viszonylag ritkán szeretnénk ábrázolni, a jegyzetben azért van bent, hogy tudjuk mi történt, ha ilyesmit látunk.
 
 ```{r}
 x <- c(1,2,3,2,1,1)
@@ -1370,6 +1379,12 @@ y <- sqrt(1:10)
 x
 y
 plot(x, y)
+```
+
+Ezzel egyenértékű, ha beírjuk a `y~x` kifejezést a függvény első argomentumaként, mely azt jelöli, hogy *y függvénye x-nek*. A hullámjelet *tilde*-nek is hívják.
+
+```{r eval=FALSE}
+plot(y ~ x)
 ```
 
 Ha beleírjuk az `x` és az `y` helyére a számokat, akkor is ezt fogjuk kapni, csak a tengelyfeliratok változnak meg.
@@ -1427,7 +1442,7 @@ plot(x, y, type="o")
 plot(x, y, type="h")
 ```
 
-Ha szeretnénk egyéb pontokat is hozzáadni a már létező ábránkhoz, akkor a `points()` függvényt használhatjuk, ami ugyanúgy működik, mint a `plot()` függvényhez hasonlóan működik, azzal a kivétellel, hogy egy már előzőleg létező ábrára rajzol.
+Ha szeretnénk egyéb pontokat is hozzáadni a már létező ábránkhoz, akkor a `points()` függvényt használhatjuk, ami a `plot()` függvényhez hasonlóan működik, azzal a kivétellel, hogy egy már előzőleg létező ábrára rajzol.
 
 ```{r, myfirstplot_points, fig.cap="Pontdiagram hozzáadott pontokkal"}
 z <- (1:10)^(1/3)
@@ -1454,7 +1469,7 @@ plot(x, y
      )
 ```
 
-A tengelyek logaritmikus ábrázolása akkor hasznos, ha valamiről úgy gondoljuk, hogy nagyságrendű megváltozása a fontos. Tehát nem az additív távolságok a lényegesek (pl. $x_1$ 2-vel nagyobb, mint $x_2$), hanem a multiplikatív különbségek (pl. $x_1$ 100-szor nagyobb, mint $x_2$). Mindig mérlegeljük, hogy van-e biológiai relevanciája a tengelyek logaritmizálásának! A logaritmizálást a `log` argomentummal tudjuk beállítani: étéke `"xy"`, ha mindkét tengelyt, `"x"`, ha az x és `"y"`, ha az y tengelyt logaritmizáljuk. (Régi **R** verziókban a tengelyeket logaritmizálni sorra a `xlog=TRUE` és `ylog=TRUE` argomentumokkal lehetett.)
+A tengelyek logaritmikus ábrázolása akkor hasznos, ha valamiről úgy gondoljuk, hogy nagyságrendű megváltozása a fontos. Tehát nem az additív távolságok a lényegesek (pl. $x_1$ 2-vel nagyobb, mint $x_2$), hanem a multiplikatív különbségek (pl. $x_1$ 100-szor nagyobb, mint $x_2$). Mindig mérlegeljük, hogy van-e biológiai relevanciája a tengelyek logaritmizálásának! A logaritmizálást a `log` argomentummal tudjuk beállítani: értéke `"xy"`, ha mindkét tengelyt, `"x"`, ha az x és `"y"`, ha az y tengelyt logaritmizáljuk. (Régi **R** verziókban a tengelyeket logaritmizálni sorra a `xlog=TRUE` és `ylog=TRUE` argomentumokkal lehetett.)
 
 ```{r myfirstplot_log, fig.cap="Pontdiagram logaritmizált x és y tengelyekkel"}
 plot(x, y, log="xy")
@@ -1470,7 +1485,7 @@ A paraméterek alapértelmezett beállításait úgy tudjuk elérni, hogy vagy l
 par("col")
 ```
 
-Átállítani úgy tudjuk, hogy argomentumnak írjuk be a paramétert a `par()` függvénybe és értéket adunk neki. Ha át akajuk állítani például az ábrázolás színét pirosra, akkor:
+Átállítani úgy tudjuk, hogy argomentumnak írjuk be a paramétert a `par()` függvénybe és értéket adunk neki. Ha át akarjuk állítani például az ábrázolás színét pirosra, akkor:
 
 ```{r myfirstplot_par, fig.cap="Pontdiagram ha az alapértelmezett szín a vörös"}
 par(col="red")
@@ -1675,7 +1690,7 @@ par(mfrow=c(1,1))
 
 Láthatók a kiugró adatok (körök), és látható az eloszlás ferdesége (medián helyzete alapján), elnyúltsága a \'\'szálkák\'\' alapján). Ez itt most eléggé szimmetrikus és nincs nagy elnyúlása
 
-Lehet csinosítgatni a `par()` függvényben található argumentumok megadásával/beéllításával
+Lehet csinosítgatni a `par()` függvényben található argumentumok megadásával / beállításával
 
 ```{r boxplpot2, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 boxplot(beka$thossz, col = "red", las = 1)
@@ -1700,14 +1715,14 @@ barplot(vezik, main="Barplot")
 par(mfrow=c(1,1))
 ```
 
-Míg a hisztogram kiszámította a belerakott adatoknak az **eloszlását**, a barplot csak sorra egymás után ábrázolta őket.
+Míg a hisztogram kiszámította a belerakott adatoknak az **eloszlását**, a barplot csak sorra egymás után ábrázolta őket. Egy példa barplot helyes használatára:
 
 ```{r fig.cap="Barplot példa"}
 barplot(c(CHF=322.45,EUR=340.17,USD=303.91,AUD=187.48,BGN=173.92,BRL=62.54,CAD=218.72,CNY=43.39), 
         main="Arfolyamok", ylab="HUF")
 ```
 
-Diszkrét adatok adatok gyakoriságát `barplot()`-tal érdemes megjeleníteni. Azzonban az adatokat előtte táblázatba kell gyűjteni, össze kell számolni a gyakoriságukat. Ezt a `table()` függvénnyel tudjuk megtenni.
+Diszkrét adatok adatok gyakoriságát `barplot()`-tal érdemes megjeleníteni. Azonban az adatokat előtte táblázatba kell gyűjteni, össze kell számolni a gyakoriságukat. Ezt a `table()` függvénnyel tudjuk megtenni.
 
 ```{r }
 table(beka$faj)
@@ -1740,7 +1755,7 @@ Ezeket a számokat már ábrázolhatjuk.
 pie(table(csoradat$Csorhossz_kat))
 ```
 
-A `plot()` és `par()` argimantumai közül most is legtöbb használható. Ami különleges: a `labels` argomentumban meghatározhatjuk a különböző kategóriákhoz írt címkéket, a `clockwise = TRUE`-val pedig megváltoztathatjuk a körcikkek irányát.
+A `plot()` és `par()` argomentumai közül most is legtöbb használható. Ami különleges: a `labels` argomentumban meghatározhatjuk a különböző kategóriákhoz írt címkéket, a `clockwise = TRUE`-val pedig megváltoztathatjuk a körcikkek irányát.
 
 ## Ábrázolás példák
 
@@ -1944,6 +1959,8 @@ Ha gyakoriságadataink is vannak (diszkrét kategóriák - pl. utódok száma):
 
 $$ \bar x = \sum_{i=1}^n {x_i*p_i} $$
 
+, ahol $p_i$ az $i$-edik kategória gyakorisága.
+
 ```{r atlag, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 #adatok beolvasasa
 beka <- read.table("beka.csv", sep=",", header=TRUE, dec=".")
@@ -2090,9 +2107,9 @@ sd(asztal$minta1.cm)
 
 ## A konfidencia intervallum számítás logikája
 
-  1) El kell döntenünk, **milyen eloszlás**t használunk. Ehhez azt kell tudnunk, hogy ismerjük-e a **populáció szórását**. Figyelem: a minta szórását nem elég tudnunk, mert nem arra vagyunk kíváncsiak, hanem a populáció szórására. Ha tehát van egy szórás értékünk, amit egy mintából számoltunk ki, attól még nem fogjuk tudni a populáció szórását! A populáció szórását nagyon kevés helyzetben tudjuk. Ilyen esetek, ha kivettük az összes lehetséges elemet (mintát) így megismertük a populáció valós paramétereit (az ilyen esetek beláthatóan extrém ritkák), vagy ha egy előzetes tanulmány már megbízhatóan megbecsülte azt (irodalmi adatok).
-    a) Ha **ismerjük a szórást**, akkor **normális eloszlás** segítségével kiszámíthatjuk a konfidencia intervallumot. Ekkor, **nem kell szórást becsülni**, mivel azt már ismerjük.
-    b) Ha **nem ismerjük a szórást**, akkor egy olyan eloszlást kell választanunk, amivel megbízhatóan tudjuk közelíteni a normális eloszlást, de nem kell hozzá tudnunk a pouláció szórását. Ez a **t-eloszlás**. Mivel nem ismerjük, ezért a **populáció szórását becsülni kell** $\chi^2$ eloszlással.
+  1. El kell döntenünk, **milyen eloszlás**t használunk. Ehhez azt kell tudnunk, hogy ismerjük-e a **populáció szórását**. Figyelem: a minta szórását nem elég tudnunk, mert nem arra vagyunk kíváncsiak, hanem a populáció szórására. Ha tehát van egy szórás értékünk, amit egy mintából számoltunk ki, attól még nem fogjuk tudni a populáció szórását! A populáció szórását nagyon kevés helyzetben tudjuk. Ilyen esetek, ha kivettük az összes lehetséges elemet (mintát) így megismertük a populáció valós paramétereit (az ilyen esetek beláthatóan extrém ritkák), vagy ha egy előzetes tanulmány már megbízhatóan megbecsülte azt (irodalmi adatok).    
+    _**A.**_ Ha **ismerjük a szórást**, akkor **normális eloszlás** segítségével kiszámíthatjuk a konfidencia intervallumot. Ekkor **nem kell szórást becsülni**, mivel azt már ismerjük.  
+    _**B.**_ Ha **nem ismerjük a szórást**, akkor egy olyan eloszlást kell választanunk, amivel megbízhatóan tudjuk közelíteni a normális eloszlást, de nem kell hozzá tudnunk a populáció szórását. Ez a **t-eloszlás**. Mivel nem ismerjük, ezért a **populáció szórását becsülni kell** $\chi^2$ eloszlással.
     
 ```{r tnorm, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE, fig.cap="A standard normál eloszlás jól közelíthető t-eloszlással. Minél nagyobb a t-eloszlás szabadságfokainak száma, annál jobban közelíti a st. normál eloszlást."}
 curve(dnorm(x, mean = 0,sd = 1)
@@ -2100,7 +2117,7 @@ curve(dnorm(x, mean = 0,sd = 1)
       , col = "red"
       , las = 1
       , lty = 1, lwd = 2
-      , ylab = "Sűrűség"
+      , ylab = "Suruség"
       )
 curve(dt(x, df = 3)
       , from =-4, to = 4
@@ -2123,7 +2140,7 @@ legend("topleft"
        )
 ```
     
-  2) Kijelöljük a **konfidencia intervallum határai**t. 
+  2. Kijelöljük a **konfidencia intervallum határai**t. 
 
 ```{r echo=FALSE}
 alp = 0.3
@@ -2150,12 +2167,20 @@ ggplot(data.frame(x = c(-3, 3)), aes(x)) +
 
 ```
 
-Ez nem bonyolultabb, mint amikor annak a tartománynak a határoló értékeit kerestük, ami az átlag körüli x \%-ot tartalmazza és szimmetrikus az átlagra. Akkor a \texttt{q..()} függvényeket használtuk az intervallum határainak kiszámításához. Hogy milyen valószínűségnél kell kiszámítani? Ehhez csak azt tudjuk tanácsolni, hogy rajzoljátok le az eloszlást és a kérdéses tartományt. Az $\alpha$ megadja annak a valószínűségét, hogy egy véletlen szám nem esik bele a konfidencia intervallumba. Mivel a *normális* és a *t* eloszlás szimmetrikus, a konfidencia intervallum az átlagra szimmetrikusan fog elhelyezkedni, vagyis azt az átlaghoz közeli tartományt keressük, aminek határozott integrálja (a görbe alatti terület / valószínűség) egyenlő $1-\alpha$ -val. Értelemszerűen a konfidencia intervallum előtti és utáni görbe alatti területek nagysága egyaránt $\alpha/2$ és $\alpha/2$ nagyságú. Mivel a teljes görbe alatti terület nagysága 1, ezért $1=(1-\alpha)+(\alpha/2)+(\alpha/2)$. Tehát, a konfidencia intervallumok határai: $\alpha/2$ és $1-\alpha/2$
-  3) **Kiszámoljuk** az átlagok konfidencia intervallumának határait az 1. pontban kiválasztott eloszlások és a 2. pontban meghatározott határok alapján. Ebben a további fejezetek nyújtanak segítséget.
-  4) Kiszámoljuk a **variancia konfidencia intervallumát** $\chi^2$ eloszlás segítségével, **ha szükséges** (vagyis ha nem ismert a populáció szórása). Részletesebben a *A variancia konfidencia intervallumának kiszámítása* fejezetben.
+Ez nem bonyolultabb, mint amikor annak a tartománynak a határoló értékeit kerestük, ami az átlag körüli x \%-ot tartalmazza és szimmetrikus az átlagra. Akkor a \texttt{q..()} függvényeket használtuk az intervallum határainak kiszámításához. Hogy milyen valószínűségnél kell kiszámítani? Ehhez csak azt tudjuk tanácsolni, hogy rajzoljátok le az eloszlást és a kérdéses tartományt. Az $\alpha$ megadja annak a valószínűségét, hogy egy véletlen szám nem esik bele a konfidencia intervallumba. Mivel a *normális* és a *t* eloszlás szimmetrikus, a konfidencia intervallum az átlagra szimmetrikusan fog elhelyezkedni, vagyis azt az átlaghoz közeli tartományt keressük, aminek határozott integrálja (a görbe alatti terület / valószínűség) egyenlő $1-\alpha$ -val. Értelemszerűen a konfidencia intervallum előtti és utáni görbe alatti területek nagysága egyaránt $\alpha/2$ és $\alpha/2$ nagyságú. Mivel a teljes görbe alatti terület nagysága 1, ezért $1=(1-\alpha)+(\alpha/2)+(\alpha/2)$. Tehát, a konfidencia intervallumok határai: $\alpha/2$ és $1-\alpha/2$  
+
+  3. **Kiszámoljuk** az átlagok konfidencia intervallumának határait az 1. pontban kiválasztott eloszlások és a 2. pontban meghatározott határok alapján. Ebben a további fejezetek nyújtanak segítséget.
+  4. Kiszámoljuk a **variancia konfidencia intervallumát** $\chi^2$ eloszlás segítségével, **ha szükséges** (vagyis ha nem ismert a populáció szórása). Részletesebben a *A variancia konfidencia intervallumának kiszámítása* fejezetben.
   
 ```{r chi, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
-curve(dchisq(x, df = 3), from =0, to = 15, col = "red", las = 1, lty = 1, lwd = 2, ylab = "Sűrűség", main = "Khi^2 eloszlás (df=3)")
+curve(dchisq(x, df = 3)
+      , from =0, to = 15
+      , col = "red"
+      , las = 1
+      , lty = 1, lwd = 2
+      , ylab = "Suruség"
+      , main = "Khi^2 eloszlás (df=3)"
+      )
 
 ```
 
@@ -2196,8 +2221,8 @@ atlag = mean(minta)
 
 qnorm( c(alpha/2, 1-alpha/2), mean=atlag, sd=sigma/sqrt(n)) # mindket ertek
 
-atlag - qnorm(alpha/2)*sigma/sqrt(n) # also ertek
-atlag + qnorm(alpha/2)*sigma/sqrt(n) # felso ertek
+atlag - qnorm(alpha/2)*sigma/sqrt(n) # felso ertek
+atlag + qnorm(alpha/2)*sigma/sqrt(n) # also ertek
 ```
 
 ## Az átlag konfidencia intervallumának kiszámítása a populáció szórásának ismerete nélkül
@@ -2218,8 +2243,8 @@ n = length(minta)
 atlag = mean(minta)
 szoras = sd(minta) # becsuljuk a szorast, mert nem ismert
 
-atlag + qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # felso
-atlag - qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # also
+atlag + qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # also
+atlag - qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # felso
 ```
 
 ## A variancia konfidencia intervallumának kiszámítása
@@ -2423,3 +2448,81 @@ mean(voros_minisample) + tkrit1*(s/sqrt(n))
 mean(voros_minisample) + tkrit2*(s/sqrt(n))
 ```
 
+# Hipotézis vizsgálatok (6. óra)
+
+Biológiai kísérleteket azért csinálunk / adatokat azért gyűjtünk, hogy segítségükkel megértsük a minket körülvevő világ működését. Eközben a kutatók felvetnek ötleteket, hogy szerintük mi - miért úgy működik ahogy. Ezek a felvetések a hipotézisek. Az adatok azért kellenek, hogy segítsenek ezeket a hipotéziseket elvetni / igazolni. Így a statisztika szerves része a kutatásoknak, azoktól el nem különíthető. A kutatások logikai felépítése:
+
+  1) Kérdés felvetése
+  2) Irodalmi adatok áttekintése
+  3) Hipotézisek felvetése
+  4) Kísérlet / adatvétel tervezése
+  5) Kísérlet / adatfelvétel elvégzése
+  6) Statszitikai elemzés
+  7) Döntés. Innentől két útvonal lehetséges:
+    a) Ha nem volt helyes az elképzelés $\rightarrow$ új hipotézis felállítása (3-as pont)
+    b) Ha helyesnek tűnik az elképzelés $\rightarrow$ predikció felállítása (8-as pont)
+  8) Predikció felállítása és tesztelése
+  9) Publikáció (ha predikció helyes volt)
+  
+A statisztikai feladatok a fenti sémában már a 4-es pontnál előjönnek: meg kell tervezni milyen adatokat és hogy kell venni, hogy megfelelő statisztikai elemzéssel tudjuk igazolni / elvetni a hipotéziseinket. Már ekkor el kell dönteni, hogy milyen statisztikai módszereket alkalmazunk!  
+
+Tehát hipotézisvvizsgálatoknak nevezzük azokat a statisztikai módszereket, amikkel egy általunk felállított hipotézist tudunk egy adott bizonyossággal elvetni, vagy megtartani. A statisztikai hipotézisek olyan hipotézisek amiket a statisztikai módszerekkel elemzünk. Leggyakrabban ezek nem egyeznek szó szerint a biológiai hipotéziseinkkel. A biológiai hipotézisek ugyanis legtöbbször egyfajta egyenlőtlenséget feltételeznek. Például feltételezzük azt, hogy különböző műtrágyák hatására máshogy nőnek a növényeink. Ebben az egyenlőtlenség az, hogy feltétlelzzük, hogy a különbözően kezelt növények nem egyformán viselkednek. Azonban a statisztikai próbák leggyakrabban egyezőséget tesztelnek. Például, két növényi csoport magasságának egyezőségét képesek adott szignifikancia mellett tesztelni. Így egy statisztikai nullhipotézis (**H0**) lehet az, hogy $A \equiv B$, amennyiben $A$ és $B$ két különböző műtrágyával kezelt növényi csoport magasságai. Mivel mi pont ennek az ellenkezőjére vagyunk kíváncsiak, nekünk az alternatív hipotézis (**HA**) lesz a biológiai kérdésünk. Ebben az esetben az alternatív hipotézis: $A \ne B$, amit akkor fogadhatunk el, ha a nullhipotézist elvetettük.  
+
+A hipotézisvizsgálatoknak megvan a sajátos logikája, mindig egy bizonyos séma mentén kell végigmenni:
+
+  1) **Próba kiválasztása** a kérdésünknek, hipotézünknek és lehetséges adatainknak megfelelően
+  2) A megfelelő **H0 és HA** hipotézisek felállítása
+  3) A szignifikanciaszint meghatározása (ezt követheti az adatgyűjtés)
+  4) **Előfeltételek** tesztelése
+  5) **Előszámítások** elvégzése
+  6) A kiválasztott próbához tartozó **próbastatisztika** kiszámolása
+  7) **Döntés**: H0 elvetése / megtartása
+  8) **Értelmezés**
+
+Az előbbi gondolati sémát a gyakorlat során szigorúan számonkérjük!
+
+# Hasznos táblázatok
+
+## *z*-eloszlás
+
+```{r}
+big <- round(seq(-3.9, 3.9, 0.1), 1)
+small <- seq(0, 0.09, 0.01)
+  
+m <- outer(big, small, function(x, y) round(pnorm( ifelse(x<0, -1*(abs(x)+y), x+y )), digits=4))
+dimnames(m) <- list( big, small)
+kable(m) %>%
+  kable_styling(bootstrap_options = "striped") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  row_spec(0, bold = T, hline_after = T) 
+```
+
+## *t*-eloszlás
+
+```{r}
+alp <- c(0.40, 0.25, 0.10, 0.05, 0.025, 0.01, 0.005, 0.0025, 0.001, 0.0005)
+df <- c(1:30, 40, 60, 120, Inf)
+
+m <- t(outer(alp, df, function(x, y) round(qt(x, y, lower.tail = FALSE), digits=4)))
+dimnames(m) <- list(df=df,alpha=alp)
+kable(m) %>%
+  kable_styling(bootstrap_options = "striped") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  row_spec(0, bold = T, hline_after = T) %>%
+  add_header_above( c( "df", "alpha" = 10) )
+```
+
+## $\chi^2$-eloszlás
+
+```{r}
+alp <- c(0.005, 0.01, 0.025, 0.05, 0.1, 0.9, 0.95, 0.975, 0.99, 0.995)
+df <- 1:80
+
+m <- t(outer(alp, df, function(x, y) round(qchisq(x, y), digits=4)))
+dimnames(m) <- list(df=df,alpha=alp)
+kable(m, row.names = T) %>%
+  kable_styling(bootstrap_options = "striped") %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  row_spec(0, bold = T, hline_after = T) %>%
+  add_header_above( c( "df", "alpha" = 10 ) )
+```
