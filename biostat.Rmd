@@ -47,9 +47,9 @@ Amivel foglalkozni tudunk, az két, az előadáson és gyakorlat során is gyakr
 ## A *szumma* operátor
 
 Ha egy hosszabb számsorozat (pl. egy vektor) tagjainak az összegét akarjuk kiszámolni, felírhatjuk a megfelelő egyenletet a számsorozat tagjainak felsorolásával is, mint:
-$$ x_1 + x_2 + x_3 + ... +x_n $$, a
-ahol egy sorozat tagjait összeadjuk az első tagtól az *n*-edikig. A alsó indexbe tett számok a számsoroozat tagjait jelölik (*index*). A *szumma* ($\sum$) operátor azonban, erre egy sokkal egyszerűbb és kényelmesebb megoldást nyújt. A *szumma* operátor után következő kifejezés megadja az összeadandó produktum tagjait, míg az operátor alatt és felett sorra megadhatjuk egy új (az *index*) változó segítségével, hogy a számsorozat mely tagjait kívánjuk összeadni. Például az előző kifejezés a *szumma* operátor segítségével leírva így nézne ki:
-$$ \sum_{i=1}^{n}{x_i} = x_1 + x_2 + x_3 + \dots +x_n $$
+$$ x_1 + x_2 + x_3 + ... +x_n, $$
+ahol egy sorozat tagjait összeadjuk az első tagtól az *n*-edikig. A alsó indexbe tett számok a számsorozat tagjait jelölik (*index*). A *szumma* ($\sum$) operátor azonban, erre egy sokkal egyszerűbb és kényelmesebb megoldást nyújt. A *szumma* operátor után következő kifejezés megadja az összeadandó produktum tagjait, míg az operátor alatt és felett sorra megadhatjuk egy új (az *index*) változó segítségével, hogy a számsorozat mely tagjait kívánjuk összeadni. Például az előző kifejezés a *szumma* operátor segítségével leírva így nézne ki:
+$$ \sum_{i=1}^{n}{x_i} = x_1 + x_2 + x_3 + \dots +x_n  $$
 Itt az $x_i$ jelöli a számsorozat tagjait, az $i$ pedig az *index* változó, amit a *szumma* jel alatt és felett definiáltunk. A *szumma* jel alatt szoktuk definiálni az új változó kezdeti értékét, felette pedig az utolsó értékét. Itt például az $i$ 1-től $n$-ig fut: 1, 2, 3, ..., $n$. Tegyük fel, hogy $x$ egy vektor:
 
 \begin{equation}
@@ -90,14 +90,15 @@ Ha az $i$ index helyébe először behelyettesítünk 1-et, akkor $10^1+1$-et ka
 Az előbbi egyenletet át is alakíthatjuk:
 
 $$ \sum_{j=1}^{3}{(10^i+1)} = \sum_{j=1}^{3}{10^i} + \sum_{j=1}^{3}{1}=\sum_{j=1}^{3}{10^i} + 3 = \\ = 10+100+1000+3=1113 $$
-Az összegből először kiemeljük az $i$-t tartalmazó tagokat, így kapjuk a két *szummás* tagot, melyből a második egy konstans szám (1) háromszori összeadása követkzik (amit elég könnyen kiszámíthatunk). Ugyanennél az egyenletnél ez felesleges rendezgetésnek tűnhet, de később még hasznos lesz a gyakorlat során.  
-Egy másik átrendezős példa:
+Az összegből először kiemeljük az $i$-t tartalmazó tagokat, így kapjuk a két *szummás* tagot, melyből a második egy konstans szám (1) háromszori összeadása követkzik (amit elég könnyen kiszámíthatunk). Ennél az egyenletnél ez ugyan felesleges rendezgetésnek tűnhet, de később még hasznos lesz a gyakorlat során.  
+Egy másik példa az átrendezésre:
 
 $$\sum_{i=2}^{4}{i/3} = 2/3+3/3+4/3= 0.667 + 1.000 + 1.333 = 3$$
-A gyakorlottabbak a bonyolult tizedes törtekkel való dolgozás helyett így is megoldható:
+A gyakorlottabbak a bonyolult tizedes törtekkel való dolgozás helyett így is megoldhatják:
 
-$$\sum_{i=2}^{4}{i/3} = 2/3+3/3+4/3 = \frac{1}{3}(2+3+4)= {2+3+4 \over 3} = {9 \over 3} =3 $$,
-egy számítógép azonban  nem fog nekiállni átrendezni az egyenleteinket, hanem egyesével kiszámolja a tagokat és összeadja, így kettővel több osztási műveletet végezne el, mint ami feltétlenül szükséges. Így érdemes formailag is átrendezni az egyenletet:
+$$\sum_{i=2}^{4}{i/3} = 2/3+3/3+4/3 = \frac{1}{3}(2+3+4)= {2+3+4 \over 3} = {9 \over 3} =3 $$
+
+Egy számítógép azonban  nem fog nekiállni átrendezni az egyenleteinket, hanem egyesével kiszámolja a tagokat és összeadja, így kettővel több osztási műveletet végezne el, mint ami feltétlenül szükséges. Így érdemes formailag is átrendezni az egyenletet:
 
 $$\sum_{i=2}^{4}{i/3} = \sum_{i=2}^{4}{1 \over 3}{i} ={1 \over 3} \sum_{i=2}^{4}{i}  ={\sum_{i=2}^{4}{i} \over 3} = {2+3+4 \over 3} =3 $$
 
@@ -112,11 +113,11 @@ Ilyen esetekben először vesszük a külső *szumma* első értékét (ami itt 
 
 A *produktum* operátor ($\prod{}$) hasonlít a *szumma* operátorhoz azzal a kivétellel, hogy a tagokat nem összeadni kell, hanem összeszorozni. Így:
 
-$$ \prod_{i=1}^{10}{i} = 1*2*3* \dots *10= 3628800$$
+$$ \prod_{i=1}^{10}{i} = 1 \cdot 2 \cdot 3 \cdot ... \cdot 10= 3628800$$
 
 Eggyel bonyolultabb művelet:
 
-$$ \prod_{i=-1}^{2}{2^i}=(2^{-1})*(2^0)*(2^1)*(2^2)=0.5*1*2*4=4$$
+$$ \prod_{i=-1}^{2}{2^i}=(2^{-1}) \cdot (2^0) \cdot (2^1) \cdot (2^2)=0.5 \cdot 1 \cdot 2 \cdot 4=4$$
 
 # Szükséges **R** alapok (1. óra)
 
@@ -150,7 +151,7 @@ Az **RStudio**-ban alapvetően két helyre írhatunk parancsokat: a megnyitott s
 
 ![Az RStudio kezelőfelülete 4 panellel. Parancsokat lefuttatni lehet a script fájlban (felső nyíl) és a Console-ban (alsó nyíl). A script fájlt a bal felső sarokban lévő ikon segítségével lehet menteni (bekarikázva), míg ettől jobbra lehet soronként és egészében lefuttatni a fájlt. Jobb alsó sarokban van a Help fül, ahol függvények leírására lehet keresni (lila keret). \label{rst2}](./pics/rst2_2.png)
 
-Ha meg van nyitva egy script fájl, akkor az **RStudio** felülete négy panelből áll (Fig \ref{rst2}). A bal felső panelban találjuk a megnyitott script fájlokat. Ezek egyszerű szövegfájlok, amikbe írhatjuk, szerkeszthetjük az **R** parancsokat. A script fájlokban található parancsok egyszerre történő lefuttatásához a panel jobb felső sarokában lévő *"Source"* gombot kell megnyomni, vagy a *"CTRL + SHIFT + ENTER"* billentyűkombinációt.
+Ha meg van nyitva egy script fájl, akkor az **RStudio** felülete négy panelből áll (Fig. \ref{rst2}). A bal felső panelban találjuk a megnyitott script fájlokat. Ezek egyszerű szövegfájlok, amikbe írhatjuk, szerkeszthetjük az **R** parancsokat. A script fájlokban található parancsok egyszerre történő lefuttatásához a panel jobb felső sarokában lévő *"Source"* gombot kell megnyomni, vagy a *"CTRL + SHIFT + ENTER"* billentyűkombinációt.
 
 Az **R** egy interpreter nyelv, tehát a parancsokat egyesével is futtathatjuk, nem csak egyszerre az összeset (Iterpreter programozó nyelv: sorrol sorra haladva értékeli ki, és az eredményt azonnal kiszámolja, megjeleníti.). Egy parancs külön lefuttatásához a panel jobb felső sarkában lévő *"Run"* gombot, vagy a *"CTRL + ENTER"* billentyűkombinációt kell leütni. Ez egyszerre csak egy sort fog kiértékelni/lefuttatni, ezt fogjuk  a gyakorlatok során a legtöbbször alkalmazni. Ha több parancsot szeretnénk egyszerre lefuttatni, de nem az egész script fájl tartalmát, akkor jelöljük ki azt a lefuttatni szándékozott parancsokat tartalmazó szövegrészt, majd nyomjuk le a *"Run"* gombot.
 
@@ -170,7 +171,7 @@ A jobb alsó sarokban további fontos panelek találhatók. A *Files* fülön eg
 
 ### Változótípusok
 
-Az **R**-t legegyszerűbben úgy képzelhetjük el, mint egy túlbonyolított számológépet. Amit minden számológépnek tudnia kell, azok a számokkal történő egyszerű és bonyolult műveletek. Írjuk bea script fájlba egy egész számot és futtaslu mint egy parancs tartalmaz:
+Az **R**-t legegyszerűbben úgy képzelhetjük el, mint egy túlbonyolított számológépet. Amit minden számológépnek tudnia kell, azok a számokkal történő egyszerű és bonyolult műveletek. Írjunk be a script fájlba egy egész számot és futtasu mint egy parancs:
 
 ```{r}
 -13
@@ -182,9 +183,9 @@ Az **R** értelmezte a beírt sort és mivel csak egy számot tartalmazott, viss
 0.0069
 ```
 
-A számokat megadhatjuk normálalak formájában is. A normálalak matematikai definíció szerint (ettől el lehet térni) egy szorzat mely egy 0 és 10 közötti tényezőből és egy 10 hatványaként megadott tényezőből áll.
+A számokat megadhatjuk normálalak formájában is. A normálalak matematikai definíció szerint (ettől el lehet térni) egy szorzat mely egy 0 és 10 közötti tényezőből, és egy 10 hatványaként megadott tényezőből áll.
 
-$$ 0.006 = 6*10^{-3} = 6e-3 $$
+$$ 0.006 = 6 \cdot  10^{-3} = 6e-3 $$
 Ebben az esetben a $6$ a 0 és 10 közti tényező, míg a $10^{-3}$ a hatványtényező. Ezt az alakot rövidíthetjük úgy is, hogy az első tényező után egy $e$ karaktert rakunk majd utána a 10 hatványkitevőjét. Az **R** ezt a formátumot is felismeri:
 
 ```{r}
@@ -207,7 +208,7 @@ Használhatunk még szöveget is. Szöveg vagy karakter használatakor mindig id
 "szoveg"
 ```
 
-Az utolsó típus amivel találkozni fogunk a logikai érték. Logikai érték kétféle lehet: **igaz (igen)** vagy **hamis (nem)**. Az **R**-ben az igazt **TRUE**-val vagy egyszerű **T**-vel jelöljük, míg a hamist **FALSE**-al, vagy **F**-el (mindig nagybetű!) \emph{Megjegyzés}. Az egybetűs kódok nagyon zavaróak lehetnek, ha hasonló egybetűs változókat definiálunk. 
+Az utolsó típus amivel találkozni fogunk a logikai érték. Logikai érték kétféle lehet: **igaz (igen)** vagy **hamis (nem)**. Az **R**-ben az igazat **TRUE**-val vagy egyszerű **T**-vel jelöljük, míg a hamist **FALSE**-al, vagy **F**-el (mindig nagybetű!) \emph{Megjegyzés}. Az egybetűs kódok nagyon zavaróak lehetnek, ha hasonló egybetűs változókat definiálunk. 
 
 ```{r}
 TRUE
@@ -301,7 +302,7 @@ Vagy alkalmazható egyéb műveletekre is:
 
 Itt ugye az öt még mindig kisebb a háromnál, tehát a *5 < 3* kifejezés eredménye még mindig *FALSE*, de erre alkamlazva lett egy *!* operátor, így kaptuk a *TRUE*-t.
 
-Ha több logikai értékünk van, használhatjuk a *vagy* (**R**-ben jelölése: **|**), illetve az és (**R**-ben jelölése: **&**) operátorokat.
+Ha több logikai értékünk van, használhatjuk a *vagy* (**R**-ben jelölése: **|**), illetve az *és* (**R**-ben jelölése: **&**) operátorokat.
 
 \begin{center}
 \begin{tabular}{ |c||c|c|}
@@ -349,7 +350,7 @@ Mindezt azért tehetjük meg, merta  *TRUE* értéknek az *1*, a *FALSE* érték
 TRUE * FALSE + TRUE
 ```
 
-Van az **R**-ben egy érdekes érték is: az **NA**. Ez azt jelöli, hogy nem áll rendelkezésünkre az adott adat. Ez fontos lesz bizonyos statisztikai számításoknál, amikor szeretnénk jelölni, hogy van valami, aminek ez értékét nem tudjuk, mert megsemmisült az adott mérés vagy valami más ok miatt. Az **NA**-val végzett műveletek eredménye többnyire **NA** lesz.
+Van az **R**-ben egy érdekes érték is: az **NA**. Ez azt jelöli, hogy nem áll rendelkezésünkre az adott adat. Ez fontos lesz bizonyos statisztikai számításoknál, amikor szeretnénk jelölni, hogy van valami, aminek ez értékét nem tudjuk, mert megsemmisült az adott mérés, vagy valami más ok miatt. Az **NA**-val végzett műveletek eredménye többnyire **NA** lesz.
 
 ```{r}
 NA + 3
@@ -357,7 +358,7 @@ NA + 3
 
 ### Változók
 
-A matematikában nem csak számokat használunk értékek jelzésére, hanem néha karaktereket is, amiket változóknak hívnunk. Az **R**-ben is van lehetőség értékeket elmenteni változókba. A változókat változónevekkel jelöljük és a nevekhez az értékeket a **<-** (*nyíl operátor*) vagy az **=** jellel adjuk hozzá. Hivatolosan **R** kódokban a változók definiálásakor a **<-**jelet használják. Mentsünk el egy számot az **R**-ben egy változóba!
+A matematikában nem csak számokat használunk értékek jelzésére, hanem néha karaktereket is, amiket változóknak hívunk. Az **R**-ben is van lehetőség értékeket elmenteni változókba. A változókat változónevekkel jelöljük és a nevekhez az értékeket a **<-** (*nyíl operátor*ral), vagy az **=** jellel adjuk hozzá. Hivatolosan **R** kódokban a változók definiálásakor a **<-** jelet használják. Mentsünk el egy számot az **R**-ben egy változóba!
 
 ```{r}
 a <- 54.2
@@ -386,7 +387,7 @@ Most a változót egyszerre felhasználtuk mint az összeadás egyik tagja, utá
 
 Miért hasznos eltárolni az értékeket egy változóban? Egyrészt ezután nem kell visszakeresgélni, hogy mennyi volt egy művelet (akár bonyolult) eredménye, hanem egyből használható is lesz a változóban eltárolva. Másrészt így írhatunk olyan kódokat, amiket később újra felhasználhatunk más kiindulási adatokra is.
 
-A változónevek mindig betűvel kezdődnek, nincs bennük szóköz és nincs bennük speciális karakter (de **.** vagy **_** lehet)!
+A változónevek mindig betűvel kezdődnek, nincs bennük szóköz és nincs bennük speciális karakter (de **.** vagy \emph{\_} lehet)!
 
 ### Függvények
 
@@ -424,7 +425,7 @@ sum(13, 4, NA)
 
 A **sum()** függvénybe annyi változót adhatunk meg, amennyit szeretnénk.
 
-A matematikai függvényektől eltérően az **R** függvényeiben nem csak az a változó adható meg, amivel a függvény dolgozik, hanem a függvény működését befolyásoló utasíztások is, ezek hívjuk *argumentum*oknak. Például a **sum()** függvénynek is van egy argumentuma, az *na.rm*. Ennek értéke alapértelmezetten (tehát ha azt kézzel meg nem változtattuk) *FALSE*, ami azt mondja meg, hogy a változóként megadott számokból eltávolítsa-e az *NA* értékeket. Ha igazra (*na.rm = TREU*) állítjuk ezt, akkor figyelmen kívül hagyja változóban a *NA* értéket, és máris ki tudjuk számolni az előző parancs eredményét:
+A matematikai függvényektől eltérően az **R** függvényeiben nem csak az a változó adható meg, amivel a függvény dolgozik, hanem a függvény működését befolyásoló utasítások is, ezek hívjuk *argumentum*oknak. Például a **sum()** függvénynek is van egy argumentuma, az *na.rm*. Ennek értéke alapértelmezetten (tehát ha azt kézzel meg nem változtattuk) *FALSE*, ami azt mondja meg, hogy a változóként megadott számokból eltávolítsa-e az *NA* értékeket. Ha igazra (*na.rm = TREU*) állítjuk ezt, akkor figyelmen kívül hagyja változóban a *NA* értéket, és máris ki tudjuk számolni az előző parancs eredményét:
 
 ```{r}
 sum(13, 4, NA, na.rm = TRUE)
@@ -436,7 +437,7 @@ A *produktum*ot a **prod()** függvénnyel számíthatjuk ki. Ennek is argumentu
 prod(1, 2, 3, 4, 5)
 ```
 
-Függvényt lehet függvénybe ágyazni! Itt az előbb kiszámolt kifejezést rakjuk bele egy **sum()** függvénybe. Az **R** elsőzör a belső függvényt értelmezi, aztán a külsőt!
+Függvényt lehet függvénybe ágyazni! Itt az előbb kiszámolt kifejezést rakjuk bele egy **sum()** függvénybe. Az **R** elöször a belső függvényt értelmezi, aztán a külsőt!
 
 ```{r}
 sum(100, prod(1,2,3,4,5) )
@@ -454,7 +455,7 @@ A függvényekről és használatukról az **R** tartalmaz súgót. Ezt úgy ér
 
 De a help elérhetó az **RStudio** jobb alsó ablakában is, egy külön fülön, ahol a keresőben kell a parancsot beírni.
 
-\emph{Megjegyzés.} A fügvény argumentumainak nevét nem feltétlenül kell kiirni, de ekkor a függvény a help-ben megadott sorendben értelmezi az argumentumokat. Tehát felcserélhetők az  argumentumok a függvény \'\'hasán\'\' belül, de csak akkor ha kiírjuk az argumentumok neveit, egyébként pedig nem feltétlenül értelemzető kimenetet kapunk. Ebben a példában 1-től 2-ig előállítjuk  a számokat 0.2-es lépésközzel:
+\emph{Megjegyzés.} A függvény argumentumainak nevét nem feltétlenül kell kiirni, de ekkor a függvény a help-ben megadott sorendben értelmezi az argumentumokat. Tehát felcserélhetők az  argumentumok a függvény \'\'hasán\'\' belül, de csak akkor ha kiírjuk az argumentumok neveit, egyébként pedig nem feltétlenül értelemzető kimenetet kapunk. Ebben a példában 1-től 2-ig előállítjuk  a számokat 0.2-es lépésközzel:
 
 ```{r wrong, eval=FALSE}
 seq(from = 1, by = 0.2, to = 2) # helyes kód 
@@ -473,7 +474,7 @@ Ha az **R** kódba megjegyzéseket szeretnénk írni, azt kettőskereszt (*hash 
 
 ### Vektorok
 
-A vektorok nem éppen matematikai pontossággal megfogalmazva számhalmazok. A vektorokhoz nagyon hasonló számhalmaz a mátrix is, mely felfogható egymás mellé rendelt vektorok halmazának. Mindkettőnek nagy jelentőssége van a modern tudományokban. Az **R**ben a vektorok és a mátrixok összetett adatípusnak felelnekmeg, mely az egyszerű adattípusokból hozható létre. A vektorok, mátrixok és a velük elvégezhető matematikai műveletek elméletileg a tárgy előkövetelményeként szereplő *Matematika GY* tárgy programjában szerepelnek és itt egy részét alakalmazni fogjuk.
+A vektorok nem éppen matematikai pontossággal megfogalmazva számhalmazok. A vektorokhoz nagyon hasonló számhalmaz a mátrix is, mely felfogható egymás mellé rendelt vektorok halmazának. Mindkettőnek nagy jelentőssége van a modern tudományokban. Az **R**ben a vektorok és a mátrixok összetett adatípusnak felelnek meg, mely az egyszerű adattípusokból hozható létre. A vektorok, mátrixok és a velük elvégezhető matematikai műveletek elméletileg a tárgy előkövetelményeként szereplő *Matematika GY* tárgy programjában szerepelnek és itt egy részét alakalmazni fogjuk.
 
 Az **R**-ben vektorokat soféleképp adhatunk meg. Az egyik módja, hogy megadjuk mettől meddig menjen a vektorunk egyesével egy **:** jel segítségével.
 
@@ -484,7 +485,7 @@ Az **R**-ben vektorokat soféleképp adhatunk meg. Az egyik módja, hogy megadju
 1.5:8 #tud tizedestortekkel is dolgozni, de akkor is egyesevel lepdel
 ```
 
-Egy másik megoldás, hogy megadjuk az elemeit és összefűzzük egy vektorba a **c()**, azaz *concatenate* (= összefűz) függvény segítségével.
+Egy másik megoldás, hogy megadjuk az elemeit és összefűzzük egy vektorba a \texttt{c()}, azaz *concatenate* (= összefűz) függvény segítségével.
 
 ```{r}
 c(0,2,4,NA,-0.8)
@@ -494,7 +495,7 @@ c(FALSE, TRUE, FALSE) # ... es logikai vektorok is
 c(2,4,"szoveg") # szoveggel pedig nem tudunk matematikai muveletet vegrehajtani!
 ```
 
-Használhatunk függvényeket is vektorok létrehozásához. Ha ugyanazt az értéket akarjuk sokszor egymás után leírni, használjuk a **rep()**, azaz *replicate* függvényt, melynek első változója az, hogy mit szeretnénk ismételni, a második pedig az, hogy hányszor.
+Használhatunk függvényeket is vektorok létrehozásához. Ha ugyanazt az értéket akarjuk sokszor egymás után leírni, használjuk a \texttt{rep()}, azaz *replicate* függvényt, melynek első változója az, hogy mit szeretnénk ismételni, a második pedig az, hogy hányszor.
 
 ```{r}
 rep(1, 52)
@@ -502,14 +503,14 @@ rep("blabla", 10)
 rep(FALSE, 4) 
 ```
 
-A **seq(from, to, by)** függvénnyel pedig egy szekvenciát generálunk a *from* értéktől a *to* értékig *by* lépésközzel.
+A \texttt{seq(from, to, by)} függvénnyel pedig egy szekvenciát generálunk a *from* értéktől a *to* értékig *by* lépésközzel.
 
 ```{r}
 seq(3, 50, 2)
 seq(2, -5, -0.2) #visszafele ne felejtsetek el a by-t negativra allitani!
 ```
 
-Vagy használhatjuk a **seq()** függvény *length.out* argumentumát is, ami megadja, hogy mennyi számot szeretnénk kapni és kiszámolja az optimális lépésközt.
+Vagy használhatjuk a \texttt{seq()} függvény \texttt{length.out} argumentumát is, ami megadja, hogy mennyi számot szeretnénk kapni és kiszámolja az optimális lépésközt.
 
 ```{r}
 seq(1, 50, length.out = 4)
@@ -527,7 +528,7 @@ myvektor2 = rep(2, 3)
 myvektor2
 ```
 
-A vektorok hosszát (azaz elemeinek számát) a **length()** függvénnyel érjük el.
+A vektorok hosszát (azaz elemeinek számát) a \texttt{length()} függvénnyel érjük el.
 
 ```{r}
 length(myvektor1)
@@ -535,7 +536,7 @@ length(343:678)
 ```
 
 
-A vektorok elemeit indexeléssel kérhetjük le. Ehhez az indexelő operátort **[ ]** kell használnunk.
+A vektorok elemeit indexeléssel kérhetjük le. Ehhez az indexelő operátort \texttt{[ ]} kell használnunk.
 
 ```{r}
 myvektor1[3]
@@ -554,7 +555,7 @@ Ha egy vektor adott elemén (pl. harmadikon) kívül az összeset akarjuk lehív
 myvektor1[-3]
 ```
 
-A vektor utolsó elemét a **length()** függvény és az indexelő operátor segítségével érjük el.
+A vektor utolsó elemét a \texttt{length()} függvény és az indexelő operátor segítségével érjük el.
 
 ```{r}
 myvektor1[length(myvektor1)]
@@ -585,7 +586,7 @@ myvektor1 + 100
 
 Matematikai értelemben vett vektor- és mátrixműveletek is vannak az **R**-ben, ezekről azonban egy későbbi órán fogunk beszélni!
 
-**Fontos** megjegyezni, hogy az **R**-ben a vektorok alapértelmezettként mindig oszlopvektorok jelentenek, mégha ha az **R** nem is úgy jeleníti meg őket!
+**Fontos** megjegyezni, hogy az **R**-ben a vektorok alapértelmezettként mindig oszlopvektorok jelentenek, mégha az **R** nem is úgy jeleníti meg őket!
 
 ### Az *eleme-e* operátor
 
@@ -608,7 +609,7 @@ c("B", "X") %in% c("A", "B", "C", "D")
 
 ### Mátrixok
 
-Mátrixokat a **matrix()** függvény segítségével hozhatunk létre. Változónak megadjuk a mátrix elemeit. Argumentumnak beírhatjuk az oszlopok számát (*ncol*) és a sorok számát (*nrow*).
+Mátrixokat a \texttt{matrix()} függvény segítségével hozhatunk létre. Változónak megadjuk a mátrix elemeit. Argumentumnak beírhatjuk az oszlopok számát (`ncol`) és a sorok számát (`nrow`).
 
 ```{r}
 matrix(1, ncol = 2, nrow = 3)
@@ -620,7 +621,7 @@ Mivel általában nem egyféle értékkel akarjuk a mátrixunkat inicializálni 
 matrix(1:9, ncol = 3)
 ```
 
-A *byrow* argumentum *TRUE*-ra állításával tudjuk a mátrixunkat soronként feltölteni. (Vesd össze az előzővel!)
+A \texttt{byrow} argumentum \texttt{TRUE}-ra állításával tudjuk a mátrixunkat soronként feltölteni. (Vesd össze az előzővel!)
 
 ```{r}
 matrix(1:9, ncol = 3, byrow = TRUE)
@@ -636,7 +637,7 @@ matrix1
 matrix1 + 10
 ```
 
-Mátrixokat transzponálni (főátlóra tükrözni) a **t()** függvénnyel tudunk.
+Mátrixokat transzponálni (főátlóra tükrözni) a `t()` függvénnyel tudunk.
 
 ```{r}
 t(matrix1)
@@ -650,7 +651,7 @@ t(myvektor1)
 t(t(myvektor1) )
 ```
 
-Mátrixok elemeit ugyancsak az indexelő operátorral lehet előhívni, csak meg kell adni a sorszámot és az oszlopszámot is (ebben a sorrendben), vesszővel elválasztva: **matrix[sorszam, oszlopszam]**. Ha valamelyiket üresen hagyjuk (de nem felejtjük el a vesszőt!!), akkor az egész oszlopot/sort kapjuk vissza.
+Mátrixok elemeit ugyancsak az indexelő operátorral lehet előhívni, csak meg kell adni a sorszámot és az oszlopszámot is (ebben a sorrendben), vesszővel elválasztva: \texttt{matrix[sorszam, oszlopszam]}. Ha valamelyiket üresen hagyjuk (de nem felejtjük el a vesszőt!!), akkor az egész oszlopot/sort kapjuk vissza.
 
 ```{r}
 matrix1
@@ -676,7 +677,7 @@ matrix1[, 2] <- 7:9
 matrix1
 ```
 
-Mátrix dimenzióit (sorok és oszlopk számát) a következő függvényekkel kérdezhetjük le:
+Mátrix \emph{dimenzió}it (sorok és oszlopk számát) a következő függvényekkel kérdezhetjük le:
 
 ```{r}
 ncol(matrix1) #oszlopok szama
@@ -690,7 +691,7 @@ Ha a mátrix celláinak összegére vagyunk kíváncsiak:
 sum(matrix1)
 ```
 
-A mátrix adatainak is csak egy típusa lehet!
+A mátrix minden adatának típusa azonos, azaz vannak \texttt{numeric}, \texttt{integer}, \emph{szöveg} stb típusu mátrixok!
 
 ```{r}
 m2 <- matrix1
@@ -707,7 +708,7 @@ A *data.frame*-ek olyan adatstruktúrák, melyeket adatbázisok tárolására ha
 data.frame(c("bela", "jano"), c(TRUE, FALSE), c(10,12))
 ```
 
-Ebben a *data.frame*-ben emeberek adatai a rekordok. Az első mezőben a nevüket tároljuk, a másodikban azt, hogy láttak-e már kanalasgémet, a harmadikban pedig az életkorukat. A **data.frame()** függvénybe sorra megadjuk a mezők adatait, vesszővel elválasztva. Ha egynél több rekordot szeretnénk megadni, akkor azokat vektor formájában kell bevinnünk. A mezőknek nevet is adhatunk, így már látni fogjuk, hogy milyen adatokat tartalmaznak:
+Ebben a *data.frame*-ben emeberek adatai a rekordok. Az első mezőben a nevüket tároljuk, a másodikban azt, hogy láttak-e már kanalasgémet, a harmadikban pedig az életkorukat. A \texttt{data.frame()} függvénybe sorra megadjuk a mezők adatait, vesszővel elválasztva. Ha egynél több rekordot szeretnénk megadni, akkor azokat vektor formájában kell bevinnünk. A mezőknek nevet is adhatunk, így már látni fogjuk, hogy milyen adatokat tartalmaznak:
 
 ```{r}
 data.frame(nev=c("bela", "jano"), kanalasgem=c(TRUE, FALSE), kor=c(10,12))
@@ -715,9 +716,9 @@ data.frame(nev=c("bela", "jano"), kanalasgem=c(TRUE, FALSE), kor=c(10,12))
 
 Fontos megjegyezni, hogy csak egyforma hosszú vektorokat rakhatunk egy *data.frame*-be!  
 
-Azért hasznos ez az adatstruktúra, mert egy változóban tudunk tárolni többféle adatot is (a mátrixokkal ellentétben). Itt a *nev* oszlopban szoveges adatok vannak, a *kanalasgem* oszlopban logikai értékek, míg a *kor* oszlopban számok.
+Azért hasznos ez az adatstruktúra, mert egy változóban tudunk tárolni többféle típusú adatot is (a mátrixokkal ellentétben). Itt a *nev* oszlopban szoveges adatok vannak, a *kanalasgem* oszlopban logikai értékek, míg a *kor* oszlopban számok.
 
-A *data.frame*-ek adatait tárolhatjuk, lekérdezhetjük és módosíthajuk úgy, mint a mátrixoknál.
+A *data.frame*-ek adatait tárolhatjuk, lekérdezhetjük és módosíthajuk úgy, mint a mátrixoknál láttuk.
 
 ```{r}
 df <- data.frame(nev=c("bela", "jano"), kanalasgem=c(TRUE, FALSE), kor=c(10,12))
@@ -740,7 +741,7 @@ sum(df$kor) #az emberek osszeletkora
 ```
 
 
-*RStudio*-ban hasznos függvény még a **View()** is, ami a *data.frame*-eket jeleníti meg szebb formában.
+*RStudio*-ban hasznos függvény még a \texttt{View()} is, ami a *data.frame*-eket jeleníti meg szebb formában.
 
 ```{r viewnotrun, eval=FALSE}
 View(df)
@@ -751,7 +752,7 @@ kable(df)
 
 ### Adatdiagnosztika
 
-A változóinkat több függvénnyel is elemezhetjük. Ezek közül a legfontosabb az **str()**, azaz *structure* függvény. Nézzük meg pár egyszerű változóra:
+A változóinkat több függvénnyel is elemezhetjük. Ezek közül a legfontosabb az \texttt{str()}, azaz *structure* függvény. Nézzük meg pár egyszerű változóra:
 
 ```{r}
 str(a)
@@ -759,29 +760,29 @@ str(4L)
 str("szoveg")
 ```
 
-Egyszerű változór/értékekekre kiadja, hogy milyen adattípusba tartoznak, és mi az értékük. 
+Egyszerű változóra/értékekre kiadja, hogy milyen adattípusba tartoznak, és mi az értékük. 
 
 ```{r}
 str(myvektor1)
 ```
 
-Vektorokra elmondja, hogy milyen típusú vektor, hány eleme van (11), és megmutatja még az első pár elemet is.
+Vektorokra megjeleníti, hogy milyen típusú vektor, hány eleme van (11), és megmutatja még az első pár elemet is.
 
 ```{r}
 str(matrix1)
 ```
 
-Mátrixok esetén azt is látjuk, hogy hány sor (3) és hány oszlopa (4) van.
+Mátrixok esetén azt is látjuk, hogy hány sora (3), és hány oszlopa (4) van.
 
 ```{r}
 str(df)
 ```
 
-*data.frame*-ek esetén már többet ír: elmondja, hogy hány rekord (2) és hány változó, azaz mező van (3), aztán felsorolja ezek nevét, a változó típusát és az első pár elemet belőle. A *\$nev* oszlopban például egy érdekes adattípust látunk: ez a *faktor*. 
+*data.frame*-ek esetén már több mindent megmutat: hány rekord (2) és hány változó (mező) van (3), felsorolja a változók nevét, a változó típusát, és az első pár elemet belőle. A *\$nev* oszlopban például egy érdekes adattípust látunk: ez a *faktor*. 
 
 ### Faktorok
 
-A faktorok diszkrét nominális vagy ordinális skálájú változók, melyeknek az értékeivel nem akarunk számolni. Az **str()** megjeleníti, hogy milyen szintjei vannak: ezek a diszkrét értékek, melyekhez egy számot rendel az **R**. Az adattáblában valójában ezek a számok vannak tárolva, így gyorsan lehívhatók és kevesebb memóriát használnak fel. Később fontos lesz számunkra ezeknek az ismerete. A faktor szintjeit a **levels()** paranccsal tudjuk lekérni.
+A faktorok diszkrét nominális vagy ordinális skálájú változók, melyeknek az értékeivel nem akarunk számolni. Az \texttt{str()} megjeleníti, hogy milyen szintjei vannak: ezek a diszkrét értékek, melyekhez egy számot rendel az **R**. Az adattáblában valójában ezek a számok vannak tárolva, így gyorsan lehívhatók és kevesebb memóriát használnak fel. Később fontos lesz számunkra ezeknek az ismerete. A faktor szintjeit a \texttt{levels()} paranccsal tudjuk lekérni.
 
 ```{r}
 levels(df$nev)
@@ -789,7 +790,7 @@ levels(df$nev)
 
 ### Egyéb hasznos függvények
 
-A **table()** függvénnyel meg tudjuk számolni a vektor elemeit.
+A \texttt{table()} függvénnyel meg tudjuk számolni, hogy mennyi elem van az egyes típusokból.
 
 ```{r}
 elemek <- c("b", "b", "t", "b")
@@ -798,7 +799,7 @@ table(elemek)
 
 Itt láhatjuk, hogy az *elemek* vektorban 3 db *b* és 1 db *t* van.
 
-A *round()* paranccsal kerekíthetjük a számokat a második argumentumként megadott tizedesjegyjre.
+A \texttt{round()} paranccsal kerekíthetjük a számokat a második argumentumként megadott tizedesjegyjre.
 
 ```{r}
 1/3
@@ -900,7 +901,7 @@ getwd()
 print("/gyoker/mappaB/mappaBA")
 ```
 
-FONTOS: *wMS Windows* alatt az elérési útvonalban lévő "\\" perjeleket le kell cserélni "/" perjelre!
+FONTOS: *MS Windows* alatt az elérési útvonalban lévő "\\" perjeleket le kell cserélni "/" perjelre!
 
 Ha *Asztal*-on vagy *Dokumentumok*-ban vannak a fájlok, akkor úgy kell kikeresni az elérési útvonalat, hogy a "C:" gyökérkönyvtárból indultok ki (C:/Users/felhasznalo/stb), nem pedig a gyorsgombbal! 
 
@@ -908,7 +909,7 @@ Ha *Asztal*-on vagy *Dokumentumok*-ban vannak a fájlok, akkor úgy kell kikeres
 
 A gyakorlat, valamint jövőbeli adatelemzéseitek során legtöbbször szöveges adattáblából kell az adataitokat beolvasni. Ezek (*.txt, .dat, .csv, .tsv*) kiterjesztésűek.
 
-Először is a beolvasandó fájl elérési útvonalát kell megkeresni. Két lehetoseg van "OPCIÓ 1" es "OPCIÓ 2", mindenki azt válassza, amelyik számára szimpatikusabb! A jegyzet írója a további fejezetekben az "OPCIÓ 1"-et fogja használni.
+Először is a beolvasandó fájl elérési útvonalát kell megkeresni. Két lehetoseg van "OPCIÓ 1" es "OPCIÓ 2", mindenki azt válassza, amelyik számára szimpatikusabb! A jegyzet írói a további fejezetekben az "OPCIÓ 1"-et fogja használni.
 
 ### OPCIO 1 - elérési útvonallal - haladó megoldás
 
@@ -939,7 +940,7 @@ print("/gyoker/mappaB/mappaBA")
 utvonal1 <- "/gyoker/mappaB/mappaBA/csor.csv"
 ```
 
-Két féle elérési útvonalat kell megkülönböztetnünk: relatív és abszolút. Relatív hivatkozás alatt a munkakönyvtárból kiinduló útvonalat értjük. Tehát ha a munkakönyvtáram a "/gyoker/mappaB", akkor a "csor.csv" fájlhoz a relatív elérési útvonalam a következő: "mappaBA/csor.csv". Ha viszont a munkakönyvtáram a "/gyoker/mappaB/mappaBA", akkor ugyanahhoz a fájlhoz a relatív elérési útvonalam csak ennyi: "csor.csv". A relatív elérési útvonal tehát változik attól függően, hogy mi a munkakönyvtáram. Ellenben az abszolút elérés útvonal a gyökérkönyvtárhoz képest adja meg a fájlom helyét: "/gyoker/mappaB/mappaBA/csor.csv". Így ez független attól, hogy mi az elérési útvonalam. Az abszolút elérési útvonalat úgy is megkaphatjuk, hogy egy fájlböngészőben kikertessük a megnyitni szándékozott fájlt, kijelöljük és másoljuk (CTRL + C, vagy jobbklikk -> Másolás), majd belemegyünk az **RStudio** valamelyik szöveges felületére, és "beillesztjük" a fájlt. Ekkor egy ehhez hasonló elérési útvonalat kapunk: `"file:///gyoker/mappaB/mappaBA/csor.csv"`. Ez ebben a formában is használható, még Windows esetén is.  
+Két féle elérési útvonalat kell megkülönböztetnünk: relatív és abszolút. Relatív hivatkozás alatt a munkakönyvtárból kiinduló útvonalat értjük. Tehát ha a munkakönyvtár most a "/gyoker/mappaB", akkor a "csor.csv" fájlhoz a relatív elérési útvonal a következő: "mappaBA/csor.csv". Ha viszont a munkakönyvtár a "/gyoker/mappaB/mappaBA", akkor ugyanahhoz a fájlhoz a relatív elérési útvonalam csak ennyi: "csor.csv". A relatív elérési útvonal tehát változik attól függően, hogy mi a munkakönyvtár. Ellenben az abszolút elérés útvonal a gyökérkönyvtárhoz képest adja meg a fájl helyét: "/gyoker/mappaB/mappaBA/csor.csv". Így ez független attól, hogy mi az elérési útvonalam. Az abszolút elérési útvonalat úgy is megkaphatjuk, hogy egy fájlböngészőben kikertessük a megnyitni szándékozott fájlt, kijelöljük és másoljuk (CTRL + C, vagy jobbklikk -> Másolás), majd belemegyünk az **RStudio** valamelyik szöveges felületére, és "beillesztjük" a fájlt. Ekkor egy ehhez hasonló elérési útvonalat kapunk: `"file:///gyoker/mappaB/mappaBA/csor.csv"`. Ez ebben a formában is használható, még Windows esetén is.  
 Ha megvan az elérési útvonalunk, akkor `read.table()` függvénnyel tudjuk beolvasni.
 
 ```{r filechoose_0, eval=FALSE}
@@ -951,7 +952,7 @@ A `read.table()` függvény további argumentumai is szükségesek, hogy megfele
 
 ### OPCIO 2 - `file.choose()` - kezdő megoldás
 
-A `file.choose()` függvény hatására megnyílik egy új ablak, ami a számítógép fájl rendszerét mutatja (pontosabban az aktuális munkakönyvtárat mutatja). Itt megkereshető a fájl, amivel dolgozni szeretnénk és kimásolja a fájl teljes elérési útvonalát szövegként. *Megjegyzés.* Gykori, hogy a `file.choose()` hatásár megnyiló új ablak az **RStudio** ablaka mögé kerül.
+A `file.choose()` függvény hatására megnyílik egy új ablak, ami a számítógép fájl endszerét mutatja (pontosabban az aktuális munkakönyvtárat mutatja). Itt megkereshető a fájl, amivel dolgozni szeretnénk és kimásolja a fájl teljes elérési útvonalát szövegként. *Megjegyzés.* Gyakori, hogy a `file.choose()` hatásár megnyiló új ablak az **RStudio** ablaka mögé kerül.
 
 ```{r filechoose_1, eval=FALSE}
 utvonal1 <- file.choose()
@@ -976,7 +977,7 @@ Fontos megjegyezni, hogy ekkor nem kell idézőjel az *utvonal1* mellé, hisz az
 
 Mielőtt beolvasnánk az adattáblát nézzük meg a fájlunkat egyszerű szövegszerkesztővel. (Windows: fájl kijelöl -> jobbklikk -> Társitás -> Jegyzettömb vagy Notepad++; Linux: ugyanez csak más programokkal, pl. Kate, gedit) Fontos, hogy ne nyissuk meg MS Excel vagy LibreOffice Calc programmal, mert ezek nem fogják megmutatni nekünk azokat a tulajdonságokat, amikre kíváncsiak vagyunk, valamint gyakran átírják magát a fájlt is!
 
-Jegyzeteljük le magunknak a következő adatokat: mező elválasztó jel, decimális karakter, van-e fejléc(header).
+Jegyzeteljük le magunknak a következő adatokat: mező elválasztó jel, decimális karakter, van-e fejléc(\emph{header}).
  
 Például, ha van egy ilyen fájlunk:
 
@@ -1021,7 +1022,7 @@ Az első változó a *Faj* faktor típusú, elemei pl. "harkalypinty", "harkalyp
 
 A második változó a *Csorhossz* numerikus változó, melynek értékei tizedestörtek. Ez így szintén jó, de ha ezt faktornak írta volna, az azt jelentette volna, hogy elrontottuk valamelyik argumentum megadását.  
 
-Így végignézzük az `str()` függvény kimenetelét és eldöntjük úgy olvastuk-e be a függvényünket, ahogy szerettük volna.
+Így végignézzük az `str()` függvény kimenetelét és eldöntjük úgy olvastuk-e be az adattáblát , ahogy szerettük volna.
 
 További hasznos függvények is vannak az adataink megnézésére (a korábban tanult `View()` mellett). Hosszú adatsorok esetén megnézhetjük a táblázat elejét és végét a következő függvényekkel, melyek az első ill. az utolsó pár rekordot írják ki a képernyőre:
 
@@ -1242,8 +1243,8 @@ kable(asztal2[(nrow(asztal2)*0.4):(nrow(asztal2)*0.6),])
 
 Bizonyos adatelemzési módszerek megkövetelik, hogy egy *data.frame* oszlopai megfelő formátumúak legyenek. A különböző formátumok:
 
-  * *int* és *num*: akkor használjuk, ha mint arány-, intervallum skálás adatként vagy rangként akarjuk az adatot kezelni. Ezzel találkozunk a legtöbbet.
-  * *logi*: binomiális adatok jelenlét - távollét, igen - nem formában.
+  * *int* (*integer*) és *num* (*numeric*): akkor használjuk, ha a változót arány-, intervallum skálás adatként vagy rangként akarjuk kezelni. Ezzel találkozunk a legtöbbet.
+  * *logi* (*logical*): ligikai adatok: igen (*TRUE*) - nem (*FLASE*) formában.
   * *character*: csak akkor használjuk, ha karakterműveleteket akarunk az adott mezővel végezni, vagy ki akarjuk íratni. Így ez a statisztikai elemzések során legritkábban használt adattípus.
   * *factor*: ha az adat egy nominális skálájú változó, mely csoportba való tartozást jelöl. Vigyázni kell vele, mert gyakran keveredik az előző kategóriákkal, gondot okozva az adatelemzésben.
 
@@ -1255,7 +1256,7 @@ str(kutyus)
 
 A *kutyus* adatbázisban a *nev* és a *nem* szerepel faktorként. Ez jól is van, nem akarjuk ezeket számként kezelni. Esetleg elgondolkozhatunk azon, hogy a kutya neve szöveg is lehetne.  
 A *marmagassag* és a *kor* számként vannak tárolva, ami jó is, mivel valószínűleg számként fogunk vele számolni.  
-Az *ivartalanitott* oszlop logikai értékeket tartalmaz, ezt is lehet mint csoportmegadást használni például az ivartalanított kutyák vizsgálatból való kizárására. 
+Az *ivartalanitott* oszlop logikai értékeket tartalmaz, ezt is lehet mint csoportmegadást (*factor*-ként) használni például az ivartalanított kutyák vizsgálatból való kizárására. 
 A *mintazat* oszlop típusa *num*. Ez nem biztos, hogy jó, tudni kell mit jelölnek a számok. Ha mondjuk foltok számát a szemben, akkor valahogy talán lehet értelme mint számot kezelni, viszont ha a mérést végző személy csak sorszámokkal jelölte a különböző mintázatokat (pl. 1 = dalmata, 2 = foltos, stb.), akkor mint *factor* lehet csak kezelni!!  
 
 Alakítsuk át az oszloptípusokat. Ezt az `as.factor()`, `as.numeric()`, `as.integer()`, `as.character()` és `as.logical()` függvények segítségével tudjuk megtenni. Először ki kell választanunk a megváltoztatandó oszlopot, majd felülírjuk ugyanennek az oszlopnak az előző függvényekkel átalakított másával.  
@@ -1285,7 +1286,7 @@ str(kutyus)
 Van, hogy nem minden cellában szerepel adat, pl. mert a vizsgálatot nem lehetett elvégezni, vagy mert elveszett az adat. Az ilyen cellákat *NA*-val jelöljük meg. 
 Hiányzó adatok felderítésre több lehetőség is kínálkozik
 
-* \texttt(summary()) függvény minden változóra kiszámol bizonyos statisztikai mérőszámokat (\emph{átlagot, mediánt, kvartiliseket, min.}, és \emph{max.}, lásd később) és feltünteti a hiányzó adatok számát
+* \texttt{summary()} függvény minden változóra kiszámol bizonyos statisztikai mérőszámokat (\emph{átlagot, mediánt, kvartiliseket, min.}, és \emph{max.}, lásd később) és feltünteti a hiányzó adatok számát
 
 ```{r}
 summary(kutyus)
@@ -1301,7 +1302,7 @@ kutyus[index]
 
 az \texttt{is.na()} minden változótól \'\'megkérdezi, hogy hiányzó adat-e\'\' ha igen akkor az érték \texttt{TRUE}, ha nem akkor \texttt{FALSE}. Ezt lehet felhasználni, a \texttt{which()} függvény segítségével, hogy beazonosítsuk az adatbázisban az NA-k pontos helyét. Érdemes \texttt{arr.ind = TRUE} opciót alkalmazni, mely kigyűjti az `NA` pontos sor és oszlop index értékét. Elmentjük a hiányzó adat pontos elhelyezkedését egy változóba (\texttt{index}).
 
-Azt kell eldönteni, hogy az elemzés során csak azt az egy hiányzó adatot nem használjuk fel, vagy kihagyjuk az elemzésből az egész rekordot (sort). Az előbbire jó megoldás a számos függvény argumentum listájában megtalálható `na.rm` opció. Ilyen például a `sum()` függvény. Alapesetben ha `NA` van az argomentumok közt, a visszatérési értéke `NA` lesz.
+Azt kell eldönteni, hogy az elemzés során csak azt az egy hiányzó adatot nem használjuk fel, vagy kihagyjuk az elemzésből az egész rekordot (sort). Az előbbire jó megoldás a számos függvény argumentum listájában megtalálható `na.rm` opció. Ilyen például a `sum()` függvény. Alapesetben ha `NA` van az argumentumok közt, a visszatérési értéke `NA` lesz.
 
 ```{r}
 sum(2,3,4,NA,6)
@@ -1364,14 +1365,14 @@ Az **R** alapcsomagjai elegendőek ahhoz, hogy a kurzus során szükséges ábr�
 
 ### A *plot()* függvény használata
 
-A `plot()` függvény egy általános adatábrázoló függvény. Viselkedése attól függ, hogy milyen adatokat adunk meg argomentumaként, de leggyakrabban pont- vagy vonaldiagram rajzolásához használjuk. Ha egyetlen számsort adunk meg változóként, akkor a számsor tagjait fogja sorban ábrázolni, *X* tengelyen, hogy hányadik a számsorban, *Y* tengelyen a szám számértékét. Ezt viszonylag ritkán szeretnénk ábrázolni, a jegyzetben azért van bent, hogy tudjuk mi történt, ha ilyesmit látunk.
+A `plot()` függvény egy általános adatábrázoló függvény. Viselkedése attól függ, hogy milyen adatokat adunk meg argumentumaként, de leggyakrabban pont- vagy vonaldiagram rajzolásához használjuk. Ha egyetlen számsort adunk meg változóként, akkor a számsor tagjait fogja sorban ábrázolni, *X* tengelyen azt, hogy hányadik a számsorban, *Y* tengelyen a szám számértékét. Ezt viszonylag ritkán szeretnénk ábrázolni, a jegyzetben azért van bent, hogy tudjuk mi történt, ha ilyesmit látunk.
 
 ```{r}
 x <- c(1,2,3,2,1,1)
 plot(x)
 ```
 
-Ha két vektort adunk meg neki változóként, akkor pontokként ábrázolja őket, úgy hogy az első argomentumból hívja be az *X* koordinátákat, míg a másodikból az *Y* koordinátákat.
+Ha két vektort adunk meg neki változóként, akkor pontokként ábrázolja őket, úgy hogy az első argumentumból hívja be az *X* koordinátákat, míg a másodikból az *Y* koordinátákat.
 
 ```{r myfirstplot, fig.cap="Pontdiagram"}
 x <- 1:10
@@ -1381,7 +1382,7 @@ y
 plot(x, y)
 ```
 
-Ezzel egyenértékű, ha beírjuk a `y~x` kifejezést a függvény első argomentumaként, mely azt jelöli, hogy *y függvénye x-nek*. A hullámjelet *tilde*-nek is hívják.
+Ezzel egyenértékű, ha beírjuk a `y~x` kifejezést a függvény első argumentumaként, mely azt jelöli, hogy *y függvénye x-nek*. A hullámjelet *tilde*-nek is hívják.
 
 ```{r eval=FALSE}
 plot(y ~ x)
@@ -1393,7 +1394,7 @@ Ha beleírjuk az `x` és az `y` helyére a számokat, akkor is ezt fogjuk kapni,
 plot(1:10, sqrt(1:10))
 ```
 
-Megadhatunk címet és alcímet az ábránknak a `main` és `sub` argomentumokkal.
+Megadhatunk címet és alcímet az ábránknak a `main` és `sub` argumentumokkal.
 
 ```{r, myfirstplot_cimek, fig.cap="Pontdiagram címmel és alcímmel"}
 plot(x, y
@@ -1402,7 +1403,7 @@ plot(x, y
 )
 ```
 
-Testreszabhatjuk a tengelyfeliratokat az `xlab` és `ylab` argomentumokkal.
+Testreszabhatjuk a tengelyfeliratokat az `xlab` és `ylab` argumentumokkal.
 
 ```{r, myfirstplot_tfelirat, fig.cap="Pontdiagram címmel, alcímmel és tengelyfeliratokkal"}
 plot(x, y
@@ -1413,7 +1414,7 @@ plot(x, y
 )
 ```
 
-A `type` argomentummal megadhatjuk, hogy milyen ábrázolási módodot szeretnénk:
+A `type` argumentummal megadhatjuk, hogy milyen ábrázolási módodot szeretnénk:
 
   * "p": pontdiagram, ez az alapértelmezett
   * "l": vonaldiagram
@@ -1460,7 +1461,7 @@ plot(x, y)
 lines(x, z)
 ```
 
-Az **R** alap grafikai függvényei az első plottolási parancsban lévő adatokhoz igazítják az ábrázolt területet. Ezt azonban meg lehet változtatni az `xlim` és `ylim` argomentumokkal. Ezeknek egy két elemből álló numerikus vektort kell megadni, ami meghatározza, hogy mettől meddig tartson az ábrázolandó terület az *X* és *Y* tengelyen.
+Az **R** alap grafikai függvényei az első plottolási parancsban lévő adatokhoz igazítják az ábrázolt területet. Ezt azonban meg lehet változtatni az `xlim` és `ylim` argumentumokkal. Ezeknek egy két elemből álló numerikus vektort kell megadni, ami meghatározza, hogy mettől meddig tartson az ábrázolandó terület az *X* és *Y* tengelyen.
 
 ```{r myfirstplot_lim, fig.cap="Pontdiagram beállított plotterülettel"}
 plot(x, y
@@ -1469,23 +1470,23 @@ plot(x, y
      )
 ```
 
-A tengelyek logaritmikus ábrázolása akkor hasznos, ha valamiről úgy gondoljuk, hogy nagyságrendű megváltozása a fontos. Tehát nem az additív távolságok a lényegesek (pl. $x_1$ 2-vel nagyobb, mint $x_2$), hanem a multiplikatív különbségek (pl. $x_1$ 100-szor nagyobb, mint $x_2$). Mindig mérlegeljük, hogy van-e biológiai relevanciája a tengelyek logaritmizálásának! A logaritmizálást a `log` argomentummal tudjuk beállítani: értéke `"xy"`, ha mindkét tengelyt, `"x"`, ha az x és `"y"`, ha az y tengelyt logaritmizáljuk. (Régi **R** verziókban a tengelyeket logaritmizálni sorra a `xlog=TRUE` és `ylog=TRUE` argomentumokkal lehetett.)
+A tengelyek logaritmikus ábrázolása akkor hasznos, ha valamiről úgy gondoljuk, hogy nagyságrendű megváltozása a fontos. Tehát nem az additív távolságok a lényegesek (pl. $x_1$ 2-vel nagyobb, mint $x_2$), hanem a multiplikatív különbségek (pl. $x_1$ 100-szor nagyobb, mint $x_2$). Mindig mérlegeljük, hogy van-e biológiai relevanciája a tengelyek logaritmizálásának! A logaritmizálást a `log` argumentummal tudjuk beállítani: értéke `"xy"`, ha mindkét tengelyt, `"x"`, ha az x és `"y"`, ha az y tengelyt logaritmizáljuk. (Régi **R** verziókban a tengelyeket logaritmizálni sorra a `xlog=TRUE` és `ylog=TRUE` argumentumokkal lehetett.)
 
 ```{r myfirstplot_log, fig.cap="Pontdiagram logaritmizált x és y tengelyekkel"}
 plot(x, y, log="xy")
 ```
 
-### Paraméterek
+### Argumentumok
 
-A plottolás és egyéb grafikus kimenetelek paramétereit a `par()` függvénnyel érhetjük el és módosíthatjuk. Ha valamit állítani szeretnénk a plotunkon, akkor érdemes lefuttatni a `?par` parancsot és a help-ből kikeresni a számunkra fontos paramétert a különböző beállítási lehetőségek hosszú listájából. Ebben a fejezetben csak a fontosabbakat fogjuk tárgyalni.
+A plottolás és egyéb grafikus kimenetelek arumentumait a `par()` függvénnyel érhetjük el és módosíthatjuk. Ha valamit állítani szeretnénk a plotunkon, akkor érdemes lefuttatni a `?par` parancsot és a help-ből kikeresni a számunkra fontos argumentumot a különböző beállítási lehetőségek hosszú listájából. Ebben a fejezetben csak a fontosabbakat fogjuk tárgyalni.
 
-A paraméterek alapértelmezett beállításait úgy tudjuk elérni, hogy vagy lefuttatjuk a `par()` parancsot argomentum nélkül és kikeressük a listából az egyes paramétereket, vagy beírjuk a paraméter nevét a függvénybe. Például:
+Az argumentum alapértelmezett beállításait úgy tudjuk elérni, hogy vagy lefuttatjuk a `par()` parancsot argumentum nélkül és kikeressük a listából az egyes paramétereket, vagy beírjuk a argumentum nevét a függvénybe. Például:
 
 ```{r}
 par("col")
 ```
 
-Átállítani úgy tudjuk, hogy argomentumnak írjuk be a paramétert a `par()` függvénybe és értéket adunk neki. Ha át akarjuk állítani például az ábrázolás színét pirosra, akkor:
+Átállítani úgy tudjuk, hogy argumentumnak írjuk be a paramétert a `par()` függvénybe és értéket adunk neki. Ha át akarjuk állítani például az ábrázolás színét pirosra, akkor:
 
 ```{r myfirstplot_par, fig.cap="Pontdiagram ha az alapértelmezett szín a vörös"}
 par(col="red")
@@ -1571,7 +1572,7 @@ par(mar = mar_orig)
 
 ### Osztott ábra
 
-Ha egy ábraterületen több ábrát szeretnénk lerajzolni, akkor először el kell döntenünk, hogy hány sorba és hány oszlopba akarjuk. Ezután az `mfrow = c(sor, oszlop)` argomentummal beállítjuk, hogy mekkorára osztjuk a plotterületet. Az argomentum bementi értéke egy két elemből álló numerikus vektor, mely elemek sorra megadják, hogy hány sorba és hány oszlopba szeretnénk ábrázolni. Ezután kiadjuk a megfelelő mennyiségű plot parancsot. A plotok helyei sor szerint töltődnek fel. Ha utána újból egy ábra / egy ábraterületen szeretnénk ábrázolni, akkor vissza is kell állítanunk az argomentumot eredeti állapotába: `mfrow = c(1, 1)`. 
+Ha egy ábraterületen több ábrát szeretnénk lerajzolni, akkor először el kell döntenünk, hogy hány sorba és hány oszlopba akarjuk. Ezután az `mfrow = c(sor, oszlop)` argumentummal beállítjuk, hogy mekkorára osztjuk a plotterületet. Az argumentum bementi értéke egy két elemből álló numerikus vektor, mely elemek sorra megadják, hogy hány sorba és hány oszlopba szeretnénk ábrázolni. Ezután kiadjuk a megfelelő mennyiségű plot parancsot. A plotok helyei sor szerint töltődnek fel. Ha utána újból egy ábra / egy ábraterületen szeretnénk ábrázolni, akkor vissza is kell állítanunk az argumentumot eredeti állapotába: `mfrow = c(1, 1)`. 
 
 ```{r fig.cap="Osztott ábra"}
 par(mfrow=c(3,2)) # 3 sor es 2 oszlop
@@ -1613,7 +1614,7 @@ beka <- read.table("beka.csv", sep=",", header=TRUE, dec=".")
 str(beka)
 ```
 
-Szűrjünk rá az adatainkra, hogy csak a "TD_MPS1.3" kultúrából származó primer vezikulák kerületadatait lássuk! 
+A \texttt{hunt} adattáblát szűrjük meg, hogy csak a "TD_MPS1.3" kultúrából származó primer vezikulák kerületadatait lássuk! 
 
 ```{r huntszures_1, output.lines=10}
 hunt[hunt$vesicle.type == "Prim", ] # csak a primer vezikulak
@@ -1688,7 +1689,7 @@ boxplot(beka$thossz,range = 1.5, main = "(Q1-1.5*IQR)-Q1-median-Q3-(Q3+1.5*IQR)"
 par(mfrow=c(1,1))
 ```
 
-Láthatók a kiugró adatok (körök), és látható az eloszlás ferdesége (medián helyzete alapján), elnyúltsága a \'\'szálkák\'\' alapján). Ez itt most eléggé szimmetrikus és nincs nagy elnyúlása
+Láthatók a kiugró adatok (körök), és látható az eloszlás ferdesége (medián helyzete alapján), elnyúltsága a \'\'szálkák\'\' alapján). Ez itt most eléggé szimmetrikus és nincs nagy elnyúlása.
 
 Lehet csinosítgatni a `par()` függvényben található argumentumok megadásával / beállításával
 
@@ -1706,7 +1707,7 @@ Amit lehet látni, hogy a piros, és a kék viszonylag szimmetrikus, de a zöld 
 
 ### Barplot és hisztogram
 
-Gyakran összekeverik ezt a két típust. Amit érdemes megjegyezni, hogy a hisztogram (részletesen előző fejezetben bemutatva) esetén az oszlopok összeérnek, ezzel is jelzik, hogy felosztottak egy folytonos intervallumot darabokra és ezeknek a rövidebb intervallumoknak az összesített gyakoriságát ábrázolják. Ellenben az oszlopdiagrammoknál az oszlopok nem érnek össze, ezzel pedig azt mutatják, hogy ezek diszkrét kategóriák. Az oszlopdiagram értékei nem csak gyakoriságok lehetnek, hanem másfajta változók is. Legegyszerűbb a különbséget akkor megérteni, ha ábrázoljuk ugyanazt az adatot.
+Gyakran összekeverik ezt a két típust. Amit érdemes megjegyezni, hogy a hisztogram (részletesen előző fejezetben bemutatva) esetén az oszlopok összeérnek, ezzel is jelzik, hogy felosztottak egy folytonos intervallumot darabokra és ezeknek a rövidebb intervallumoknak az összesített gyakoriságát ábrázolják (*osztály gyakoriság*). Ellenben az oszlopdiagrammoknál az oszlopok nem érnek össze, ezzel pedig azt mutatják, hogy ezek diszkrét kategóriák (*kategória gyakoriság*). Az oszlopdiagram értékei nem csak gyakoriságok lehetnek, hanem másfajta változók is. Legegyszerűbb a különbséget akkor megérteni, ha ábrázoljuk ugyanazt az adatot.
 
 ```{r}
 par(mfrow=c(1,2))
@@ -1755,7 +1756,7 @@ Ezeket a számokat már ábrázolhatjuk.
 pie(table(csoradat$Csorhossz_kat))
 ```
 
-A `plot()` és `par()` argomentumai közül most is legtöbb használható. Ami különleges: a `labels` argomentumban meghatározhatjuk a különböző kategóriákhoz írt címkéket, a `clockwise = TRUE`-val pedig megváltoztathatjuk a körcikkek irányát.
+A `plot()` és `par()` argumentumai közül most is legtöbb használható. Ami különleges: a `labels` argumentumban meghatározhatjuk a különböző kategóriákhoz írt címkéket, a `clockwise = TRUE`-val pedig megváltoztathatjuk a körcikkek irányát.
 
 ## Ábrázolás példák
 
@@ -1939,7 +1940,7 @@ par(mfrow = c(1,1), mar=c(4,5,1,1),bg="white",new=FALSE)
 
 # Mérőszámok (5. óra)
 
-Az adatokat és eloszlásukat statisztikai mérőszámokkal szokás jellemezni. Ezek a valós eloszlásokat különbözőképpen egyszerűsítik le, ezért mindig az adott vizsgálathoz kell igazítani, hogy melyiket használjuk. Fontos még megjegyezni, hogy figyelni kell arra, hogy a az adott mérőszám a populációt vagy egy mintát jellemez-e. Populációk mérőszámait extrém ritkán tudjuk vizsgálni, mivel akkor az előforduló összes esetet figyelembe kell venni. Ilyen esetek lehetnek a dobókocka oldalainak értékei vagy mondjuk a kakapók (*Strigops habroptilus*) szárnyhosszai (mivel ott fel van mérve az összes élő egyed). Így az esetek többségében minták mérőszámaival dolgozunk.  
+Az adatokat és eloszlásukat statisztikai mérőszámokkal szokás jellemezni. Ezek a valós eloszlásokat különbözőképpen egyszerűsítik le, ezért mindig az adott vizsgálathoz kell igazítani, hogy melyiket használjuk. Fontos még figyelni arra, hogy az adott mérőszám a populációt, vagy egy mintát jellemez-e. Populációk mérőszámait extrém ritkán tudjuk vizsgálni, mivel akkor az előforduló összes esetet figyelembe kell venni. Ilyen esetek lehetnek a dobókocka oldalainak értékei vagy mondjuk a kakapók (*Strigops habroptilus*) szárnyhosszai (mivel ott fel van mérve az összes élő egyed). Így az esetek többségében minták mérőszámaival dolgozunk.  
 A mérőszámok tulajdonságaival, jelentésével és használatával az előadás anyaga foglalkozik.
 
 ## Minta elemszáma
@@ -1957,9 +1958,9 @@ $$ \bar x = \frac{1}{n} \sum_{i=1}^{n} x_i$$
 
 Ha gyakoriságadataink is vannak (diszkrét kategóriák - pl. utódok száma):
 
-$$ \bar x = \sum_{i=1}^n {x_i*p_i} $$
+$$ \bar x = \sum_{i=1}^n {x_i*p_i} ,$$
 
-, ahol $p_i$ az $i$-edik kategória gyakorisága.
+ahol $p_i$ az $i$-edik kategória gyakorisága.
 
 ```{r atlag, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 #adatok beolvasasa
@@ -1975,7 +1976,7 @@ mean(beka$tomeg, na.rm = TRUE)
 
 ## Medián
 
-A mediánnal kiszámíthatjuk a középpontot, vagyis azt a számot, ami alatt a nagyság szerint sorbarendezett adatok fele és ami felett a nagyság szerint sorbarendezett adatok másik fele található.
+A mediánnal kiszámíthatjuk a középpontot, vagyis azt a számot, ami alatt a nagyság szerint sorbarendezett adatok fele, és ami felett a nagyság szerint sorbarendezett adatok másik fele található.
 
 ```{r median, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 median(beka$tomeg)
@@ -1993,23 +1994,23 @@ Gyakoriság táblázatot kell készíteni (\texttt{table(beka\$tomeg)}) és a le
 ```{r range, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 range(beka$tomeg, na.rm = TRUE) ## ez nem fogadható el ZH-n a terjedelemre
 range(beka$tomeg, na.rm = TRUE)[2]-range(beka$tomeg, na.rm = TRUE)[1]
-max(beka$tomeg, na.rm = TRUE)-min(beka$tomeg, na.rm = TRUE) # egyenerteku
+max(beka$tomeg, na.rm = TRUE)-min(beka$tomeg, na.rm = TRUE) # egyenerteku a kozvetlenul felette levovel 
 ```
 
 ## Quantilisek, quartilisek és percentilisek
 
-Kva**n**tilis: A nagyság szerint sorba rendezett adatokat egyenlő arányban adott számú részre vágjuk.  
-Medián: A nagyság szerint sorba rendezett adatokat egyenlő arányban ketté vágjuk.  
-Kva**r**tilis: A nagyság szerint sorba rendezett adatokat 4 egyenlő méretű darabra vágjuk.  
-Percentilis: A nagyság szerint sorba rendezett adatokat 100 egyenlő méretű darabra vágjuk.  
+Kva**n**tilis: A nagyság szerint sorba rendezett adatokat adott arányban osztjuk ketté.  
+Medián: A nagyság szerint sorba rendezett adatokat egyenlő arányban osztjuk ketté.  
+Kva**r**tilis: A nagyság szerint sorba rendezett adatokat negyedek szerint osztjuk ketté pl. 3/4 vagy 1/4.  
+Percentilis: A nagyság szerint sorba rendezett adatokat adott arányban osztjuk ketté, amit százalékban adunk meg.  
 
 Részek száma szerint: 
 
-* 50-50% -> medián  ($Q_2$)
+* 50-50% -> medián  ($Q_2$) vagy 50%-os percentilis
 
-* 25-75% -> alsó quartilis ($Q_1$)
+* 25-75% -> alsó quartilis ($Q_1$) vagy 25%-os percentilis
 
-* 75-25% -> felső quartilis  ($Q_3$)
+* 75-25% -> felső quartilis  ($Q_3$) vagy 75%-os percentilis
 
 * bármilyen arány pl. 10-90% ezek a percentilsek (A quartilis \'\'speciális\'\' quantilis!) 
 
@@ -2084,7 +2085,7 @@ sqrt(var(beka$thossz))
 
 Képlet alapján számoljuk:
 
-$$CV = \frac{sd_x}{\bar X}$$
+$$CV = \frac{sd_x}{\bar x}$$
 
 ```{r cv, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 sd(beka$thossz)/mean(beka$thossz)
@@ -2094,7 +2095,7 @@ sd(beka$thossz)/mean(beka$thossz) * 100
 
 # Konfidenciaintervallumok (*KI* vagy *CI*)
 
-A konfidencia intervallumokat azért számolunk, hogy ki tudjuk jelölni, hogyha egy populációból mintát veszünk, és a mintából egy paramétert (általában valami átlag-szerű paramétert) kiszámolunk, nagy valószínűséggel milyen értéket fog felvenni. Ezért kijelölünk bizonyos mértékben megbízhatósági (innen jön a konfidencia) intervallumokat.
+A konfidenciaintervallumokat azért számolunk, mert ebből látható a becslés pontossága: minél szűkebb annál pontosabb a becslés. 
 
 A fejezetben az *asztal.csv* adatbázist használjuk, melyben az első mintát egy olyan gyárból kaptuk, ahol a gyártó állítása szerint az asztallábak hosszának szórása $\sigma = 1 cm$, míg a második minta gyártója nem hozott nyilvánosságra ilyen adatokat. Vegyük észre, hogy az első minta szórását ($SD_x$) kiszámolva nem azt kapjuk, mint amit a gyártó nyilvánosságra hozott, ugyanis $\sigma$ a populáció szórása, míg $SD_x$ csak a mintánk szórása $\sigma \ne SD_x$!
 
@@ -2105,11 +2106,11 @@ str(asztal)
 sd(asztal$minta1.cm)
 ```
 
-## A konfidencia intervallum számítás logikája
+## A konfidenciaintervallum számítás logikája
 
-  1. El kell döntenünk, **milyen eloszlás**t használunk. Ehhez azt kell tudnunk, hogy ismerjük-e a **populáció szórását**. Figyelem: a minta szórását nem elég tudnunk, mert nem arra vagyunk kíváncsiak, hanem a populáció szórására. Ha tehát van egy szórás értékünk, amit egy mintából számoltunk ki, attól még nem fogjuk tudni a populáció szórását! A populáció szórását nagyon kevés helyzetben tudjuk. Ilyen esetek, ha kivettük az összes lehetséges elemet (mintát) így megismertük a populáció valós paramétereit (az ilyen esetek beláthatóan extrém ritkák), vagy ha egy előzetes tanulmány már megbízhatóan megbecsülte azt (irodalmi adatok).    
-    _**A.**_ Ha **ismerjük a szórást**, akkor **normális eloszlás** segítségével kiszámíthatjuk a konfidencia intervallumot. Ekkor **nem kell szórást becsülni**, mivel azt már ismerjük.  
-    _**B.**_ Ha **nem ismerjük a szórást**, akkor egy olyan eloszlást kell választanunk, amivel megbízhatóan tudjuk közelíteni a normális eloszlást, de nem kell hozzá tudnunk a populáció szórását. Ez a **t-eloszlás**. Mivel nem ismerjük, ezért a **populáció szórását becsülni kell** $\chi^2$ eloszlással.
+  1. El kell döntenünk, **milyen eloszlás**t használunk. Ehhez azt kell tudnunk, hogy ismerjük-e a **populáció szórását**. Figyelem: a minta szórását nem elég tudnunk, mert nem arra vagyunk kíváncsiak, hanem a populáció szórására. Ha tehát van egy szórás értékünk, amit egy mintából számoltunk ki, attól még nem fogjuk tudni a populáció szórását! A populáció szórását nagyon kevés helyzetben tudjuk. Ilyen esetek, ha ismerjük a populáció összes elemét, így megismertük a populáció valós paramétereit (az ilyen esetek beláthatóan extrém ritkák), vagy ha egy előzetes tanulmány már megbízhatóan megbecsülte azt (irodalmi adatok).    
+    _**A.**_ Ha **ismerjük a szórást**, akkor **normális eloszlás** segítségével kiszámíthatjuk a konfidenciaintervallumot. Ekkor **nem kell szórást becsülni**, mivel azt már ismerjük.  
+    _**B.**_ Ha **nem ismerjük a szórást**, akkor egy olyan eloszlást kell választanunk, amivel megbízhatóan tudjuk közelíteni a normális eloszlást, de nem kell hozzá tudnunk a populáció szórását. Ez a **t-eloszlás**. 
     
 ```{r tnorm, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE, fig.cap="A standard normál eloszlás jól közelíthető t-eloszlással. Minél nagyobb a t-eloszlás szabadságfokainak száma, annál jobban közelíti a st. normál eloszlást."}
 curve(dnorm(x, mean = 0,sd = 1)
@@ -2140,7 +2141,7 @@ legend("topleft"
        )
 ```
     
-  2. Kijelöljük a **konfidencia intervallum határai**t. 
+  2. Kijelöljük a **konfidenciaintervallum határai**t. 
 
 ```{r echo=FALSE}
 alp = 0.3
@@ -2167,30 +2168,17 @@ ggplot(data.frame(x = c(-3, 3)), aes(x)) +
 
 ```
 
-Ez nem bonyolultabb, mint amikor annak a tartománynak a határoló értékeit kerestük, ami az átlag körüli x \%-ot tartalmazza és szimmetrikus az átlagra. Akkor a \texttt{q..()} függvényeket használtuk az intervallum határainak kiszámításához. Hogy milyen valószínűségnél kell kiszámítani? Ehhez csak azt tudjuk tanácsolni, hogy rajzoljátok le az eloszlást és a kérdéses tartományt. Az $\alpha$ megadja annak a valószínűségét, hogy egy véletlen szám nem esik bele a konfidencia intervallumba. Mivel a *normális* és a *t* eloszlás szimmetrikus, a konfidencia intervallum az átlagra szimmetrikusan fog elhelyezkedni, vagyis azt az átlaghoz közeli tartományt keressük, aminek határozott integrálja (a görbe alatti terület / valószínűség) egyenlő $1-\alpha$ -val. Értelemszerűen a konfidencia intervallum előtti és utáni görbe alatti területek nagysága egyaránt $\alpha/2$ és $\alpha/2$ nagyságú. Mivel a teljes görbe alatti terület nagysága 1, ezért $1=(1-\alpha)+(\alpha/2)+(\alpha/2)$. Tehát, a konfidencia intervallumok határai: $\alpha/2$ és $1-\alpha/2$  
+Ez nem bonyolultabb, mint amikor annak a tartománynak a határoló értékeit kerestük, ami az átlag körüli x \%-ot tartalmazza és szimmetrikus az átlagra. Akkor a \texttt{q..()} függvényeket használtuk az intervallum határainak kiszámításához. Hogy milyen valószínűségnél kell kiszámítani? Ehhez csak azt tudjuk tanácsolni, hogy rajzoljátok le az eloszlást és a kérdéses tartományt. Az $\alpha$ megadja annak a valószínűségét, hogy egy véletlen szám nem esik bele a konfidenciaintervallumba. Mivel a *normális* és a *t* eloszlás szimmetrikus, a konfidenciaintervallum az átlagra szimmetrikusan fog elhelyezkedni, vagyis azt az átlaghoz közeli tartományt keressük, aminek határozott integrálja (a görbe alatti terület / valószínűség) egyenlő $1-\alpha$ -val. Értelemszerűen a konfidenciaintervallum előtti és utáni görbe alatti területek nagysága egyaránt $\alpha/2$ és $\alpha/2$ nagyságú. Mivel a teljes görbe alatti terület nagysága 1, ezért $1=(1-\alpha)+(\alpha/2)+(\alpha/2)$. Tehát, a konfidenciaintervallumok határai: $\alpha/2$ és $1-\alpha/2$  
 
-  3. **Kiszámoljuk** az átlagok konfidencia intervallumának határait az 1. pontban kiválasztott eloszlások és a 2. pontban meghatározott határok alapján. Ebben a további fejezetek nyújtanak segítséget.
-  4. Kiszámoljuk a **variancia konfidencia intervallumát** $\chi^2$ eloszlás segítségével, **ha szükséges** (vagyis ha nem ismert a populáció szórása). Részletesebben a *A variancia konfidencia intervallumának kiszámítása* fejezetben.
+  3. **Kiszámoljuk** az átlag konfidenciaintervallumának határait az 1. pontban kiválasztott eloszlás és a 2. pontban meghatározott határok alapján. Ebben a további fejezetek nyújtanak segítséget.
   
-```{r chi, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
-curve(dchisq(x, df = 3)
-      , from =0, to = 15
-      , col = "red"
-      , las = 1
-      , lty = 1, lwd = 2
-      , ylab = "Suruség"
-      , main = "Khi^2 eloszlás (df=3)"
-      )
+## Az átlag konfidenciaintervallumának kiszámítása a populáció ismert szórása esetén
 
-```
-
-## Az átlag konfidencia intervallumának kiszámítása a populáció ismert szórása esetén
-
-Mivel ismert a szórás, ezért kiszámíthatjuk normális eloszlással. Azonban gondoljuk végig, hogy minek a konfidencia intervallumát akarjuk is mi kiszámítani? Nem a mintáét, hanem a populáció **paramétereinek** a kondidencia intervallumát! Ez azt jelenti, hogy nem a populáció egyedeinek a szórásával ($\sigma$) akarunk számolni, hanem egy olyan mérőszámmal, ami a populációból kivett mintáknak a szórását jellemzi! Ez a standard error ($SE$). A standard error-t ki tudjuk számolni a populáció elemeinek szórásának ($\sigma$) és a minta nagyságának ($n$) ismeretével.
+Mivel ismert a szórás, ezért kiszámíthatjuk normális eloszlással. Azonban gondoljuk végig, hogy minek a konfidenciaintervallumát akarjuk is kiszámítani? Nem a mintáét, hanem a populáció **paramétereinek** a konfidenciaintervallumát! Ez azt jelenti, hogy nem a populáció egyedeinek a szórásával ($\sigma$) akarunk számolni, hanem egy olyan mérőszámmal, ami a populációból kivett mintáknak a szórását jellemzi! Ez a standard error ($SE$). A standard error-t ki tudjuk számolni a populáció elemeinek szórásának ($\sigma$) és a minta nagyságának ($n$) ismeretével.
 
 $$SE=\frac {\sigma} {\sqrt{n}}$$
 
-A konfidencia intervallum határai így:  
+A konfidenciaintervallum határai így:  
 $F_{normális}(\alpha/2, \bar x, \sigma)$ és $F_{normális}(1-\alpha/2, \bar x, \sigma)$
 
 Ha kézzel akarjuk kiszámolni, akkor először át kell alakítanunk a normális eloszlást standard normális eloszlásra. Erre a *Z*-transzformációt használjuk.
@@ -2201,13 +2189,13 @@ $$Z=\frac{x-\bar x}{\sigma}$$
 
 $$x=\bar x + Z*\sigma$$
 
-Így a konfidencia intervallum kiszámítása:
+Így a konfidenciaintervallum kiszámítása:
 
 $$\bar x \pm F_{st. norm.}(\alpha/2) * SE = \bar x \pm F_{st. norm.}(\alpha/2) * \frac {\sigma}{\sqrt{n}} $$
 
 kikeressük az $\alpha /2$-höz tartozó értéket a *z*-táblázatból (mivel valószínűségből keressük az *z*-értéket, ezért a táblázat belsejében keressük ki az $\alpha/2$-t és megnézzük a margón az *z* értékét $\rightarrow F_{st.norm.}(\alpha/2)$), kiszámítjuk a minta darabszámát ($n$) és átlagát ($\bar x$), majd behelyettesítjük a képletbe az ismert $\sigma$ értékkel együtt.
 
-**R**-ben kiszámolva az átlag konfidencia intervallumát $\alpha=0.05$-höz, azaz 95\%-os konfidencia intervallumhoz:
+**R**-ben kiszámolva az átlag konfidenciaintervallumát $\alpha=0.05$-höz, azaz 95\%-os konfidenciaintervallumhoz:
 
 ```{r}
 # az elso mintahoz tartozik gyarto altal megjelolt szoras!
@@ -2225,13 +2213,13 @@ atlag - qnorm(alpha/2)*sigma/sqrt(n) # felso ertek
 atlag + qnorm(alpha/2)*sigma/sqrt(n) # also ertek
 ```
 
-## Az átlag konfidencia intervallumának kiszámítása a populáció szórásának ismerete nélkül
+## Az átlag konfidenciaintervallumának kiszámítása a populáció szórásának ismerete nélkül
 
-*t*-eloszlást használunk, aminek csak egy paramétere van: a szabadsági fokok száma. Mivel a *t*-eloszlás a standard normál eloszlást követi, ezért nekünk is át kell alakítani a paramétereinket a $x=\bar x + Z*\sigma$ képlet használatával. A konfidencia intervallum határai:
+*t*-eloszlást használunk, aminek csak egy paramétere van: a szabadsági fokok száma. Mivel a *t*-eloszlás a standard normál eloszlást követi, ezért nekünk is át kell alakítani a paramétereinket a $x=\bar x + Z*\sigma$ képlet használatával. A konfidenciaintervallum határai:
 
-$$\bar x \pm t_{\alpha/2, df=n-1} * \frac {S_x}{\sqrt{n}}$$
+$$\bar x \pm t_{\alpha/2, df=n-1} * \frac {sd_x}{\sqrt{n}} ,$$
 
-, amiben $S_x$ a mintából becsült szórás, $n-1$ pedig a szabadsági fokok száma. Az quantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ \%-nál és a $1-\alpha/2$ \%-nál keressük \emph{n-1} szabadságfokú *t*-eloszlásból. 
+amiben $sd_x$ a mintából becsült szórás, $n-1$ pedig a szabadsági fokok száma. Az quantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ nál és a $1-\alpha/2$  keressük \emph{n-1} szabadságfokú *t*-eloszlásból. 
 
 Ez **R**-ben, 95\%-os konfidenciaintervallumhoz:
 
@@ -2247,13 +2235,28 @@ atlag + qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # also
 atlag - qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # felso
 ```
 
-## A variancia konfidencia intervallumának kiszámítása
+## A variancia konfidenciaintervallumának kiszámítása
 
-Ha nem ismert a variancia, akkor becsülnünk kell. Ezt $\chi^2$ eloszlással tesszük meg, melynek egyetlen paramétere a szabadsági fokok száma ($n-1$). Így a konfidencia intervallum határai:  
-$\frac {(n-1){S_x}^2} {\chi^2_{\alpha/2, df=n-1} }$ és $\frac {(n-1){S_x}^2} {\chi^2_{1-\alpha/2,df= n-1}}$  
+Ha nem ismert a variancia, akkor becsülnünk kell. Ezt $\chi^2$ eloszlással tesszük meg, melynek egyetlen paramétere a szabadsági fokok száma ($n-1$). 
+
+```{r chi, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+curve(dchisq(x, df = 3)
+      , from =0, to = 15
+      , col = "red"
+      , las = 1
+      , lty = 1, lwd = 2
+      , ylab = "Suruség"
+      , main = "Khi^2 eloszlás (df=3)"
+      )
+
+```
+
+
+Így a konfidenciaintervallum határai:  
+$\frac {(n-1){sd_x}^2} {\chi^2_{\alpha/2, df=n-1} }$ és $\frac {(n-1){sd_x}^2} {\chi^2_{1-\alpha/2,df= n-1}}$  
 A quantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ \%-nál és a $1-\alpha/2$ \%-nál keressük \emph{n-1} szabadságfokú $\chi^2$-eloszlásból. 
 
-Ez **R**-ben, 90\%-os konfidencia intervallumhoz:
+Ez **R**-ben, 90\%-os konfidenciaintervallumhoz:
 
 ```{r}
 minta = asztal$minta2.cm
@@ -2287,7 +2290,7 @@ sarga_pop = rnorm(mean = sarga_MU, sd = sarga_SIGMA, n = POP_SIZES)
 
 ```
 
-Ezután vett belőle két mintát. Véletlenszerű mintát a `sample()` függénnyel tudunk venni: alső argomentumaként a populációt adjuk meg, a `size` argomentumban pedig a minta darabszámát.
+Ezután vett belőle két mintát. Véletlenszerű mintát a `sample()` függénnyel tudunk venni: alső argumentumaként a populációt adjuk meg, a `size` argumentumban pedig a minta darabszámát.
 
 ```{r}
 #Vegyünk egy vöröshasú és egy sárgahasú mintát, mindkettő 100-100-as mintamérettel
@@ -2425,7 +2428,7 @@ mean(voros_minisample)
 sd(voros_minisample)
 ```
 
-Meg szeretnénk állapítani ez alapján hogy az eredeti populáció középértéke ($\mu$) mennyi lehet. Nyilván nagyjából a minta átlaga környékén helyezkedhet el de nem akarunk túl pongyolák lenni, inkább egy tartományt jelölünk ki: 99%-os konfidencia intervallum $\rightarrow$ 99% hogy ott van az átlag.  
+Meg szeretnénk állapítani ez alapján hogy az eredeti populáció középértéke ($\mu$) mennyi lehet. Nyilván nagyjából a minta átlaga környékén helyezkedhet el de nem akarunk túl pongyolák lenni, inkább egy tartományt jelölünk ki: 99%-os konfidenciaintervallum $\rightarrow$ 99% hogy ott van az átlag.  
 ELSŐDLEGES kérdés: Ismerjük-e a populáció átlagok szórását meghatározó paramétert?  
 
   1. Doctor Strange ismeri $\sigma=3 \rightarrow SE= {\sigma} / { \sqrt{n} }$
