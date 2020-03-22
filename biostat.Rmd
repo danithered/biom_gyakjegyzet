@@ -1,5 +1,5 @@
 ---
-title: "Gyakorlati segédanyag Biosztatisztika gyakorlathoz"
+title: "Gyakorlati segédanyag Biostatisztika gyakorlathoz"
 author: "Könnyű Balázs, Radványi Ádám, Vörös Dániel"
 date: "2019/20/2"
 output: pdf_document
@@ -90,7 +90,7 @@ Ha az $i$ index helyébe először behelyettesítünk 1-et, akkor $10^1+1$-et ka
 Az előbbi egyenletet át is alakíthatjuk:
 
 $$ \sum_{j=1}^{3}{(10^i+1)} = \sum_{j=1}^{3}{10^i} + \sum_{j=1}^{3}{1}=\sum_{j=1}^{3}{10^i} + 3 = \\ = 10+100+1000+3=1113 $$
-Az összegből először kiemeljük az $i$-t tartalmazó tagokat, így kapjuk a két *szummás* tagot, melyből a második egy konstans szám (1) háromszori összeadása követkzik (amit elég könnyen kiszámíthatunk). Ennél az egyenletnél ez ugyan felesleges rendezgetésnek tűnhet, de később még hasznos lesz a gyakorlat során.  
+Az összegből először kiemeljük az $i$-t tartalmazó tagokat, így kapjuk a két *szummás* tagot, melyből a második egy konstans szám (1) háromszori összeadása következik (amit elég könnyen kiszámíthatunk). Ennél az egyenletnél ez ugyan felesleges rendezgetésnek tűnhet, de később még hasznos lesz a gyakorlat során.  
 Egy másik példa az átrendezésre:
 
 $$\sum_{i=2}^{4}{i/3} = 2/3+3/3+4/3= 0.667 + 1.000 + 1.333 = 3$$
@@ -107,7 +107,7 @@ A *szumma* műveleteket egymásba is ágyazhatjuk, tehát a külső operátort e
 $$\sum_{a=0}^{2}{ \sum_{b=10}^{12}{b^a} } = \sum_{a=0}^{2}{ (10^a + 11^a +12^a) } = $$
 $$ = (10^0 + 11^0 +12^0) + (10^1 + 11^1 +12^1) + (10^2 + 11^2 +12^2)= $$ 
 $$ = 1+1+1+10+11+12+100+121+144 = 401$$
-Ilyen esetekben először vesszük a külső *szumma* első értékét (ami itt $a=0$), majd elvégezzük a belső *szumma* operátor alapján az összeadást, amit a $b=0$ értékkel kezdünk (azaz $10^0 + 11^0 +12^0$). Majd vesszük $a=1$ értéket, és elvégezzük vele a belső operátor alapján az összeadást újra (eredmény: $10^1 + 11^1 +12^1$), és ezt az összeget hozzáadjuk az előző eredményekhez (eddig: $10^0 + 11^0 +12^0 + 10^1 + 11^1 +12^1$). Ezt folytatjuk mindaddíg, amíg tart a külső operátor számlálója, vagyis $a = 2$-ig.
+Ilyen esetekben először vesszük a külső *szumma* első értékét (ami itt $a=0$), majd elvégezzük a belső *szumma* operátor alapján az összeadást, amit a $b=0$ értékkel kezdünk (azaz $10^0 + 11^0 +12^0$). Majd vesszük $a=1$ értéket, és elvégezzük vele a belső operátor alapján az összeadást újra (eredmény: $10^1 + 11^1 +12^1$), és ezt az összeget hozzáadjuk az előző eredményekhez (eddig: $10^0 + 11^0 +12^0 + 10^1 + 11^1 +12^1$). Ezt folytatjuk mindaddig, amíg tart a külső operátor számlálója, vagyis $a = 2$-ig.
 
 ## A *produktum* operátor
 
@@ -126,10 +126,10 @@ $$ \prod_{i=-1}^{2}{2^i}=(2^{-1}) \cdot (2^0) \cdot (2^1) \cdot (2^2)=0.5 \cdot 
 A gyakorlat során a statisztikai számításokat kézzel és az **R** statisztikai programcsomag segítségével fogjuk elvégezni. Az **R** használata mellett több érvünk is van:
 
  * ingyenes
- * konzolos (szöveges vagy másnéven *script*) alapú felület
+ * konzolos (szöveges vagy más néven *script*) alapú felület
  * az egyik leggyakrabban használt statisztikai program a biológiában
  * erős támogatottság, hatalmas közösség
- * platform független (bár alapvetően linux-ra lett fejlesztve)
+ * platform független (bár alapvetően Linux-ra lett fejlesztve)
  * *package*-ekkel bővíthető, konkrétan bármilyen számítástechnikai feladat elvégzésére képes
  * megbízható és pontos
  * viszonylag könnyen kezelhető
@@ -137,11 +137,11 @@ A gyakorlat során a statisztikai számításokat kézzel és az **R** statiszti
  * biológusok által leggyakrabban használt 
  * ELTE biológus hallgatók más kurzusokon is találkozni fognak vele
 
-A hallgatóknak leggyakrabban az **R** konzol alapú írányításával van gondja, azonban oktatási tapasztalataink szerint a kezdeti nehézségek után sokkal könnyebben tanulható, mint a grafikus kezelőfelületű programok "most ide kattints - majd oda kattints" stílusú kezelése. Valamint így sokkal könnyebben ellenőrizhető a hallgatók tudásának mélysége is.  
+A hallgatóknak leggyakrabban az **R** konzol alapú irányításával van gondja, azonban oktatási tapasztalataink szerint a kezdeti nehézségek után sokkal könnyebben tanulható, mint a grafikus kezelőfelületű programok "most ide kattints - majd oda kattints" stílusú kezelése. Valamint így sokkal könnyebben ellenőrizhető a hallgatók tudásának mélysége is.  
 
 ## Az **RStudio** használata
 
-Az **R** használatát nagyban megkönnyíti az **RStudio** nevű program, ami egy grafikus kezelőfelüleletet nyújt az **R** kezeléséhez.  
+Az **R** használatát nagyban megkönnyíti az **RStudio** nevű program, ami egy grafikus kezelőfelületet nyújt az **R** kezeléséhez.  
 Az **R** és az **RStudio** feltelepítéséhez ebben a segédanyagban nincs útmutatás!  
 
 ![Az RStudio kezelőfelülete első indításkor. A bal felső sarokban lévő ikon segítségével lehet új script fájlt nyitni \label{rst1}](./pics/rst1_2.png)
@@ -151,13 +151,13 @@ Az **RStudio**-ban alapvetően két helyre írhatunk parancsokat: a megnyitott s
 
 ![Az RStudio kezelőfelülete 4 panellel. Parancsokat lefuttatni lehet a script fájlban (felső nyíl) és a Console-ban (alsó nyíl). A script fájlt a bal felső sarokban lévő ikon segítségével lehet menteni (bekarikázva), míg ettől jobbra lehet soronként és egészében lefuttatni a fájlt. Jobb alsó sarokban van a Help fül, ahol függvények leírására lehet keresni (lila keret). \label{rst2}](./pics/rst2_2.png)
 
-Ha meg van nyitva egy script fájl, akkor az **RStudio** felülete négy panelből áll (Fig. \ref{rst2}). A bal felső panelban találjuk a megnyitott script fájlokat. Ezek egyszerű szövegfájlok, amikbe írhatjuk, szerkeszthetjük az **R** parancsokat. A script fájlokban található parancsok egyszerre történő lefuttatásához a panel jobb felső sarokában lévő *"Source"* gombot kell megnyomni, vagy a *"CTRL + SHIFT + ENTER"* billentyűkombinációt.
+Ha meg van nyitva egy script fájl, akkor az **RStudio** felülete négy panelből áll (Fig. \ref{rst2}). A bal felső panelban találjuk a megnyitott script fájlokat. Ezek egyszerű szövegfájlok, amikbe írhatjuk, szerkeszthetjük az **R** parancsokat. A script fájlokban található parancsok egyszerre történő lefuttatásához a panel jobb felső sarkában lévő *"Source"* gombot kell megnyomni, vagy a *"CTRL + SHIFT + ENTER"* billentyűkombinációt.
 
-Az **R** egy interpreter nyelv, tehát a parancsokat egyesével is futtathatjuk, nem csak egyszerre az összeset (Iterpreter programozó nyelv: sorrol sorra haladva értékeli ki, és az eredményt azonnal kiszámolja, megjeleníti.). Egy parancs külön lefuttatásához a panel jobb felső sarkában lévő *"Run"* gombot, vagy a *"CTRL + ENTER"* billentyűkombinációt kell leütni. Ez egyszerre csak egy sort fog kiértékelni/lefuttatni, ezt fogjuk  a gyakorlatok során a legtöbbször alkalmazni. Ha több parancsot szeretnénk egyszerre lefuttatni, de nem az egész script fájl tartalmát, akkor jelöljük ki azt a lefuttatni szándékozott parancsokat tartalmazó szövegrészt, majd nyomjuk le a *"Run"* gombot.
+Az **R** egy interpreter nyelv, tehát a parancsokat egyesével is futtathatjuk, nem csak egyszerre az összeset (Interpreter programozó nyelv: sorról sorra haladva értékeli ki, és az eredményt azonnal kiszámolja, megjeleníti.). Egy parancs külön lefuttatásához a panel jobb felső sarkában lévő *"Run"* gombot, vagy a *"CTRL + ENTER"* billentyűkombinációt kell leütni. Ez egyszerre csak egy sort fog kiértékelni/lefuttatni, ezt fogjuk  a gyakorlatok során a legtöbbször alkalmazni. Ha több parancsot szeretnénk egyszerre lefuttatni, de nem az egész script fájl tartalmát, akkor jelöljük ki azt a lefuttatni szándékozott parancsokat tartalmazó szövegrészt, majd nyomjuk le a *"Run"* gombot.
 
 A script fájlokat a *"File -> Save As..."* útvonalon tudjuk menteni, vagy a *"CTRL + S"* billentyűkombinációval. Az **R** scriptek általánosan használt kiterjesztése (a fájlnév pont utáni része) a .R  vagy .r (például: *myScriptFile.R*).
 
-Alapértelmezés szerint bal oldalon, vagy a bal alsó sarokban találhatjuk a *Console* panelt. A *Console* valójában az **R** igazi kezelőfelülete, az **RStudio** ide másolja be és futtatja a script fájlból a futtatandó sorokat a *"RUN"* (és az összes fent említett) gomb hatására. Ide közvetlenül is írgatunk parancsokat, melyeket az *ENTER* gomb menyomásával futtathatunk. Érdemes megjegyezni, hogy innen a már lefuttatott parancsok visszakereshetők és újra lefuttathatók a *felfele* gomb megnyomásával (ahogy az megszokott Linux konzol és Windows cmd környezetekben).  
+Alapértelmezés szerint bal oldalon, vagy a bal alsó sarokban találhatjuk a *Console* panelt. A *Console* valójában az **R** igazi kezelőfelülete, az **RStudio** ide másolja be és futtatja a script fájlból a futtatandó sorokat a *"RUN"* (és az összes fent említett) gomb hatására. Ide közvetlenül is írhatunk parancsokat, melyeket az *ENTER* gomb megnyomásával futtathatunk. Érdemes megjegyezni, hogy innen a már lefuttatott parancsok visszakereshetők és újra lefuttathatók a *felfele* gomb megnyomásával (ahogy az megszokott Linux konzol és Windows cmd környezetekben).  
 
 ![Az Environment fül. Tartalma megmutatja milyen változókat definiáltunk eddig, a "seprű" gomb pedig kiüríti a környezetet (törli a változókat). \label{rst_env}](./pics/rst_env_2.png)
 
@@ -171,7 +171,7 @@ A jobb alsó sarokban további fontos panelek találhatók. A *Files* fülön eg
 
 ### Változótípusok
 
-Az **R**-t legegyszerűbben úgy képzelhetjük el, mint egy túlbonyolított számológépet. Amit minden számológépnek tudnia kell, azok a számokkal történő egyszerű és bonyolult műveletek. Írjunk be a script fájlba egy egész számot és futtasu mint egy parancs:
+Az **R**-t legegyszerűbben úgy képzelhetjük el, mint egy túlbonyolított számológépet. Amit minden számológépnek tudnia kell, azok a számokkal történő egyszerű és bonyolult műveletek. Írjunk be a script fájlba egy egész számot és futtassuk mint egy parancs:
 
 ```{r}
 -13
@@ -300,7 +300,7 @@ Vagy alkalmazható egyéb műveletekre is:
 !(5 < 3)
 ```
 
-Itt ugye az öt még mindig kisebb a háromnál, tehát a *5 < 3* kifejezés eredménye még mindig *FALSE*, de erre alkamlazva lett egy *!* operátor, így kaptuk a *TRUE*-t.
+Itt ugye az öt még mindig kisebb a háromnál, tehát a *5 < 3* kifejezés eredménye még mindig *FALSE*, de erre alkalmazva lett egy *!* operátor, így kaptuk a *TRUE*-t.
 
 Ha több logikai értékünk van, használhatjuk a *vagy* (**R**-ben jelölése: **|**), illetve az *és* (**R**-ben jelölése: **&**) operátorokat.
 
@@ -344,7 +344,7 @@ Hasznos tudni, hogy logikai értékekre alkalmazhatunk matematikai műveleteket.
 TRUE + FALSE + TRUE
 ```
 
-Mindezt azért tehetjük meg, merta  *TRUE* értéknek az *1*, a *FALSE* értékenek a *0* felel meg. Így válik érthetővé a következő példa erdménye is
+Mindezt azért tehetjük meg, mert a  *TRUE* értéknek az *1*, a *FALSE* értéknek a *0* felel meg. Így válik érthetővé a következő példa eredménye is
 
 ```{r}
 TRUE * FALSE + TRUE
@@ -358,7 +358,7 @@ NA + 3
 
 ### Változók
 
-A matematikában nem csak számokat használunk értékek jelzésére, hanem néha karaktereket is, amiket változóknak hívunk. Az **R**-ben is van lehetőség értékeket elmenteni változókba. A változókat változónevekkel jelöljük és a nevekhez az értékeket a **<-** (*nyíl operátor*ral), vagy az **=** jellel adjuk hozzá. Hivatolosan **R** kódokban a változók definiálásakor a **<-** jelet használják. Mentsünk el egy számot az **R**-ben egy változóba!
+A matematikában nem csak számokat használunk értékek jelzésére, hanem néha karaktereket is, amiket változóknak hívunk. Az **R**-ben is van lehetőség értékeket elmenteni változókba. A változókat változónevekkel jelöljük és a nevekhez az értékeket a **<-** (*nyíl operátor*ral), vagy az **=** jellel adjuk hozzá. Hivatalosan **R** kódokban a változók definiálásakor a **<-** jelet használják. Mentsünk el egy számot az **R**-ben egy változóba!
 
 ```{r}
 a <- 54.2
@@ -391,10 +391,10 @@ A változónevek mindig betűvel kezdődnek, nincs bennük szóköz és nincs be
 
 ### Függvények
 
-Az **R**-ben definiálhatunk függvényeket is. Ezek egyfajta műveletelet határoznak meg, amiket a beadott értékekkel/értékeken hajt végre, pont úgy hogyan a matematikában definiált függvények is működnek. Formailag így írható le:
+Az **R**-ben definiálhatunk függvényeket is. Ezek egyfajta műveleteket határoznak meg, amiket a beadott értékekkel/értékeken hajt végre, pont úgy hogyan a matematikában definiált függvények is működnek. Formailag így írható le:
 
 $$ f(x) = x^2+1$$
-Itt az *f* a függvényünk neve, *x* azok a számok, amikre a függvényt alkalmazzuk (*értelemezési tartomyány* a matematikában), A $f(3)$ például azt jelenti hogy a 3-as értéken hattatjuk az $f$  függvényt. A $x^2+1$ az szabály, ami megmondja, hogy a beadott értékek hogyan változzanak meg. A függvény alakalmazása során az **R** behelyettesíti a változók ($x$) helyére az értékeket ($3$) és elvégezi a műveletet:
+Itt az *f* a függvényünk neve, *x* azok a számok, amikre a függvényt alkalmazzuk (*értelmezési tartomány* a matematikában), A $f(3)$ például azt jelenti hogy a 3-as értéken hattatjuk az $f$  függvényt. A $x^2+1$ az szabály, ami megmondja, hogy a beadott értékek hogyan változzanak meg. A függvény alkalmazása során az **R** behelyettesíti a változók ($x$) helyére az értékeket ($3$) és elvégezi a műveletet:
 
 $$ f(3) = 3^2+1=10 $$
 $$ f(-4) = -4^2+1=17 $$
@@ -437,7 +437,7 @@ A *produktum*ot a **prod()** függvénnyel számíthatjuk ki. Ennek is argumentu
 prod(1, 2, 3, 4, 5)
 ```
 
-Függvényt lehet függvénybe ágyazni! Itt az előbb kiszámolt kifejezést rakjuk bele egy **sum()** függvénybe. Az **R** elöször a belső függvényt értelmezi, aztán a külsőt!
+Függvényt lehet függvénybe ágyazni! Itt az előbb kiszámolt kifejezést rakjuk bele egy **sum()** függvénybe. Az **R** először a belső függvényt értelmezi, aztán a külsőt!
 
 ```{r}
 sum(100, prod(1,2,3,4,5) )
@@ -453,9 +453,9 @@ A függvényekről és használatukról az **R** tartalmaz súgót. Ezt úgy ér
 ?sum
 ```
 
-De a help elérhetó az **RStudio** jobb alsó ablakában is, egy külön fülön, ahol a keresőben kell a parancsot beírni.
+De a help elérhető az **RStudio** jobb alsó ablakában is, egy külön fülön, ahol a keresőben kell a parancsot beírni.
 
-\emph{Megjegyzés.} A függvény argumentumainak nevét nem feltétlenül kell kiirni, de ekkor a függvény a help-ben megadott sorendben értelmezi az argumentumokat. Tehát felcserélhetők az  argumentumok a függvény \'\'hasán\'\' belül, de csak akkor ha kiírjuk az argumentumok neveit, egyébként pedig nem feltétlenül értelemzető kimenetet kapunk. Ebben a példában 1-től 2-ig előállítjuk  a számokat 0.2-es lépésközzel:
+\emph{Megjegyzés.} A függvény argumentumainak nevét nem feltétlenül kell kiírni, de ekkor a függvény a help-ben megadott sorrendben értelmezi az argumentumokat. Tehát felcserélhetők az  argumentumok a függvény \'\'hasán\'\' belül, de csak akkor ha kiírjuk az argumentumok neveit, egyébként pedig nem feltétlenül értelmezhető kimenetet kapunk. Ebben a példában 1-től 2-ig előállítjuk  a számokat 0.2-es lépésközzel:
 
 ```{r wrong, eval=FALSE}
 seq(from = 1, by = 0.2, to = 2) # helyes kód 
@@ -465,7 +465,7 @@ seq(1, 0.2, 2) # hibás kód
 
 ### **R** kommentek
 
-Ha az **R** kódba megjegyzéseket szeretnénk írni, azt kettőskereszt (*hash mark*) jellel tehetjük meg. Ha az **R** találkozik egy kettőskereszt jellel, az utána következő részt nem futtaja le a sor végéig!
+Ha az **R** kódba megjegyzéseket szeretnénk írni, azt kettőskereszt (*hash mark*) jellel tehetjük meg. Ha az **R** találkozik egy kettőskereszt jellel, az utána következő részt nem futtatja le a sor végéig!
 
 ```{r}
 # 3 + 2
@@ -474,9 +474,9 @@ Ha az **R** kódba megjegyzéseket szeretnénk írni, azt kettőskereszt (*hash 
 
 ### Vektorok
 
-A vektorok nem éppen matematikai pontossággal megfogalmazva számhalmazok. A vektorokhoz nagyon hasonló számhalmaz a mátrix is, mely felfogható egymás mellé rendelt vektorok halmazának. Mindkettőnek nagy jelentőssége van a modern tudományokban. Az **R**ben a vektorok és a mátrixok összetett adatípusnak felelnek meg, mely az egyszerű adattípusokból hozható létre. A vektorok, mátrixok és a velük elvégezhető matematikai műveletek elméletileg a tárgy előkövetelményeként szereplő *Matematika GY* tárgy programjában szerepelnek és itt egy részét alakalmazni fogjuk.
+A vektorok nem éppen matematikai pontossággal megfogalmazva számhalmazok. A vektorokhoz nagyon hasonló számhalmaz a mátrix is, mely felfogható egymás mellé rendelt vektorok halmazának. Mindkettőnek nagy jelentősége van a modern tudományokban. Az **R**ben a vektorok és a mátrixok összetett adattípusnak felelnek meg, mely az egyszerű adattípusokból hozható létre. A vektorok, mátrixok és a velük elvégezhető matematikai műveletek elméletileg a tárgy előkövetelményeként szereplő *Matematika GY* tárgy programjában szerepelnek és itt egy részét alkalmazni fogjuk.
 
-Az **R**-ben vektorokat soféleképp adhatunk meg. Az egyik módja, hogy megadjuk mettől meddig menjen a vektorunk egyesével egy **:** jel segítségével.
+Az **R**-ben vektorokat sokféleképp adhatunk meg. Az egyik módja, hogy megadjuk mettől meddig menjen a vektorunk egyesével egy **:** jel segítségével.
 
 ```{r}
 1:5 #egy kifejezes utan is irhatunk kommentet, igen!!
@@ -575,7 +575,7 @@ myvektor1[2:4] <- myvektor2
 myvektor1
 ```
 
-Ha vektorokkal végzünk műveleteket, akkor az **R** alapértelemezés szerint mindegyik elemével elvégzi a műveletet.
+Ha vektorokkal végzünk műveleteket, akkor az **R** alapértelmezés szerint mindegyik elemével elvégzi a műveletet.
 
 ```{r}
 myvektor1 * (-1)
@@ -586,7 +586,7 @@ myvektor1 + 100
 
 Matematikai értelemben vett vektor- és mátrixműveletek is vannak az **R**-ben, ezekről azonban egy későbbi órán fogunk beszélni!
 
-**Fontos** megjegyezni, hogy az **R**-ben a vektorok alapértelmezettként mindig oszlopvektorok jelentenek, mégha az **R** nem is úgy jeleníti meg őket!
+**Fontos** megjegyezni, hogy az **R**-ben a vektorok alapértelmezettként mindig oszlopvektorok jelentenek, még ha az **R** nem is úgy jeleníti meg őket!
 
 ### Az *eleme-e* operátor
 
@@ -615,7 +615,7 @@ Mátrixokat a \texttt{matrix()} függvény segítségével hozhatunk létre. Vá
 matrix(1, ncol = 2, nrow = 3)
 ```
 
-Mivel általában nem egyféle értékkel akarjuk a mátrixunkat inicializálni (kezdőértéket adni, feltölteni), megadhatunk több értéket is a változóban. Ezt termszetesen vektor formájában tesszük meg, hisz így tudunk egy változóban több értéket tárolni!
+Mivel általában nem egyféle értékkel akarjuk a mátrixunkat inicializálni (kezdőértéket adni, feltölteni), megadhatunk több értéket is a változóban. Ezt természetesen vektor formájában tesszük meg, hisz így tudunk egy változóban több értéket tárolni!
 
 ```{r}
 matrix(1:9, ncol = 3)
@@ -627,7 +627,7 @@ A \texttt{byrow} argumentum \texttt{TRUE}-ra állításával tudjuk a mátrixunk
 matrix(1:9, ncol = 3, byrow = TRUE)
 ```
 
-A mátrixokkal is úgy tudunk műveletekt elvégezni egyszerre, mint a vektorok esetében is.
+A mátrixokkal is úgy tudunk műveleteket elvégezni egyszerre, mint a vektorok esetében is.
 
 ```{r}
 matrix1 <- matrix(1:12, nrow = 3, byrow = TRUE)
@@ -677,7 +677,7 @@ matrix1[, 2] <- 7:9
 matrix1
 ```
 
-Mátrix \emph{dimenzió}it (sorok és oszlopk számát) a következő függvényekkel kérdezhetjük le:
+Mátrix \emph{dimenzió}it (sorok és oszlopok számát) a következő függvényekkel kérdezhetjük le:
 
 ```{r}
 ncol(matrix1) #oszlopok szama
@@ -691,7 +691,7 @@ Ha a mátrix celláinak összegére vagyunk kíváncsiak:
 sum(matrix1)
 ```
 
-A mátrix minden adatának típusa azonos, azaz vannak \texttt{numeric}, \texttt{integer}, \emph{szöveg} stb típusu mátrixok!
+A mátrix minden adatának típusa azonos, azaz vannak \texttt{numeric}, \texttt{integer}, \emph{szöveg} stb típusú mátrixok!
 
 ```{r}
 m2 <- matrix1
@@ -702,13 +702,13 @@ m2
 
 ### *data.frame*-ek
 
-A *data.frame*-ek olyan adatstruktúrák, melyeket adatbázisok tárolására használjuk. Ez egy két dimenziós adatstruktúra, melyben az oszlopokban különféle adatokat tárolunk (ezek felfoghatók egy-egy vektornak is). Ezeket hívjuk **mező**knek. A sorokban pedig a viszgált objektumok, minta elemek tulajdonságait tároljuk. Általában, de nem feltétlenül egy sorban csak egy objektum tulajdonságait tároljuk. Ezeket a sorokat **rekord**oknak hívjuk. Ez az adatbázis struktúra minden adatbázis kezelő szoftverben megjelenik. Nézzünk egy példát!
+A *data.frame*-ek olyan adatstruktúrák, melyeket adatbázisok tárolására használjuk. Ez egy két dimenziós adatstruktúra, melyben az oszlopokban különféle adatokat tárolunk (ezek felfoghatók egy-egy vektornak is). Ezeket hívjuk **mező**knek. A sorokban pedig a vizsgált objektumok, minta elemek tulajdonságait tároljuk. Általában, de nem feltétlenül egy sorban csak egy objektum tulajdonságait tároljuk. Ezeket a sorokat **rekord**oknak hívjuk. Ez az adatbázis struktúra minden adatbázis kezelő szoftverben megjelenik. Nézzünk egy példát!
 
 ```{r}
 data.frame(c("bela", "jano"), c(TRUE, FALSE), c(10,12))
 ```
 
-Ebben a *data.frame*-ben emeberek adatai a rekordok. Az első mezőben a nevüket tároljuk, a másodikban azt, hogy láttak-e már kanalasgémet, a harmadikban pedig az életkorukat. A \texttt{data.frame()} függvénybe sorra megadjuk a mezők adatait, vesszővel elválasztva. Ha egynél több rekordot szeretnénk megadni, akkor azokat vektor formájában kell bevinnünk. A mezőknek nevet is adhatunk, így már látni fogjuk, hogy milyen adatokat tartalmaznak:
+Ebben a *data.frame*-ben emberek adatai a rekordok. Az első mezőben a nevüket tároljuk, a másodikban azt, hogy láttak-e már kanalasgémet, a harmadikban pedig az életkorukat. A \texttt{data.frame()} függvénybe sorra megadjuk a mezők adatait, vesszővel elválasztva. Ha egynél több rekordot szeretnénk megadni, akkor azokat vektor formájában kell bevinnünk. A mezőknek nevet is adhatunk, így már látni fogjuk, hogy milyen adatokat tartalmaznak:
 
 ```{r}
 data.frame(nev=c("bela", "jano"), kanalasgem=c(TRUE, FALSE), kor=c(10,12))
@@ -718,7 +718,7 @@ Fontos megjegyezni, hogy csak egyforma hosszú vektorokat rakhatunk egy *data.fr
 
 Azért hasznos ez az adatstruktúra, mert egy változóban tudunk tárolni többféle típusú adatot is (a mátrixokkal ellentétben). Itt a *nev* oszlopban szoveges adatok vannak, a *kanalasgem* oszlopban logikai értékek, míg a *kor* oszlopban számok.
 
-A *data.frame*-ek adatait tárolhatjuk, lekérdezhetjük és módosíthajuk úgy, mint a mátrixoknál láttuk.
+A *data.frame*-ek adatait tárolhatjuk, lekérdezhetjük és módosíthatjuk úgy, mint a mátrixoknál láttuk.
 
 ```{r}
 df <- data.frame(nev=c("bela", "jano"), kanalasgem=c(TRUE, FALSE), kor=c(10,12))
@@ -797,9 +797,9 @@ elemek <- c("b", "b", "t", "b")
 table(elemek)
 ```
 
-Itt láhatjuk, hogy az *elemek* vektorban 3 db *b* és 1 db *t* van.
+Itt láthatjuk, hogy az *elemek* vektorban 3 db *b* és 1 db *t* van.
 
-A \texttt{round()} paranccsal kerekíthetjük a számokat a második argumentumként megadott tizedesjegyjre.
+A \texttt{round()} paranccsal kerekíthetjük a számokat a második argumentumként megadott tizedesjegyre.
 
 ```{r}
 1/3
@@ -809,7 +809,7 @@ round(1/3, 2)
 
 ## Általános tanácsok
  
- * ha az **R** megkérdezi, hogy milyen karakterkódolást használjuk a script fájl mentése soránjon, akkor az **UTF-8** -at válasszuk (Fig. \ref{rst_encoding})! 
+ * ha az **R** megkérdezi, hogy milyen karakterkódolást használjuk a script fájl mentése során, akkor az **UTF-8** -at válasszuk (Fig. \ref{rst_encoding})! 
  * **ne** használjunk ékezetes karaktereket az **R** kódunkban!
  * az **R** **tizedespont**ot használ, nem tizedesvesszőt!
  * fájl és mappanevekben soha **ne** használjunk ékezetes karakter, speciális karaktert vagy szóközt! (helyette mondjuk alulvonás _ használható)
@@ -822,7 +822,7 @@ round(1/3, 2)
 
 Ezt a fejezetet hagyják ki, akik ismerik a következő fogalmakat: "mappa", "elérési útvonal"!   
 
-A mai operációs rendszerek a háttértáron tárolt fájlokat egy mappastuktúrába rendezik. Ez a mappastruktúra azért létezik, hogy a mi tájékozódásunkat segítse a fájljaink között. Az emberi elme ugyanis szereti hierarchikusan rendezni / rendszerezni a dolgokat. A mappastruktúrában a mappákat mint rendszerező "dobozokat" lehet elképzelni. 
+A mai operációs rendszerek a háttértáron tárolt fájlokat egy mappastruktúrába rendezik. Ez a mappastruktúra azért létezik, hogy a mi tájékozódásunkat segítse a fájljaink között. Az emberi elme ugyanis szereti hierarchikusan rendezni / rendszerezni a dolgokat. A mappastruktúrában a mappákat mint rendszerező "dobozokat" lehet elképzelni. 
 
 Képzeljük el, hogy van 100 darab legódarabkánk és azt szeretnénk elérni, hogy gyorsan ki tudjuk mindig keresni a megfelelő legódarabot. Ekkor elrakhatjuk a legóinkat úgy is, hogy veszünk két dobozt: az egyikre ráírjuk, hogy "lapos", a másikra pedig, hogy "magas". Azonban a legók nem csak vastagságban térnek el, így a már meglévő dobozokon belül új dobozokat helyezhetünk el a legó egységek számának jelzésére: "1", "2x2", "2x3", stb. De a "vastag", "2x2" -es legók sem egyformák, így rakhatunk újabb dobozokat a kis dobozokon belülre is, mondjuk a színek szerint: "sárga", "szürke", "fehér". Most, hogy van sok dobozunk, elhelyezhetjük a legóinkat, úgy, hogy ha kell egy nagy fehér 2x3-as elem, egyből tudjuk, hogy sorra a "vastag", "2x2" és "fehér" dobozokat kell kinyitnunk. Ezzel a módszerrel sokkal gyorsabban kereshetünk, mintha 100 összekevert eltérő kocka közül kéne kiválogatni a megfelelőt. Persze az is lehet, hogy van egy vastag 1-es elem, aminek különleges hupikék színe van. Ennek nem biztos, hogy érdemes új dobozt nyitni, mert csak egy van belőle, így az dobhatjuk a "vastag" dobozon belüli "1" -es dobozba is. Tehát egy doboz tartalmazhat más dobozokat és legókockákat is egyszerre. A számítógépek mappastruktúráját is így lehet elképzelni.  
 
@@ -857,11 +857,11 @@ cat(dirtree_path, sep="\n")
 
 Itt a fájlok nevei előtt hierarchikusan a gyökértől kezdve fel vannak sorolva a mappák, amikben vannak. Így pontosan tudjuk milyen mappákat milyen sorrendben kell megnyitni, hogy megtaláljuk a keresett fájlt.
 
-Fontos megjegyezni, hogy például a webcímek is elérési útvonalak. Például a kurzus honlapja: "http://plantsys.elte.hu/drupal/hu/oktatas/biometria" esetén a "biometria" az oldal, amit el akarunk érni, a "http://" rész megmondja a számítógépnek, hogy milyen protokolt használjon az oldal eléréséhez, a "plantsys.elte.hu" a szerver neve, azon belül a "drupal", a "hu" és "oktatas" mappákban van a "biometria" oldal.
+Fontos megjegyezni, hogy például a webcímek is elérési útvonalak. Például a kurzus honlapja: "http://plantsys.elte.hu/drupal/hu/oktatas/biometria" esetén a "biometria" az oldal, amit el akarunk érni, a "http://" rész megmondja a számítógépnek, hogy milyen protokollt használjon az oldal eléréséhez, a "plantsys.elte.hu" a szerver neve, azon belül a "drupal", a "hu" és "oktatas" mappákban van a "biometria" oldal.
 
 ## Az **R** munkakönyvtára
 
-Az **R** jó linuxos programként mindig egy adott könyvtárban dolgozik. Alapértelmezettként innen olvas és ide ír fájlokat. Ezt hívjuk munkakönyvtárnak (*working directory*). Ha meg akajuk tudni melyik ez a könyvtár:
+Az **R** jó linuxos programként mindig egy adott könyvtárban dolgozik. Alapértelmezettként innen olvas és ide ír fájlokat. Ezt hívjuk munkakönyvtárnak (*working directory*). Ha meg akarjuk tudni melyik ez a könyvtár:
 
 ```{r getwd, eval=F}
 getwd()
@@ -871,7 +871,7 @@ getwd()
 print("/gyoker/mappaB/mappaBA")
 ```
 
-Meg is változtathatjuk a *working directory*-t. Ha egy almappát akarunk megtenni munkakönyvtárnak, akkor elég az almappa nevét megadni **szövegként** (*realtív fájlelérési útvonal*: csak egy adott könyvtárszinthez képest adjuk meg a *working directory*-t):
+Meg is változtathatjuk a *working directory*-t. Ha egy almappát akarunk megtenni munkakönyvtárnak, akkor elég az almappa nevét megadni **szövegként** (*relatív fájlelérési útvonal*: csak egy adott könyvtárszinthez képest adjuk meg a *working directory*-t):
 
 ```{r setwd, eval=F}
 setwd("mappaBAB") #a "mappaBAB" helyére egy valós mappanevet írjanak!
@@ -887,7 +887,7 @@ getwd()
 print("/gyoker/mappaB/mappaBA/mappaBAB")
 ```
 
-Ha nem almappára akarjuk változtatni a munkakönyvtárat, akkor **teljes** (vagy *aboszulút*) elérési útvonalat is meg lehet neki adni (ez a *gyökérkönyvtárhoz képest adja meg a fájl helyét*):
+Ha nem almappára akarjuk változtatni a munkakönyvtárat, akkor **teljes** (vagy *abszolút*) elérési útvonalat is meg lehet neki adni (ez a *gyökérkönyvtárhoz képest adja meg a fájl helyét*):
 
 ```{r setwd2, eval=F}
 setwd("/gyoker/mappaB/mappaBA") #ez nem valos eleresi utvonal!
@@ -909,7 +909,7 @@ Ha *Asztal*-on vagy *Dokumentumok*-ban vannak a fájlok, akkor úgy kell kikeres
 
 A gyakorlat, valamint jövőbeli adatelemzéseitek során legtöbbször szöveges adattáblából kell az adataitokat beolvasni. Ezek (*.txt, .dat, .csv, .tsv*) kiterjesztésűek.
 
-Először is a beolvasandó fájl elérési útvonalát kell megkeresni. Két lehetoseg van "OPCIÓ 1" es "OPCIÓ 2", mindenki azt válassza, amelyik számára szimpatikusabb! A jegyzet írói a további fejezetekben az "OPCIÓ 1"-et fogja használni.
+Először is a beolvasandó fájl elérési útvonalát kell megkeresni. Két lehetőség van "OPCIÓ 1" es "OPCIÓ 2", mindenki azt válassza, amelyik számára szimpatikusabb! A jegyzet írói a további fejezetekben az "OPCIÓ 1"-et fogja használni.
 
 ### OPCIO 1 - elérési útvonallal - haladó megoldás
 
@@ -940,7 +940,7 @@ print("/gyoker/mappaB/mappaBA")
 utvonal1 <- "/gyoker/mappaB/mappaBA/csor.csv"
 ```
 
-Két féle elérési útvonalat kell megkülönböztetnünk: relatív és abszolút. Relatív hivatkozás alatt a munkakönyvtárból kiinduló útvonalat értjük. Tehát ha a munkakönyvtár most a "/gyoker/mappaB", akkor a "csor.csv" fájlhoz a relatív elérési útvonal a következő: "mappaBA/csor.csv". Ha viszont a munkakönyvtár a "/gyoker/mappaB/mappaBA", akkor ugyanahhoz a fájlhoz a relatív elérési útvonalam csak ennyi: "csor.csv". A relatív elérési útvonal tehát változik attól függően, hogy mi a munkakönyvtár. Ellenben az abszolút elérés útvonal a gyökérkönyvtárhoz képest adja meg a fájl helyét: "/gyoker/mappaB/mappaBA/csor.csv". Így ez független attól, hogy mi az elérési útvonalam. Az abszolút elérési útvonalat úgy is megkaphatjuk, hogy egy fájlböngészőben kikertessük a megnyitni szándékozott fájlt, kijelöljük és másoljuk (CTRL + C, vagy jobbklikk -> Másolás), majd belemegyünk az **RStudio** valamelyik szöveges felületére, és "beillesztjük" a fájlt. Ekkor egy ehhez hasonló elérési útvonalat kapunk: `"file:///gyoker/mappaB/mappaBA/csor.csv"`. Ez ebben a formában is használható, még Windows esetén is.  
+Két féle elérési útvonalat kell megkülönböztetnünk: relatív és abszolút. Relatív hivatkozás alatt a munkakönyvtárból kiinduló útvonalat értjük. Tehát ha a munkakönyvtár most a "/gyoker/mappaB", akkor a "csor.csv" fájlhoz a relatív elérési útvonal a következő: "mappaBA/csor.csv". Ha viszont a munkakönyvtár a "/gyoker/mappaB/mappaBA", akkor ugyanahhoz a fájlhoz a relatív elérési útvonalam csak ennyi: "csor.csv". A relatív elérési útvonal tehát változik attól függően, hogy mi a munkakönyvtár. Ellenben az abszolút elérés útvonal a gyökérkönyvtárhoz képest adja meg a fájl helyét: "/gyoker/mappaB/mappaBA/csor.csv". Így ez független attól, hogy mi az elérési útvonalam. Az abszolút elérési útvonalat úgy is megkaphatjuk, hogy egy fájlböngészőben kikeressük a megnyitni szándékozott fájlt, kijelöljük és másoljuk (CTRL + C, vagy jobbklikk -> Másolás), majd belemegyünk az **RStudio** valamelyik szöveges felületére, és "beillesztjük" a fájlt. Ekkor egy ehhez hasonló elérési útvonalat kapunk: `"file:///gyoker/mappaB/mappaBA/csor.csv"`. Ez ebben a formában is használható, még Windows esetén is.  
 Ha megvan az elérési útvonalunk, akkor `read.table()` függvénnyel tudjuk beolvasni.
 
 ```{r filechoose_0, eval=FALSE}
@@ -952,7 +952,7 @@ A `read.table()` függvény további argumentumai is szükségesek, hogy megfele
 
 ### OPCIO 2 - `file.choose()` - kezdő megoldás
 
-A `file.choose()` függvény hatására megnyílik egy új ablak, ami a számítógép fájl endszerét mutatja (pontosabban az aktuális munkakönyvtárat mutatja). Itt megkereshető a fájl, amivel dolgozni szeretnénk és kimásolja a fájl teljes elérési útvonalát szövegként. *Megjegyzés.* Gyakori, hogy a `file.choose()` hatásár megnyiló új ablak az **RStudio** ablaka mögé kerül.
+A `file.choose()` függvény hatására megnyílik egy új ablak, ami a számítógép fájl rendszerét mutatja (pontosabban az aktuális munkakönyvtárat mutatja). Itt megkereshető a fájl, amivel dolgozni szeretnénk és kimásolja a fájl teljes elérési útvonalát szövegként. *Megjegyzés.* Gyakori, hogy a `file.choose()` hatásár megnyíló új ablak az **RStudio** ablaka mögé kerül.
 
 ```{r filechoose_1, eval=FALSE}
 utvonal1 <- file.choose()
@@ -962,7 +962,7 @@ utvonal1 <- file.choose()
 utvonal1 # nezzetek meg tenyleg jo fajlra mutat-e!
 ```
 
-Elmentjük ezt az utvonalat egy változóba. Ez azért célszerű, hogy később ha gond lenne a beolvasással ne kelljen minden alkalommal újra kikeresni a fájlt.
+Elmentjük ezt az útvonalat egy változóba. Ez azért célszerű, hogy később ha gond lenne a beolvasással ne kelljen minden alkalommal újra kikeresni a fájlt.
 
 A fájlt ekkor így olvassuk be:
 
@@ -971,11 +971,11 @@ read.table(utvonal1)
 #read.table(utvonal1, sep=";", header=TRUE,	dec="." )
 ```
 
-Fontos megjegyezni, hogy ekkor nem kell idézőjel az *utvonal1* mellé, hisz az egy változó, ami szöveget tartalmaz, nem pedig szöveg! A `read.table()` függvény további argumentumai is szükségesek, hogy megfelelően beolvassuk a fájlt, ezek a következő fejezetben lesznek tárgyalva. Azonban a következő fejezetet már az "OPCIÓ1" szerint fogjuk tárgyalni, ahol az útvonalat szöveként tesszük be az első argumentumként!
+Fontos megjegyezni, hogy ekkor nem kell idézőjel az *utvonal1* mellé, hisz az egy változó, ami szöveget tartalmaz, nem pedig szöveg! A `read.table()` függvény további argumentumai is szükségesek, hogy megfelelően beolvassuk a fájlt, ezek a következő fejezetben lesznek tárgyalva. Azonban a következő fejezetet már az "OPCIÓ1" szerint fogjuk tárgyalni, ahol az útvonalat szövegként tesszük be az első argumentumként!
 
 ### A táblázat beolvasása
 
-Mielőtt beolvasnánk az adattáblát nézzük meg a fájlunkat egyszerű szövegszerkesztővel. (Windows: fájl kijelöl -> jobbklikk -> Társitás -> Jegyzettömb vagy Notepad++; Linux: ugyanez csak más programokkal, pl. Kate, gedit) Fontos, hogy ne nyissuk meg MS Excel vagy LibreOffice Calc programmal, mert ezek nem fogják megmutatni nekünk azokat a tulajdonságokat, amikre kíváncsiak vagyunk, valamint gyakran átírják magát a fájlt is!
+Mielőtt beolvasnánk az adattáblát nézzük meg a fájlunkat egyszerű szövegszerkesztővel. (Windows: fájl kijelöl -> jobbklikk -> Társítás -> Jegyzettömb vagy Notepad++; Linux: ugyanez csak más programokkal, pl. Kate, gedit) Fontos, hogy ne nyissuk meg MS Excel vagy LibreOffice Calc programmal, mert ezek nem fogják megmutatni nekünk azokat a tulajdonságokat, amikre kíváncsiak vagyunk, valamint gyakran átírják magát a fájlt is!
 
 Jegyzeteljük le magunknak a következő adatokat: mező elválasztó jel, decimális karakter, van-e fejléc(\emph{header}).
  
@@ -1010,7 +1010,7 @@ Első helyre a beolvasandó fájl elérési útját, a `sep` argumentumban a mez
 
 ### Beolvasás ellenőrzése
 
-A beolvasott fájlt mindig ellenőrizzük az `str()` függvény segítségével!! Az `str()` függvény adja a legbővebb információt, de lehet azon kívűl a `head()` és a `tail()` függvényeket is használi lsád később.
+A beolvasott fájlt mindig ellenőrizzük az `str()` függvény segítségével!! Az `str()` függvény adja a legbővebb információt, de lehet azon kívül a `head()` és a `tail()` függvényeket is használni lásd később.
 
 ```{r}
 str(csoradat)
@@ -1096,7 +1096,7 @@ kutyus[2:4, ]
 kutyus[c(2,3,4), ] #egyenertekuek
 ```
 
-Ha pedig arra vagyunk kíváncsiak, hogy a második kivételével, milyen adatok vannak a rekordban, akkor azt egy mínusz (**-**) előjellel jelezzzük.
+Ha pedig arra vagyunk kíváncsiak, hogy a második kivételével, milyen adatok vannak a rekordban, akkor azt egy mínusz (**-**) előjellel jelezzük.
 
 ```{r}
 kutyus[-2, ]
@@ -1147,7 +1147,7 @@ Megszámoljuk:
 sum(kutyus$marmagassag > 30)
 ```
 
-Logikai müveletekkel pedig megnézhetjük melyik 1-es mintázatú kutyák marmagassága nagyobb mint 30 cm. Ehhez először is tudnunk kell melyikük nőstények, aztán tudnunk kell melyik nagyobb mint 30 cm és azokat kell látnunk, amikben ez a két tulajdonság egyszerre megvan. Ezt a logikai *ÉS* művelettel tudjuk megtenni.
+Logikai műveletekkel pedig megnézhetjük melyik 1-es mintázatú kutyák marmagassága nagyobb mint 30 cm. Ehhez először is tudnunk kell melyikük nőstények, aztán tudnunk kell melyik nagyobb mint 30 cm és azokat kell látnunk, amikben ez a két tulajdonság egyszerre megvan. Ezt a logikai *ÉS* művelettel tudjuk megtenni.
 
 ```{r}
 kutyus$mintazat == 1 & kutyus$marmagassag > 30
@@ -1212,7 +1212,7 @@ Most már csak be kell írnunk a többi feltételt (és legyen 30 cm-nél magasa
 kutyus[kutyus$mintazat %in% c(1, 3) & kutyus$marmagassag > 30, c("nev", "kor")]
 ```
 
-**Összefoglalva:** ha adatbázisban szűrni akarunk, leírjuk az adatbázis nevét, majd utána az indexelő operátorokat, elválasztva a vesszővel (`valtozonev[ , ]`). A vessző elé beírjuk, hogy mely sorokra vagyunk kíváncsi, utána pedig, hogy mely oszlopokra/mezőkre (`valtozonev[ sor , oszlop ]`). A sorokat logikai lekérdezésekkel (**==, !=, <, > <=, >=, %in%**) adjuk meg, melyeket logikai operátorokkal köthetünk össze (**&, |, !**). A kívant oszlopokat pedig a nevükkel vagy sorszámukkal adjuk meg (ha többre vagyunk kíváncsiak, természetesen vektorként!).
+**Összefoglalva:** ha adatbázisban szűrni akarunk, leírjuk az adatbázis nevét, majd utána az indexelő operátorokat, elválasztva a vesszővel (`valtozonev[ , ]`). A vessző elé beírjuk, hogy mely sorokra vagyunk kíváncsi, utána pedig, hogy mely oszlopokra/mezőkre (`valtozonev[ sor , oszlop ]`). A sorokat logikai lekérdezésekkel (**==, !=, <, > <=, >=, %in%**) adjuk meg, melyeket logikai operátorokkal köthetünk össze (**&, |, !**). A kívánt oszlopokat pedig a nevükkel vagy sorszámukkal adjuk meg (ha többre vagyunk kíváncsiak, természetesen vektorként!).
 
 ### Adatok rendezése
 
@@ -1241,10 +1241,10 @@ kable(asztal2[(nrow(asztal2)*0.4):(nrow(asztal2)*0.6),])
 
 ### Oszloptípusok megváltoztatása
 
-Bizonyos adatelemzési módszerek megkövetelik, hogy egy *data.frame* oszlopai megfelő formátumúak legyenek. A különböző formátumok:
+Bizonyos adatelemzési módszerek megkövetelik, hogy egy *data.frame* oszlopai megfelelő formátumúak legyenek. A különböző formátumok:
 
   * *int* (*integer*) és *num* (*numeric*): akkor használjuk, ha a változót arány-, intervallum skálás adatként vagy rangként akarjuk kezelni. Ezzel találkozunk a legtöbbet.
-  * *logi* (*logical*): ligikai adatok: igen (*TRUE*) - nem (*FLASE*) formában.
+  * *logi* (*logical*): logikai adatok: igen (*TRUE*) - nem (*FLASE*) formában.
   * *character*: csak akkor használjuk, ha karakterműveleteket akarunk az adott mezővel végezni, vagy ki akarjuk íratni. Így ez a statisztikai elemzések során legritkábban használt adattípus.
   * *factor*: ha az adat egy nominális skálájú változó, mely csoportba való tartozást jelöl. Vigyázni kell vele, mert gyakran keveredik az előző kategóriákkal, gondot okozva az adatelemzésben.
 
@@ -1292,7 +1292,7 @@ Hiányzó adatok felderítésre több lehetőség is kínálkozik
 summary(kutyus)
 ```
 
-* \texttt{which()+is.na()} amellyel konkrétan megkereshető hol van a hiányzó adat. Ez akkor lehet hasznos ha kiderül, hogy az adat valójában nem is hányzik, csak valamit rosszul rögzítettünk
+* \texttt{which()+is.na()} amellyel konkrétan megkereshető hol van a hiányzó adat. Ez akkor lehet hasznos ha kiderül, hogy az adat valójában nem is hiányzik, csak valamit rosszul rögzítettünk
 
 ```{r NA2, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 index <- which(is.na(kutyus)==TRUE, arr.ind = TRUE)
@@ -1316,7 +1316,7 @@ sum(kutyus$kor) #masik pelda
 sum(kutyus$kor, na.rm = TRUE)
 ```
 
-Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából a hiányos rekordokat. Vigyázat, ez a függvény minden olyan sort töröl, amiben `NA` van! A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot `TRUE`, az egy vagy több hányzó adatot tartalamzó rekordot `FALSE` jelöli. Ha ezt tesszük meg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
+Az utóbbira megoldást az  `na.omit()` és `complete.cases()` függvények jelentik. Az `na.omit()` kidobálja az adattáblából a hiányos rekordokat. Vigyázat, ez a függvény minden olyan sort töröl, amiben `NA` van! A `complete.cases()` egy olyan logikai vektorral tér vissza amelyben a teljes rekordot `TRUE`, az egy vagy több hiányzó adatot tartalmazó rekordot `FALSE` jelöli. Ha ezt tesszük meg a változó sorindexének akkor csak a teljes rekordokat írja ki változóba/képernyőre. 
 
 ```{r}
 str(kutyus)
@@ -1333,7 +1333,7 @@ kutyus3 <- kutyus[complete.cases(kutyus),]
 str(kutyus3)
 ```
 
-Alkalmazhatunk logikai lekérdezést is, ha csak azokat a sorokat akarjuk kivenni a vizsgálatból, melyeknek csak egy bizonyos oszlopában van *NA*. Az `is.na()` megmondja minden egyes értékre, hogy `NA`-e? Ha ezt párosítjuk a *logikai nem* operátorral (**!**), akkor megkapjuk azokat az elmeket, melyek *NA*-k.
+Alkalmazhatunk logikai lekérdezést is, ha csak azokat a sorokat akarjuk kivenni a vizsgálatból, melyeknek csak egy bizonyos oszlopában van *NA*. Az `is.na()` megmondja minden egyes értékre, hogy `NA`-e? Ha ezt párosítjuk a *logikai nem* operátorral (**!**), akkor megkapjuk azokat az elemeket, melyek *NA*-k.
 
 ```{r}
 is.na( c(2,4,NA,0) )
@@ -1414,14 +1414,14 @@ plot(x, y
 )
 ```
 
-A `type` argumentummal megadhatjuk, hogy milyen ábrázolási módodot szeretnénk:
+A `type` argumentummal megadhatjuk, hogy milyen ábrázolási módot szeretnénk:
 
   * "p": pontdiagram, ez az alapértelmezett
   * "l": vonaldiagram
   * "b": pont és vonaldiagram is (**b**oth), a pontok nincsenek a vonallal áthúzva
   * "c": az előző típus vonalai kizárólag
   * "o": pont és vonaldiagram is, a pontok át vannak húzva a vonallal
-  * "h": a pontokat oszlopk jelzik az *X* tengely felől
+  * "h": a pontokat oszlopok jelzik az *X* tengely felől
   
 ```{r myfirstplot_l, fig.cap="Vonaldiagram"}
 plot(x, y, type="l")
@@ -1478,7 +1478,7 @@ plot(x, y, log="xy")
 
 ### Argumentumok
 
-A plottolás és egyéb grafikus kimenetelek arumentumait a `par()` függvénnyel érhetjük el és módosíthatjuk. Ha valamit állítani szeretnénk a plotunkon, akkor érdemes lefuttatni a `?par` parancsot és a help-ből kikeresni a számunkra fontos argumentumot a különböző beállítási lehetőségek hosszú listájából. Ebben a fejezetben csak a fontosabbakat fogjuk tárgyalni.
+A plottolás és egyéb grafikus kimenetelek argumentumait a `par()` függvénnyel érhetjük el és módosíthatjuk. Ha valamit állítani szeretnénk a plotunkon, akkor érdemes lefuttatni a `?par` parancsot és a help-ből kikeresni a számunkra fontos argumentumot a különböző beállítási lehetőségek hosszú listájából. Ebben a fejezetben csak a fontosabbakat fogjuk tárgyalni.
 
 Az argumentum alapértelmezett beállításait úgy tudjuk elérni, hogy vagy lefuttatjuk a `par()` parancsot argumentum nélkül és kikeressük a listából az egyes paramétereket, vagy beírjuk a argumentum nevét a függvénybe. Például:
 
@@ -1530,7 +1530,7 @@ points(x, z
        )
 ```
 
-Vonalak típusát (`lty`, azaz linetype) is megadhatjuk számokkal, vagy karakterekkel: 0 = "blank" (üres), 1 = solid (folytonos), 2 = "dashed" (szaggaott), 3 = "dotted" (pontozott), 4 = "dotdash" (pontos és szaggatott), 5 = "longdash" (hosszú szaggatott), 6 = "twodash" (pontos és szaggatott). A vonalak vastagságát (`lwd`, azaz line width) pedig számmal adhatjuk meg. A vonalakat is lehet színezni a `col` paraméterrel.
+Vonalak típusát (`lty`, azaz linetype) is megadhatjuk számokkal, vagy karakterekkel: 0 = "blank" (üres), 1 = solid (folytonos), 2 = "dashed" (szaggatott), 3 = "dotted" (pontozott), 4 = "dotdash" (pontos és szaggatott), 5 = "longdash" (hosszú szaggatott), 6 = "twodash" (pontos és szaggatott). A vonalak vastagságát (`lwd`, azaz line width) pedig számmal adhatjuk meg. A vonalakat is lehet színezni a `col` paraméterrel.
 
 ```{r}
 plot(x, y
@@ -1707,7 +1707,7 @@ Amit lehet látni, hogy a piros, és a kék viszonylag szimmetrikus, de a zöld 
 
 ### Barplot és hisztogram
 
-Gyakran összekeverik ezt a két típust. Amit érdemes megjegyezni, hogy a hisztogram (részletesen előző fejezetben bemutatva) esetén az oszlopok összeérnek, ezzel is jelzik, hogy felosztottak egy folytonos intervallumot darabokra és ezeknek a rövidebb intervallumoknak az összesített gyakoriságát ábrázolják (*osztály gyakoriság*). Ellenben az oszlopdiagrammoknál az oszlopok nem érnek össze, ezzel pedig azt mutatják, hogy ezek diszkrét kategóriák (*kategória gyakoriság*). Az oszlopdiagram értékei nem csak gyakoriságok lehetnek, hanem másfajta változók is. Legegyszerűbb a különbséget akkor megérteni, ha ábrázoljuk ugyanazt az adatot.
+Gyakran összekeverik ezt a két típust. Amit érdemes megjegyezni, hogy a hisztogram (részletesen előző fejezetben bemutatva) esetén az oszlopok összeérnek, ezzel is jelzik, hogy felosztottak egy folytonos intervallumot darabokra és ezeknek a rövidebb intervallumoknak az összesített gyakoriságát ábrázolják (*osztály gyakoriság*). Ellenben az oszlopdiagramoknál az oszlopok nem érnek össze, ezzel pedig azt mutatják, hogy ezek diszkrét kategóriák (*kategória gyakoriság*). Az oszlopdiagram értékei nem csak gyakoriságok lehetnek, hanem másfajta változók is. Legegyszerűbb a különbséget akkor megérteni, ha ábrázoljuk ugyanazt az adatot.
 
 ```{r}
 par(mfrow=c(1,2))
@@ -1976,7 +1976,7 @@ mean(beka$tomeg, na.rm = TRUE)
 
 ## Medián
 
-A mediánnal kiszámíthatjuk a középpontot, vagyis azt a számot, ami alatt a nagyság szerint sorbarendezett adatok fele, és ami felett a nagyság szerint sorbarendezett adatok másik fele található.
+A mediánnal kiszámíthatjuk a középpontot, vagyis azt a számot, ami alatt a nagyság szerint sorba rendezett adatok fele, és ami felett a nagyság szerint sorba rendezett adatok másik fele található.
 
 ```{r median, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 median(beka$tomeg)
@@ -1997,7 +1997,7 @@ range(beka$tomeg, na.rm = TRUE)[2]-range(beka$tomeg, na.rm = TRUE)[1]
 max(beka$tomeg, na.rm = TRUE)-min(beka$tomeg, na.rm = TRUE) # egyenerteku a kozvetlenul felette levovel 
 ```
 
-## Quantilisek, quartilisek és percentilisek
+## Kvantilisek, kvartilisek és percentilisek
 
 Kva**n**tilis: A nagyság szerint sorba rendezett adatokat adott arányban osztjuk ketté.  
 Medián: A nagyság szerint sorba rendezett adatokat egyenlő arányban osztjuk ketté.  
@@ -2008,11 +2008,11 @@ Részek száma szerint:
 
 * 50-50% -> medián  ($Q_2$) vagy 50%-os percentilis
 
-* 25-75% -> alsó quartilis ($Q_1$) vagy 25%-os percentilis
+* 25-75% -> alsó kvartilis ($Q_1$) vagy 25%-os percentilis
 
-* 75-25% -> felső quartilis  ($Q_3$) vagy 75%-os percentilis
+* 75-25% -> felső kvartilis  ($Q_3$) vagy 75%-os percentilis
 
-* bármilyen arány pl. 10-90% ezek a percentilsek (A quartilis \'\'speciális\'\' quantilis!) 
+* bármilyen arány pl. 10-90% ezek a percentilisek (A kvartilis \'\'speciális\'\' kvantilis!) 
 
 ```{r quantile, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 #quantile(c(0.25,0.75),beka$thossz) # hibas kod
@@ -2020,9 +2020,9 @@ quantile(probs=c(0.25,0.75),beka$tomeg, na.rm = TRUE) # Q1 és Q3
 quantile(beka$thossz,probs=c(0.5,0.15,0.45,0.95), na.rm = TRUE)
 ```
 
-## Inter quartilis terjedelem (IQR)
+## Inter kvartilis terjedelem (IQR)
 
-Definicó szerint a felső és az alsó kvartilis különbsége: $Q_3 - Q1$
+Definíció szerint a felső és az alsó kvartilis különbsége: $Q_3 - Q1$
 
 ```{r iqr, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
 IQR(beka$tomeg, na.rm = TRUE)
@@ -2030,7 +2030,7 @@ IQR(beka$tomeg, na.rm = TRUE)
 
 ## Eltérés négyzetösszeg (\emph{Sum of Square})
 
-Képelete: 
+Képlete: 
 
 $$\sum (x_i-\bar x)^2$$
 
@@ -2219,7 +2219,7 @@ atlag + qnorm(alpha/2)*sigma/sqrt(n) # also ertek
 
 $$\bar x \pm t_{\alpha/2, df=n-1} * \frac {sd_x}{\sqrt{n}} ,$$
 
-amiben $sd_x$ a mintából becsült szórás, $n-1$ pedig a szabadsági fokok száma. Az quantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ nál és a $1-\alpha/2$  keressük \emph{n-1} szabadságfokú *t*-eloszlásból. 
+amiben $sd_x$ a mintából becsült szórás, $n-1$ pedig a szabadsági fokok száma. Az kvantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ nál és a $1-\alpha/2$  keressük \emph{n-1} szabadságfokú *t*-eloszlásból. 
 
 Ez **R**-ben, 95\%-os konfidenciaintervallumhoz:
 
@@ -2254,7 +2254,7 @@ curve(dchisq(x, df = 3)
 
 Így a konfidenciaintervallum határai:  
 $\frac {(n-1){sd_x}^2} {\chi^2_{\alpha/2, df=n-1} }$ és $\frac {(n-1){sd_x}^2} {\chi^2_{1-\alpha/2,df= n-1}}$  
-A quantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ \%-nál és a $1-\alpha/2$ \%-nál keressük \emph{n-1} szabadságfokú $\chi^2$-eloszlásból. 
+A kvantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ \%-nál és a $1-\alpha/2$ \%-nál keressük \emph{n-1} szabadságfokú $\chi^2$-eloszlásból. 
 
 Ez **R**-ben, 90\%-os konfidenciaintervallumhoz:
 
@@ -2290,7 +2290,7 @@ sarga_pop = rnorm(mean = sarga_MU, sd = sarga_SIGMA, n = POP_SIZES)
 
 ```
 
-Ezután vett belőle két mintát. Véletlenszerű mintát a `sample()` függénnyel tudunk venni: alső argumentumaként a populációt adjuk meg, a `size` argumentumban pedig a minta darabszámát.
+Ezután vett belőle két mintát. Véletlenszerű mintát a `sample()` függvénnyel tudunk venni: első argumentumaként a populációt adjuk meg, a `size` argumentumban pedig a minta darabszámát.
 
 ```{r}
 #Vegyünk egy vöröshasú és egy sárgahasú mintát, mindkettő 100-100-as mintamérettel
@@ -2460,7 +2460,7 @@ Biológiai kísérleteket azért csinálunk / adatokat azért gyűjtünk, hogy s
   3) Hipotézisek felvetése
   4) Kísérlet / adatvétel tervezése
   5) Kísérlet / adatfelvétel elvégzése
-  6) Statszitikai elemzés
+  6) Statisztikai elemzés
   7) Döntés. Innentől két útvonal lehetséges:
     a) Ha nem volt helyes az elképzelés $\rightarrow$ új hipotézis felállítása (3-as pont)
     b) Ha helyesnek tűnik az elképzelés $\rightarrow$ predikció felállítása (8-as pont)
@@ -2469,11 +2469,11 @@ Biológiai kísérleteket azért csinálunk / adatokat azért gyűjtünk, hogy s
   
 A statisztikai feladatok a fenti sémában már a 4-es pontnál előjönnek: meg kell tervezni milyen adatokat és hogy kell venni, hogy megfelelő statisztikai elemzéssel tudjuk igazolni / elvetni a hipotéziseinket. Már ekkor el kell dönteni, hogy milyen statisztikai módszereket alkalmazunk!  
 
-Tehát hipotézisvvizsgálatoknak nevezzük azokat a statisztikai módszereket, amikkel egy általunk felállított hipotézist tudunk egy adott bizonyossággal elvetni, vagy megtartani. A statisztikai hipotézisek olyan hipotézisek amiket a statisztikai módszerekkel elemzünk. Leggyakrabban ezek nem egyeznek szó szerint a biológiai hipotéziseinkkel. A biológiai hipotézisek ugyanis legtöbbször egyfajta egyenlőtlenséget feltételeznek. Például feltételezzük azt, hogy különböző műtrágyák hatására máshogy nőnek a növényeink. Ebben az egyenlőtlenség az, hogy feltétlelzzük, hogy a különbözően kezelt növények nem egyformán viselkednek. Azonban a statisztikai próbák leggyakrabban egyezőséget tesztelnek. Például, két növényi csoport magasságának egyezőségét képesek adott szignifikancia mellett tesztelni. Így egy statisztikai nullhipotézis (**H0**) lehet az, hogy $A \equiv B$, amennyiben $A$ és $B$ két különböző műtrágyával kezelt növényi csoport magasságai. Mivel mi pont ennek az ellenkezőjére vagyunk kíváncsiak, nekünk az alternatív hipotézis (**HA**) lesz a biológiai kérdésünk. Ebben az esetben az alternatív hipotézis: $A \ne B$, amit akkor fogadhatunk el, ha a nullhipotézist elvetettük.  
+Tehát hipotézisvizsgálatoknak nevezzük azokat a statisztikai módszereket, amikkel egy általunk felállított hipotézist tudunk egy adott bizonyossággal elvetni, vagy megtartani. A statisztikai hipotézisek olyan hipotézisek amiket a statisztikai módszerekkel elemzünk. Leggyakrabban ezek nem egyeznek szó szerint a biológiai hipotéziseinkkel. A biológiai hipotézisek ugyanis legtöbbször egyfajta egyenlőtlenséget feltételeznek. Például feltételezzük azt, hogy különböző műtrágyák hatására máshogy nőnek a növényeink. Ebben az egyenlőtlenség az, hogy feltételezzük, hogy a különbözően kezelt növények nem egyformán viselkednek. Azonban a statisztikai próbák leggyakrabban egyezőséget tesztelnek. Például, két növényi csoport magasságának egyezőségét képesek adott szignifikancia mellett tesztelni. Így egy statisztikai nullhipotézis (**H0**) lehet az, hogy $A \equiv B$, amennyiben $A$ és $B$ két különböző műtrágyával kezelt növényi csoport magasságai. Mivel mi pont ennek az ellenkezőjére vagyunk kíváncsiak, nekünk az alternatív hipotézis (**HA**) lesz a biológiai kérdésünk. Ebben az esetben az alternatív hipotézis: $A \ne B$, amit akkor fogadhatunk el, ha a nullhipotézist elvetettük.  
 
 A hipotézisvizsgálatoknak megvan a sajátos logikája, mindig egy bizonyos séma mentén kell végigmenni:
 
-  1) **Próba kiválasztása** a kérdésünknek, hipotézünknek és lehetséges adatainknak megfelelően
+  1) **Próba kiválasztása** a kérdésünknek, hipotézisünknek és lehetséges adatainknak megfelelően
   2) A megfelelő **H0 és HA** hipotézisek felállítása
   3) A szignifikanciaszint meghatározása (ezt követheti az adatgyűjtés)
   4) **Előfeltételek** tesztelése
