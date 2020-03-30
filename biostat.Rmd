@@ -1,6 +1,6 @@
 ---
 title: "Gyakorlati segédanyag Biostatisztika gyakorlathoz"
-author: "Könnyű Balázs, Radványi Ádám, Vörös Dániel"
+author: "Vörös Dániel, Radványi Ádám, Könnyű Balázs"
 date: "2019/20/2"
 output: pdf_document
 always_allow_html: yes
@@ -2207,10 +2207,14 @@ alpha = 0.05
 n = length(minta)
 atlag = mean(minta)
 
-qnorm( c(alpha/2, 1-alpha/2), mean=atlag, sd=sigma/sqrt(n)) # mindket ertek
+qnorm( c(alpha/2, 1-alpha/2), mean=atlag, sd=sigma/sqrt(n)) # mindkét érték
 
-atlag - qnorm(alpha/2)*sigma/sqrt(n) # felso ertek
-atlag + qnorm(alpha/2)*sigma/sqrt(n) # also ertek
+atlag + qnorm(alpha/2)*sigma/sqrt(n) # alsó érték, qnorm(alpha/2): negetív!
+atlag + qnorm(1-(alpha/2))*sigma/sqrt(n) # felső érték
+
+# VAGY egyszerűen:
+atlag + qnorm(c(alpha/2,1-(alpha/2)))*sigma/sqrt(n) # mindkettő
+
 ```
 
 ## Az átlag konfidenciaintervallumának kiszámítása a populáció szórásának ismerete nélkül
@@ -2232,7 +2236,9 @@ atlag = mean(minta)
 szoras = sd(minta) # becsuljuk a szorast, mert nem ismert
 
 atlag + qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # also
-atlag - qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # felso
+atlag + qt(1-alpha/2, df = n - 1)*( szoras/sqrt(n) ) # felso
+# VAGY egyszerűen:
+atlag + qt(c(alpha/2,1-alpha/2), df = n - 1)*( szoras/sqrt(n) ) # mindkettő
 ```
 
 ## A variancia konfidenciaintervallumának kiszámítása
