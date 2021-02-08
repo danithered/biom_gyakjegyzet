@@ -2208,7 +2208,14 @@ n = length(minta)
 atlag = mean(minta)
 
 qnorm( c(alpha/2, 1-alpha/2), mean=atlag, sd=sigma/sqrt(n)) # mindkét érték
+```
 
+Ha standard normális eloszlással akarunk számolni, akkor kihasználjuk, hogy mivel a standard normális eloszlás sűrűségfüggvénye 0-ra szimmetrikus, ezért $-F_{st.norm}(\alpha/2) =F_{st.norm}(1-\alpha/2)$. Így a fenti egyenlet módosított változatát használjuk:
+
+$$ x_{krit~1,2} =\bar x + F_{st. norm.}(\alpha/2 ~ és ~ 1-\alpha/2) * \frac {\sigma}{\sqrt{n}} $$
+
+
+```{r}
 atlag + qnorm(alpha/2)*sigma/sqrt(n) # alsó érték, qnorm(alpha/2): negetív!
 atlag + qnorm(1-(alpha/2))*sigma/sqrt(n) # felső érték
 
@@ -2225,8 +2232,10 @@ $$\bar x \pm t_{\alpha/2, df=n-1} * \frac {sd_x}{\sqrt{n}} ,$$
 
 amiben $sd_x$ a mintából becsült szórás, $n-1$ pedig a szabadsági fokok száma. Az kvantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ nál és a $1-\alpha/2$  keressük \emph{n-1} szabadságfokú *t*-eloszlásból. 
 
-Ez **R**-ben, 95\%-os konfidenciaintervallumhoz:
+Ez **R**-ben, 95\%-os konfidenciaintervallum kiszámításához megint kihasználjuk, hogy a *t*-eloszlás sűrűségfüggvénye szimmetrikus 0-ra, tehát $-t_{a/2,df} =t_{1-\alpha/2, df}$. A fenti képlet módosítva:
 
+$$\bar x + t_{\alpha/2 ~ és ~ 1-\alpha/2, df=n-1} * \frac {sd_x}{\sqrt{n}}$$
+  
 ```{r}
 minta = asztal$minta2.cm
 alpha = 0.05
