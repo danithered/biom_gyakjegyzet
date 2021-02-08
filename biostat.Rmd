@@ -2,7 +2,7 @@
 title: "Gyakorlati segédanyag Biostatisztika gyakorlathoz"
 author: "Vörös Dániel, Radványi Ádám, Könnyű Balázs"
 date: "2019/20/2"
-output: pdf_document
+output: bookdown::pdf_book
 always_allow_html: yes
 toc: true
 ---
@@ -445,7 +445,7 @@ sum(100, prod(1,2,3,4,5) )
 
 A fenti **R** kód a következő matematikai felírásnak felel meg:
 
-$$\sum_{i=1}^{100} {\prod_{j=1}^5 {x_{ij}}}$$
+$$\sum \left ( 100, \prod_{j=1}^5 {j} \right )$$
 
 A függvényekről és használatukról az **R** tartalmaz súgót. Ezt úgy érjük el, hogy begépelünk egy kérdőjelet, majd a függvény nevét. **RStudio**-ban a jobb oldali alsó panelban fog megjelenni a help szövege. Például:
 
