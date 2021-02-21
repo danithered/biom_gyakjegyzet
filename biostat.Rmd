@@ -1,7 +1,7 @@
 ---
 title: "Gyakorlati segédanyag Biostatisztika gyakorlathoz"
 author: "Vörös Dániel, Radványi Ádám, Könnyű Balázs"
-date: "2019/20/2"
+date: "2020/21/2"
 output: bookdown::pdf_book
 always_allow_html: yes
 toc: true

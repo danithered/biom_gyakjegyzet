@@ -1,0 +1,49 @@
+# Eloszlások
+
+## A valószínűségi változók eloszlása
+
+A kvantitatív kutatói munka során megpróbáljuk valahogy számszerűsíteni a "valóságot", hogy lássuk illerszkedik-e a világról alkotott elképzeléseinkhez. A "valóságot" magát azonban nem tudjuk sem megvizsgálni, sem számszerűsíteni, így kénytelenek vagyunk annak csak egy kis szeletét megvizsgálni. De a "valóság kis - vizsgálható - szelete" sem áll önmagában számokból. Ezért a "valóság szeletünk" bizonyos tulajdonságait egy előre meghatározott protokoll alapján egy számmal közelítjük (megmérjük/megszámoljuk). Ez a szám, amely valamely objektumok egy tulajdonságát írja le a valószínűségi változó.  
+
+Definíció szerint a valószínűségi változó (**röviden: valvált**) egy függvény, ami az eseménytér valamennyi elemi eseményéhez egyértelműen rendel egy valós számot. Vagyis a valószínűségi változó a "valóságra" vonatkozik. A statisztikai populáció alatt a megfigyelni szándékozott egységek halmazát értjük. Ennek a részhalmaza, tehát a "valóság egy szelete" a minta. Magának a populációnak a megfigyelése/megmérése lehetetetlen így, hogy valahogy a mintából szeretnénk következtetni a populációra. Azonban ha nem egy mintát hanem többet veszünk látjuk, hogy a mért változónk eltér mintáról mintára. Például, ha megszámoljuk, a papucsállatkák számát egy pocsolyában, vagy emberek karhosszát, ha egynél többször mérünk, eltérő eredményeket kapunk. Könnyű elképzelni, hogy ha egy statisztikai populációból az összes lehetséges módon mintát vennénk, felrajzolhatnánk egy "eloszlást", ami megmutatja, hogy ha veszünk egy random mintát, adott valváltokat milyen valószínűséggel mérnénk/számolnánk. Például tudjuk, hogy ha megnézünk egy véletlenszerűen kiválasztott családot, akkor nagy valószínűséggel találunk benne 2 gyereket, de csak nagyon ritkán 6-ot és szinte sose 20-at. Vagy ha megmérjük egy véletlenszerűen kiválasztott felnőtt férfi testmagasságát és 176cm-t mérünk, az nem meglepő, míg ha 250cm-t mérnénk akkor megdöbbennénk.  
+A valószínűségi változók eloszlása tehát megmutatja, hogy ha valamely tulajdonságát mérjük egy random kiválasztott objektumnak, akkor milyen valószínűséggel találunk meg egyes mérési értékeket. Az eloszlásokat leggyakrabban a várható értékével, a varinaciájával és az eloszlás "alakjával" jellemezzük. Az eloszlás várható értéke az az érték amihez képest egy random minta a legközelebb található, tehát egyszerű eloszlások esetén a valvált azon értéke, amit legnagyobb valószínűséggel kapunk egy random mintavétel során. Az eloszlás varianciája azt határozza meg, hogy a random minták mennyire "közel" fognak elhelyezkezkedni a várható értékhez. A következő fejezetekben több nevezetes eloszlást fogunk áttekinteni.
+
+## Eloszlásfüggvények az **R**-ben
+
+Az **R**-ben az eloszlásokat számító függvények nevei sajátos logikát követnek. Ezen függvények első betűje meghatározza, hogy mit számít ki a függvény és miből, a függvény nevének további betűi pedig az eloszlás angol nevét adják ki.
+
+```{r}
+curve(dnorm(x), from=-3, to=3, ylab="f(x)", las=1)
+segments(-1,-1,-1,dnorm(-1), col="red")
+segments(-1,dnorm(-1),-4,dnorm(-1), col="blue")
+points(-1, dnorm(-1), pch=19, col="purple")
+```
+
+```{r normdens, fig.cap="Normális e \\label{normdens}", echo=FALSE}
+p <- data.frame(
+	x=c(-1),
+	y=c(dnorm(-1) )
+)
+
+ggplot(data.frame(x = c(-3, 3)), aes(x)) +
+  stat_function(fun = dnorm 
+                , xlim = c(-3, -1)
+                , geom = "area"
+                , fill="lightgreen"
+                ) + 
+  stat_function(fun = dnorm)+
+	geom_step(aes(x, y), data=data.frame(	x= c(-1, -1),	y= c(0, dnorm(-1))), colour="red", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(-1,-3),	y= c(dnorm(-1),dnorm(-1))), colour="blue", lwd=1.5)+
+	geom_point(aes(x=x, y=y), data=p, cex=4)+
+	scale_x_continuous(expand = c(0, 0))+
+	scale_y_continuous(expand = c(0, 0))+
+	labs(y="f(x)")
+
+```
+
+
+### d...()
+
+A `d`-vel kezdődő eloszlásfüggvények a sűrűségfüggvényt vagy a valószínűségi tömegfüggvényt számolják ki.
+
+choose(10,2) #combination: 10C2
+combn(10, 2) #kidobja az osszes kombinaciot 
