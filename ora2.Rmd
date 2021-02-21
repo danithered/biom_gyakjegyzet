@@ -1,3 +1,13 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r}
+library(ggplot2)
+```
+
+
 # Eloszlások
 
 ## A valószínűségi változók eloszlása
@@ -7,7 +17,7 @@ A kvantitatív kutatói munka során megpróbáljuk valahogy számszerűsíteni 
 Definíció szerint a valószínűségi változó (**röviden: valvált**) egy függvény, ami az eseménytér valamennyi elemi eseményéhez egyértelműen rendel egy valós számot. Vagyis a valószínűségi változó a "valóságra" vonatkozik. A statisztikai populáció alatt a megfigyelni szándékozott egységek halmazát értjük. Ennek a részhalmaza, tehát a "valóság egy szelete" a minta. Magának a populációnak a megfigyelése/megmérése lehetetetlen így, hogy valahogy a mintából szeretnénk következtetni a populációra. Azonban ha nem egy mintát hanem többet veszünk látjuk, hogy a mért változónk eltér mintáról mintára. Például, ha megszámoljuk, a papucsállatkák számát egy pocsolyában, vagy emberek karhosszát, ha egynél többször mérünk, eltérő eredményeket kapunk. Könnyű elképzelni, hogy ha egy statisztikai populációból az összes lehetséges módon mintát vennénk, felrajzolhatnánk egy "eloszlást", ami megmutatja, hogy ha veszünk egy random mintát, adott valváltokat milyen valószínűséggel mérnénk/számolnánk. Például tudjuk, hogy ha megnézünk egy véletlenszerűen kiválasztott családot, akkor nagy valószínűséggel találunk benne 2 gyereket, de csak nagyon ritkán 6-ot és szinte sose 20-at. Vagy ha megmérjük egy véletlenszerűen kiválasztott felnőtt férfi testmagasságát és 176cm-t mérünk, az nem meglepő, míg ha 250cm-t mérnénk akkor megdöbbennénk.  
 A valószínűségi változók eloszlása tehát megmutatja, hogy ha valamely tulajdonságát mérjük egy random kiválasztott objektumnak, akkor milyen valószínűséggel találunk meg egyes mérési értékeket. Az eloszlásokat leggyakrabban a várható értékével, a varinaciájával és az eloszlás "alakjával" jellemezzük. Az eloszlás várható értéke az az érték amihez képest egy random minta a legközelebb található, tehát egyszerű eloszlások esetén a valvált azon értéke, amit legnagyobb valószínűséggel kapunk egy random mintavétel során. Az eloszlás varianciája azt határozza meg, hogy a random minták mennyire "közel" fognak elhelyezkezkedni a várható értékhez. A következő fejezetekben több nevezetes eloszlást fogunk áttekinteni.
 
-## Eloszlásfüggvények az **R**-ben
+## Eloszlások számolása **R**-ben
 
 Az **R**-ben az eloszlásokat számító függvények nevei sajátos logikát követnek. Ezen függvények első betűje meghatározza, hogy mit számít ki a függvény és miből, a függvény nevének további betűi pedig az eloszlás angol nevét adják ki.
 
@@ -40,10 +50,27 @@ ggplot(data.frame(x = c(-3, 3)), aes(x)) +
 
 ```
 
+A `d`-vel kezdődő függvények a sűrűségfüggvényt (folytonos eset: $f(X=x)$ ) vagy a valószínűségi tömegfüggvényt (diszkrét eset: $P(X=x)$ ) számolják ki. Ez megmutatja, hogy ha random húzunk egy értéket az eloszlásból milyen eséllyel vesz fel ez a random érték egy adott értéket.  
+A `p`-vel kezdődő függvények az eloszlásfüggvényt ($P(X \le x )$) számolják ki. Ezzel azt tudjuk meg, hogy milyen valószínűséggel lesz egy random húzott érték egy adott értéknél kisebb vagy egyenlő.  
+A `q`-val kezdődő függvények az eloszlásfüggvények fordítottjai. Kiszámolják az eloszlásfüggvény egy adott valószínűségéhez tartozó $x$ értéket, azaz a valvált azon értékét melynél kisebb vagy egyenlő random értékeket a megadott valséggel kapunk.  
 
-### d...()
+A fenti ábra például egy normális eloszlás sűrűségfüggvénye. A `dnorm()` egy valváltra (piros vonal) számítja ki a sűrűségfüggvényét (kék vonal), a `pnorm()` pedig az eloszlásfüggvény értékét (zöld terület). A `qnorm()` a fordítottja: az integrált valószínűségből (zöld terület) számítja ki a hozzá tartozó valvált értékét (piros vonal). Röviden:
 
-A `d`-vel kezdődő eloszlásfüggvények a sűrűségfüggvényt vagy a valószínűségi tömegfüggvényt számolják ki.
+$$
+\begin{gathered}
+valvált \rightarrow \mathbf{d} \rightarrow P(X=x) ~vagy~ f(X=x) \\
+valvált \rightarrow \mathbf{p} \rightarrow P(X \le x) \\
+P(X \le x) \rightarrow \mathbf{q} \rightarrow valvált 
+\end{gathered}
+$$
+
+# Diszkrét eloszlások
+
+A diszkrét eloszlások értékei kategorizáltak, a diszkrét kategóriák nem mennek át egymásba. Binomiális, nominális vagy ordinális skálájú változókat sorolhatunk ide. Legtöbbször ez úgy nyilvánul meg, hogy ezen valváltok egész számok ($X \in \mathbb{Z}$) vagy faktorok. Például: hány lába van a macskának, milyen színű egy ember szeme (barna vagyy kék vagy zöld).
+A diszkrét eloszlásokat valószínűségi tömegfüggvénnyel (PMF = **P**robability **M**ass **F**unction) vagy kumulatív eloszlásfüggvénnyel szoktuk jellemzni (CDF = **C**ummulative **D**ensity **F**unction). A PMF a valószínűségi változó minden lehetséges értékéhez hozzárendeli annak gyakoriságát ($P(X=x)$), míg a CDF a valószínűségi változó minden lehetséges értékéhez hozzárendeli annak és a nála kisebb értékeknek a kumulált gyakoriságát ($P(X \le x) = \sum_{i=min}^{x} P(X=x)$), azaz annak a valószínűségét, hogy a valószínűségi változó az adott $x$ értéket, vagy annál kisebbet vesz fel. Itt meg kell jegyezni, hogy a régi magyar szakirodalom sokszor a CDF-et úgy számolja, hogy a valvált egy adott értékénél kisebb értékek kumulált gyakoriságát veszi ($P(X < x)$), azonban az órán a nemzetközi gyakorlatban használt definíciót fogjuk használni, ahogyan az **R** is azt használja.
+
+
+
 
 choose(10,2) #combination: 10C2
 combn(10, 2) #kidobja az osszes kombinaciot 
