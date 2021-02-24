@@ -2,9 +2,14 @@
 output:
   pdf_document: default
   html_document: default
+editor_options: 
+  chunk_output_type: console
 ---
 ```{r}
 library(ggplot2)
+library(gridExtra)
+library(knitr)
+library(kableExtra)
 ```
 
 
@@ -15,7 +20,7 @@ library(ggplot2)
 A kvantitatív kutatói munka során megpróbáljuk valahogy számszerűsíteni a "valóságot", hogy lássuk illerszkedik-e a világról alkotott elképzeléseinkhez. A "valóságot" magát azonban nem tudjuk sem megvizsgálni, sem számszerűsíteni, így kénytelenek vagyunk annak csak egy kis szeletét megvizsgálni. De a "valóság kis - vizsgálható - szelete" sem áll önmagában számokból. Ezért a "valóság szeletünk" bizonyos tulajdonságait egy előre meghatározott protokoll alapján egy számmal közelítjük (megmérjük/megszámoljuk). Ez a szám, amely valamely objektumok egy tulajdonságát írja le a valószínűségi változó.  
 
 Definíció szerint a valószínűségi változó (**röviden: valvált**) egy függvény, ami az eseménytér valamennyi elemi eseményéhez egyértelműen rendel egy valós számot. Vagyis a valószínűségi változó a "valóságra" vonatkozik. A statisztikai populáció alatt a megfigyelni szándékozott egységek halmazát értjük. Ennek a részhalmaza, tehát a "valóság egy szelete" a minta. Magának a populációnak a megfigyelése/megmérése lehetetetlen így, hogy valahogy a mintából szeretnénk következtetni a populációra. Azonban ha nem egy mintát hanem többet veszünk látjuk, hogy a mért változónk eltér mintáról mintára. Például, ha megszámoljuk, a papucsállatkák számát egy pocsolyában, vagy emberek karhosszát, ha egynél többször mérünk, eltérő eredményeket kapunk. Könnyű elképzelni, hogy ha egy statisztikai populációból az összes lehetséges módon mintát vennénk, felrajzolhatnánk egy "eloszlást", ami megmutatja, hogy ha veszünk egy random mintát, adott valváltokat milyen valószínűséggel mérnénk/számolnánk. Például tudjuk, hogy ha megnézünk egy véletlenszerűen kiválasztott családot, akkor nagy valószínűséggel találunk benne 2 gyereket, de csak nagyon ritkán 6-ot és szinte sose 20-at. Vagy ha megmérjük egy véletlenszerűen kiválasztott felnőtt férfi testmagasságát és 176cm-t mérünk, az nem meglepő, míg ha 250cm-t mérnénk akkor megdöbbennénk.  
-A valószínűségi változók eloszlása tehát megmutatja, hogy ha valamely tulajdonságát mérjük egy random kiválasztott objektumnak, akkor milyen valószínűséggel találunk meg egyes mérési értékeket. Az eloszlásokat leggyakrabban a várható értékével, a varinaciájával és az eloszlás "alakjával" jellemezzük. Az eloszlás várható értéke az az érték amihez képest egy random minta a legközelebb található, tehát egyszerű eloszlások esetén a valvált azon értéke, amit legnagyobb valószínűséggel kapunk egy random mintavétel során. Az eloszlás varianciája azt határozza meg, hogy a random minták mennyire "közel" fognak elhelyezkezkedni a várható értékhez. A következő fejezetekben több nevezetes eloszlást fogunk áttekinteni.
+A valószínűségi változók eloszlása tehát megmutatja, hogy ha valamely tulajdonságát mérjük egy random kiválasztott objektumnak, akkor milyen valószínűséggel találunk meg egyes mérési értékeket. Az eloszlásokat leggyakrabban a **várható érték**ével, a **varinaciá**jával / **szórás**ával és az **eloszlás "alakjával"** jellemezzük. Az eloszlás várható értéke az az érték amihez képest egy random minta a legközelebb található, tehát egyszerű eloszlások esetén a valvált azon értéke, amit legnagyobb valószínűséggel kapunk egy random mintavétel során. Az eloszlás varianciája azt határozza meg, hogy a random minták mennyire "közel" fognak elhelyezkezkedni a várható értékhez. Az eloszlás szórása pedig a variancia négyzetgyöke. A következő fejezetekben több nevezetes eloszlást fogunk áttekinteni. Ezek a nevezetes eloszlások olyan matematikailag meghatározott eloszlások, melyeknek "alakja", tulajdonságai, viselkedése, stb. jól ismert.
 
 ## Eloszlások számolása **R**-ben
 
@@ -28,7 +33,7 @@ segments(-1,dnorm(-1),-4,dnorm(-1), col="blue")
 points(-1, dnorm(-1), pch=19, col="purple")
 ```
 
-```{r normdens, fig.cap="Normális e \\label{normdens}", echo=FALSE}
+```{r normdens, fig.cap="Normális eloszlás sűrűségfüggvénye \\label{normdens}", echo=FALSE, eval=F}
 p <- data.frame(
 	x=c(-1),
 	y=c(dnorm(-1) )
@@ -41,12 +46,15 @@ ggplot(data.frame(x = c(-3, 3)), aes(x)) +
                 , fill="lightgreen"
                 ) + 
   stat_function(fun = dnorm)+
-	geom_step(aes(x, y), data=data.frame(	x= c(-1, -1),	y= c(0, dnorm(-1))), colour="red", lwd=1.5)+
-	geom_step(aes(x, y), data=data.frame(	x= c(-1,-3),	y= c(dnorm(-1),dnorm(-1))), colour="blue", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(-1, -1),	y= c(0, dnorm(-1))), colour="coral", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(-1,-3),	y= c(dnorm(-1),dnorm(-1))), colour="lightblue", lwd=1.5)+
 	geom_point(aes(x=x, y=y), data=p, cex=4)+
 	scale_x_continuous(expand = c(0, 0))+
 	scale_y_continuous(expand = c(0, 0))+
-	labs(y="f(x)")
+	annotate(geom = "point", x = -Inf, y = dnorm(-1), size = 2, color = 'blue')+
+	annotate(geom = "point", x = -1, y = -Inf, size = 2, color = 'red')+
+	labs(y="f(x)")+
+	coord_cartesian(clip = 'off')
 
 ```
 
@@ -66,11 +74,557 @@ $$
 
 # Diszkrét eloszlások
 
+
+## Diszkrét eloszlások általános jellemzése
+
+### Mi az, hogy diszkrét?
+
 A diszkrét eloszlások értékei kategorizáltak, a diszkrét kategóriák nem mennek át egymásba. Binomiális, nominális vagy ordinális skálájú változókat sorolhatunk ide. Legtöbbször ez úgy nyilvánul meg, hogy ezen valváltok egész számok ($X \in \mathbb{Z}$) vagy faktorok. Például: hány lába van a macskának, milyen színű egy ember szeme (barna vagyy kék vagy zöld).
-A diszkrét eloszlásokat valószínűségi tömegfüggvénnyel (PMF = **P**robability **M**ass **F**unction) vagy kumulatív eloszlásfüggvénnyel szoktuk jellemzni (CDF = **C**ummulative **D**ensity **F**unction). A PMF a valószínűségi változó minden lehetséges értékéhez hozzárendeli annak gyakoriságát ($P(X=x)$), míg a CDF a valószínűségi változó minden lehetséges értékéhez hozzárendeli annak és a nála kisebb értékeknek a kumulált gyakoriságát ($P(X \le x) = \sum_{i=min}^{x} P(X=x)$), azaz annak a valószínűségét, hogy a valószínűségi változó az adott $x$ értéket, vagy annál kisebbet vesz fel. Itt meg kell jegyezni, hogy a régi magyar szakirodalom sokszor a CDF-et úgy számolja, hogy a valvált egy adott értékénél kisebb értékek kumulált gyakoriságát veszi ($P(X < x)$), azonban az órán a nemzetközi gyakorlatban használt definíciót fogjuk használni, ahogyan az **R** is azt használja.
+
+### Diszkrét adatokkal való számolás
+
+|x                        |n                        | p                                             |
+|:-----------------------:|:-----------------------:|:---------------------------------------------:|
+| \(\displaystyle x_1 \)  | \(\displaystyle n_1 \)  | \(\displaystyle  p_1 = {n_1} / {\sum n_i} = n_1 / N \)  |
+| \(\displaystyle x_2 \)  | \(\displaystyle n_2 \)  | \(\displaystyle  p_2 = {n_2} / {\sum n_i} = n_2 / N \)  |
+| \(\displaystyle x_3 \)  | \(\displaystyle n_3 \)  | \(\displaystyle  p_3 = {n_3} / {\sum n_i} = n_3 / N \)  |
+| \(\displaystyle x_4 \)  | \(\displaystyle n_4 \)  | \(\displaystyle  p_4 = {n_4} / {\sum n_i} = n_4 / N \)  |
+| \(\displaystyle x_5 \)  | \(\displaystyle n_5 \)  | \(\displaystyle  p_5 = {n_5} / {\sum n_i} = n_5 / N \)  |
+| \\cdots                  | \\cdots                  | \\cdots                                        |
+| \(\displaystyle x_m \)  | \(\displaystyle n_m \)  | \(\displaystyle  p_m = {n_m} / {\sum n_i} = n_m / N \)  |
+
+Diszkrét kategóriák esetén  egyszerűen és intuitíven ki lehet számolni a nyers adatokból ($N$ darab adat esetén: $a_1, a_2, \ldots , a_N$) az egyes kategóriák gyakoriságát. Meg kell határozni az értéktartományt, vagyis azt, hogy milyen értékeink ($x_i$) fordulnak elő (fenti táblázatban: $m$ darab változó, amelyek a következő értékeket vették fel: $x_1,x_2, \ldots ,x_m$). Ezután meg kell állapítani ezen értékek előfordulását ($n_i$) azaz, hogy egy adott $x_i$ változó hányszor fordult elő az adatokban. Ha ezeket összeadjuk, megkapjuk, hogy hány adatunk volt összesen:
+
+$$ \sum_{i=1}^{m}n_i = N$$
+
+Ezekből ki tudjuk számolni, hogy mekkora a gyakorisága ($p_i$) az egyes értékeknek, a következő képlet szerint:
+
+$$ p_i = \frac {választott}{összes} = \frac {n_i}{\sum_{i=1}^{m}n_i} = \frac {n_i}{N}$$
+
+Figyeljük meg, hogy a gyakoriságok összege mindig 1 lesz!
+
+$$\sum_{i=1}^{m} p_i = 1$$
+
+Gyakorlásként feltételezzük a következő adatsort (melyben az adatok nem numerikusak, hanem színek) és számítsuk ki a kategóriák relatív gyakoriságait! Az adatsor: {kék, zöld, kék, piros, piros, kék, sárga, zöld}  
+Először is megszámoljuk, hogy 3 kék, 2 zöld, 2 piros és 1 sárga adatunk van. Összesen $N = 3+2+2+1 = 8$ adatunk van, amit $m=4$ kategóriába sorolhatunk be (kék, zöld, piros, sárga). Ebből kiszámoljuk a relatív gyakoriságot, tehát elosztjuk az előfordulások számát az összes darabszámmal ($N$). A megoldásokhoz lásd a lenti táblázatot! Visszaellenőrizhetünk: megnézzük, hogy a relatív gyakoriságok összege 1 lesz-e: 3/8 + 2/8 + 2/8 + 1/8 = 8/8 = 1. Persze ez a számolás nem csak nominális kategóriákra jó, pont így kellene kiszámolni akkor is, ha az alapadatok számok, pl.: {1, 2, 1, 3, 3, 1, 4, 2}.
+
+|x      |n  | p                                             |
+|:-----:|:-:|:---------:|
+| kék   | 3 | 3/8=0.375 |
+| zöld  | 2 | 2/8=0.250 |
+| piros | 2 | 2/8=0.250 |
+| sárga | 1 | 1/8=0.125 |
 
 
+A fentiek alapján kiszámolhatjuk az **adatok** átlagát!
+
+$$ \bar a = \frac {\sum_{i=1}^{N} a_i} {N} = \frac {a_1 + a_2 + \ldots + a_N} {N} $$
+
+Tudunk, összevonni kategóriákat, tekintve, hogy egy $x_i$ változó nem feltétlenül egyszer szerepel, hanem $n_i$-szer!
+
+$$ \bar a = \frac {\sum_{i=1}^{m} n_i  x_i} {N} = \frac {n_1 x_1 + n_2 x_2 + \ldots + n_m x_m} {N} $$
+Felbontjuk a törtet:
+
+$$ \bar a = \frac {n_1 x_1}{N} + \frac {n_2 x_2}{N} + \ldots + \frac {n_m x_m}{N} = \frac {n_1}{N}x_1 + \frac {n_2}{N}x_2 + \ldots + \frac {n_m}{N}x_m $$
+Felhasználjuk, hogy $n_i/N=p_i$, így:
+
+$$ \bar a = p_1 x_1 + p_2 x_2 + \ldots + p_m x_m $$
+
+Az elméleti diszkrét eloszlások is diszkrét kategóriákból állnak. Fontos megkülönböztetni, hogy adatokról vagy eloszlásokról beszélünk-e! Az adatok kategoriáinak is lehetnek gyakoriságai, így "eloszlása", de a diszkrét eloszlások elméleti fogalmak, azok a valós adatoktól függetlenek! A diszkrét eloszlásokkal tudjuk **jellemezni** a valós adatokat, de azok nem egyeznek meg, ne keverjük össze a fogalmakat!  
+
+### Diszkrét eloszlások várható értéke, varianciája, szórása
+
+A diszkrét adatokkal való számolás logkája alapján az eloszlások **várható érték**ének ($M$ vagy $E()$) kiszámítása egyszerű lesz: az átlagát kell venni a valvált értékének, figyelemmel léve azok gyakoriságára! Vegyük csak a valváltok értékeit és azok gyakoriságának szorzatait!
+
+$$E(X) = \sum_{i=1}^{n} x_i p_i$$
+
+Az elolszlások varianciájának kiszámítása kicsit bonyolultabb. A variancia fogalma egy későbbi fejezetben lesz tárgyalva, egyelőre legyen annyi elég, hogy a variancia a valváltnak a várható értékétől való távolságainak négyzetének átlaga. Azaz:
+
+$$SD^2(X)= E \left ( ~[X-E(X)]^2 ~ \right ) $$
+
+Próbáljuk meg egyszerűbb alakra hozni, hogy könnyebb legyen vele számolni. Először felbontjuk (ugye $(a-b)^2 = a^2 - 2ab + b^2$):
+
+$$SD^2(X)= E \left ( ~ X^2 - 2X*E(X) + E(X)^2 ~ \right ) = E(X^2) -E  (~ 2X*E(X) ~ ) + E \left(~ E(X)^2 ~ \right )   $$
+
+Kihasználjuk, hogy $E(E(X)) = E(X)$ és $E(cX)=cE(X)$, ha $c$ egy konstans.
+
+$$SD^2(X) = E(X^2) -2E(x*E(X)) + E(X)^2 = E(X^2)-2E(X)*E(E(X))+E(X)^2=E(X^2)-2E(X)^2+E(X)^2=E(X^2)-E(X)^2$$
+
+Behelyettesítjük a várható érték képletét:
+
+$$SD^2(X)= E(X^2)-E(X)^2 = \sum_{i=1}^{n}x_i^2p_i - \left ( \sum_{i=1}^{n}x_ip_i \right )^2$$
+
+Az eloszlások szórásának kiszámításhoz pedig használjuk az alábbi összefüggést:
+
+$$SD(X) = \sqrt{SD^2(X)}$$
+
+### PMF és CDF
+
+A diszkrét eloszlásokat valószínűségi tömegfüggvénnyel (PMF = **P**robability **M**ass **F**unction) vagy kumulatív eloszlásfüggvénnyel szoktuk grafikusan jellemzni (CDF = **C**ummulative **D**ensity **F**unction). A PMF a valószínűségi változó minden lehetséges értékéhez hozzárendeli annak gyakoriságát ($P(X=x)$), míg a CDF a valószínűségi változó minden lehetséges értékéhez hozzárendeli annak és a nála kisebb értékeknek a kumulált gyakoriságát ($P(X \le x) = \sum_{i=min}^{x} P(X=x)$), azaz annak a valószínűségét, hogy a valószínűségi változó az adott $x$ értéket, vagy annál kisebbet vesz fel. Itt meg kell jegyezni, hogy a régi magyar szakirodalom sokszor a CDF-et úgy számolja, hogy a valvált egy adott értékénél kisebb értékek kumulált gyakoriságát veszi ($P(X < x)$), azonban az órán a nemzetközi gyakorlatban használt definíciót fogjuk használni, ahogyan az **R** is azt használja.  
+
+### Valószínűségek számítása
+
+blabla
+előző szekció definíciói is borzalmasak, át kell írnom.
+legfeljebb, legalább
+qbinom és qhyper példa!!
+
+## Egyenletes eloszlás
+
+Az egyenletes eloszlás az, amikor minden érték egyforma valószínűséggel fordul elő. Ez leggyakrabban a "dobtam egy dobókockával" kezdetű statisztikafeladatok esetén fordul elő a természetben.  
+Az egyenletes eloszlás két paramétere a *minimumum* és *maximum* érték. E két érték közt minden kategória gyakorisága megegyezik. Tehát
+
+$$P(X=x) = \frac{1}{N}$$
+
+amiben $N$ a kategóriák száma.  
+
+Az eloszlás várható értéke a valvált minimuma és maximuma által jelzett intervallum közepe:
+
+$$E(X)= \frac { max(X) + min(X) }{2}$$
+
+Az eloszlás varianciája:
+
+$$SD^2(X)=\frac {N^2-1}{12}$$
 
 
-choose(10,2) #combination: 10C2
+```{r discrunif, fig.cap="Egyenletes eloszlás PMF és CDF\\label{discrunif}", echo=FALSE}
+
+
+plot1 <- ggplot(data.frame(x=5:10, col=as.character(c(rep("green",3),rep("grey",3)))), aes(x)) +
+	geom_step(aes(x, y), data=data.frame(	x= c(7, -Inf),	y= c(1/6,1/6)), colour="lightblue", lwd=1.5)+
+  #geom_bar(aes(y = ..prop.., fill=col)) +
+	geom_bar(aes(y = ..count.. / sum(..count..), fill=col)) +
+	#xlim(0,15)+
+	#scale_x_discrete(labels=c("5"="min", "7"="x", "10"="max"))
+	scale_x_continuous(labels=c("min", "a", "M", "max"), breaks=c(5,7, 7.5 ,10), limits=c(0,15))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "grey40"))+
+	annotate(geom = "point", x = -Inf, y = 1/6, size = 2, color = 'blue')+
+	annotate(geom = "point", x = 7, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Probability Mass Function") +
+	geom_vline(xintercept = (5+10)/2, col="purple")
+
+
+plot2 <- ggplot(data.frame(x=0:15, y=punif(0:15, min=4, max=10) ))+
+	geom_step(aes(x, y), data=data.frame(	x= c(7, -Inf),	y= c(3/6,3/6)), colour="lightgreen", lwd=1.5)+
+	geom_bar(aes(x=x, y=y), stat="identity")+
+	scale_x_continuous(labels=c("min", "a", "M", "max"), breaks=c(5,7, (5+10)/2,10))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "darkgrey"))+
+	annotate(geom = "point", x = -Inf, y = 3/6, size = 2, color = 'green4')+
+	annotate(geom = "point", x = 7, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y=expression(P(X <= x) ), title="Cumulative Density Function")+
+	geom_vline(xintercept = (5+10)/2, col="purple")
+
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+A . ábrán látható a diszkrét egyenletes eloszlás tömegfüggvénye és eloszlásfüggvénye. A PMF-en látható, hogy a minimum és maximum között egyenlő valószínűséggel húzhatunk ki számokat, míg azokon kívül nem húzhatunk ki. Mint ahogy a szabályos dobókockával sem dobhatunk -2-t, vagy 7-et. A CDF-en látszik, hogy ha $x \ge max$, akkor annak a valószínűsége, hogy kisebbet vagy egyenlőt dobunk $x$-el egyenlő 1, tehát biztosan. Dobókocka esetén tehát biztos, hogy kisebbet dobunk, mint 10.  
+Tegyük fel, hogy ki akarjuk számítani, hogy szabályos dobókocka esetén mekkora a várható érték (az ábrán lila vonal), variancia, szórás! Az eloszlásra specifikus képletekkel:
+
+```{r}
+x <- 1:6
+n <- length(x) #kategoriak szama
+
+(max(x)+min(x))/2 #varhato ertek
+(n^2-1)/12 #variancia
+sqrt((n^2-1)/12) #szoras
+```
+
+Általános képletekkel:
+
+```{r}
+x <- 1:6
+n <- length(x) #kategoriak szama
+p <- rep(1/n, n ) #kategoriak gyakorisaga: 1/6, 1/6, 1/6, 1/6, 1/6 es 1/6
+
+sum(p*x) #varhato ertek
+sum(p*x^2) - sum(p*x)^2 #variancia
+sqrt(sum(p*x^2) - sum(p*x)^2) #szoras
+```
+
+Ha ki szeretnénk számolni, hogy mennyi az esélye, hogy $a=3$ -at dobunk a dobókockával, leolvashatjuk a grafikonokról: A PMF-en kikeressük az x-tengelyen a 3-at (piros pötty), majd a hozzá tartozó oszlopról leolvassuk az y-tengelyen a valószínűséget (kék pötty); a CDF -en pedig leolvassuk a 3-hoz tatozó kumulált valószínűséget (zöld pötty) majd kivonjuk az egyel kisebb kategoriához tartozó kumulált valószínűséget (nincs ábrázolva). De legegyszerűbb kiszámolni: 1 osztva a kategóriák számával, tehát 1/6.  
+Ha ki szeretnénk számolni, hogy mennyi az esélye, hogy $a=3$ -at vagy kisebbet dobunk a dobókockával, leolvashatjuk a grafikonokról: A PMF-en kikeressük az x-tengelyen a 3-at (piros pötty), majd a hozzá tartozó és annál kisebb oszlopokról (zöld oszlopok) leolvassuk az y-tengelyen a valószínűségeket és összeadjuk; a CDF -en pedig leolvassuk a 3-hoz tatozó kumulált valószínűséget (zöld pötty). De ki is számolhatjuk: ez 3 kategória (1,2,3-ast dobunk), tehát 3 * 1/6 = 3/6 = 0.5. 
+
+## Hipergeometrikus eloszlás
+
+Hipergeometrikus eloszlás esetén mintákat veszünk egy bináris objektumokat (ezt keresem - nem ezt keresem) tartalmazó populációból és a valószínűségi változó természetes szám lesz, ami meghatározza, hogy hány olyan objektum van a mintában, amilyet keresek. Fontos, hogy megadott a minta mérete (hány objektumot veszek ki) és az, hogyaz eredeti populációban milyen az aránya annak az objektumnak, amilyet keresek. **Fontos**: hipergeometrikus eloszlás esetén a mintavétel során **változik a megfelelő objektumok aránya a populációban**! Például, ha egy urnában van 6 fehér golyóm és 4 fekete, annak a valószínűsége, hogy egyet húzok és fehér lesz az $P(első ~ fehér) = 6/10 = 0.6$. Viszont ha kihúzok egy másodikat is az urnából, akkor annak a valószínűsége, hogy fehér lesz, már nem ennyi, attól függően elsőre mit húztam ki. Ha elsőre fehért húztam ki, már csak 5 fehér van az urnában, tehát $P(második ~ fehér ~ ha ~ első ~ fehér) = 5/9 = 0.5556$, ha viszont feketét húztam, úgy "csak" a gólyók össz száma csökkent, tehát $P(második ~ fehér ~ ha ~ első ~ fekete) = 6/9 = 0.6667$. Vagyis, az elemi események hipergeometrikus eloszlás esetén **nem független**ek egymástól.
+A természetben ez a fajta eloszlás előfordul ugyan kis mintáknál, ha adott tulajdonságú egyedeket keresünk, de gyakorlatilag biológusok sosem számolnak vele.
+
+A hipergeometrikus eloszlás fő paraméterei: 
+	* $m$: a *megfelelő* objektumok száma a kiindulási populációban
+	* $n$: a *nem megfelelő* objektumok száma a kiindulási populációban
+	* $k$: a mintavétel során kihúzott objektumok száma, a *minta nagysága*
+	
+Annak a valószínűségét, hogy $x$ db megfelelő objektumot veszünk ki a mintából, a következőképpen számolhatjuk ki:
+
+$$P(X=x) = \frac{n_{megfelelő ~ kombinációk}}{n_{összes ~ kombinációk}} = \frac{ {m \choose x}{ n \choose k-x} }{m+n \choose k}$$
+
+A kombináció $N \choose n$ ugye azt mutatja meg, hogy hányféleképpen húzhatunk ki egy $N$ elemű halmazból $n$ elemű részhalmazt. Ezt a műveletet tudományos számológépeken legtöbbször az "nCr" gombbal hívhatjuk elő, **R**-ben így:
+
+```{r}
+choose(8,2) #combination: 10C2
 combn(10, 2) #kidobja az osszes kombinaciot 
+```
+
+A fenti képletben az $m+n$ a kiindulási pool mérete, tehát ennyi objektumunk van összesen. Tehát $m+n \choose k$ azt jelenti, hogy összesen ennyiféleképpen húzhatunk ki $k$ darab objektumot a poolból. A tört számlálójában a nekünk megfelelő esetek száma van. $m \choose x$ azt jelzi, hogy hányféleképp tudjuk a kellő $x$ számú megfelelő objektumot kihúzni, ha összesen $m$ ilyen objektum van a poolban, Ez nekünk azonban nem elég, elő kell húznunk $k-x$ számú nem megfelelő objektumot is, mert ha nem tennénk, akkor a maradék golyó lehetne bármilyen, ez azonban nem lenne jó nekünk, tekintve, hogy pontosan $x$ darab jót akarunk kihúzni és nem többet. Tehát $n \choose k-x$ féleképpen tudjuk kihúzni $n$ nem megfelelő objektumból $k-x$ jót. Mivel független elemi események esetén $P(A|B)=P(A)P(B)$, ezért a nekünk megfelelő jó húzások száma $ {m \choose x} { n \choose k-x}$. 
+
+Az eloszlás várható értéke a minta elemszáma szorozva a megfelelő objektumok eredeti gyakoriságával 
+
+$$E(X)= kp= k \frac{m}{m+n}$$
+
+Az eloszlás varianciája:
+
+$$SD^2(X)= kp(1-p)(1-\frac{k-1}{m+n-1})$$
+
+```{r hypergeom, echo=FALSE, fig.cap="Hipergeometrikus eloszlás PMF és CDF. Az eloszlás paraméterei: *m* = 18, *n*= 12, *k* = 6\\label{hyperg}"}
+
+
+plot1<-ggplot(data.frame(x=0:6,y=dhyper(0:6,m=18, n=12, k=6), col=as.character(c(rep("green",3),rep("grey",4)))), aes(x)) +
+	geom_step(aes(x, y), data=data.frame(	x= c(2, -Inf),	y= dhyper(c(2,2),m=18, n=12, k=6)), colour="lightblue", lwd=1.5)+
+  #geom_bar(aes(y = ..prop.., fill=col)) +
+	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
+	#xlim(0,15)+
+	#scale_x_discrete(labels=c("5"="min", "7"="x", "10"="max"))
+	scale_x_continuous(labels=c("0", "a", "M", "k"), breaks=c(0, 2, 6*18/30,6))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "grey40"))+
+	annotate(geom = "point", x = -Inf, y = dhyper(2,m=18, n=12, k=6), size = 2, color = 'blue')+
+	annotate(geom = "point", x = 2, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Probability Mass Function")
+
+
+plot2 <- ggplot(data.frame(x=0:6,y=phyper(0:6,m=18, n=12, k=6)) )+
+	geom_step(aes(x, y), data=data.frame(	x= c(2, -Inf),	y= phyper(c(2,2),m=18, n=12, k=6)), colour="lightgreen", lwd=1.5)+
+	geom_bar(aes(x=x, y=y), stat="identity")+
+	scale_x_continuous(labels=c("0", "a", "M", "k"), breaks=c(0, 2, 6*18/30,6))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "darkgrey"))+
+	annotate(geom = "point", x = -Inf, y = phyper(2,m=18, n=12, k=6), size = 2, color = 'green4')+
+	annotate(geom = "point", x = 2, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y=expression(P(X <= x) ), title="Cumulative Density Function")
+
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+A . ábrán látható a hypergeometrikus eloszlás tömegfüggvénye és eloszlásfüggvénye.  
+Ezeket **R**-ben vagy a fenti képlettel, vagy specifikus függvényekkel tudjuk kiszámolni. A tömegfüggvényt a `dhyper(..., m, n, k)` függvénnyel, az eloszlásfüggvényt pedig a `phyper(..., m, n, k)` függvénnyel. Az eloszlásfüggvény inverzét a `qhyper(..., m, n, k)` függvénnyel tudjuk kiszámítani. Ha elfelejtenénk, hogy a függvény paraméterei mit jelentenek futtassuk le a `?dhyper` parancsot az **R**-ben és a helpből kikereshetjük.
+
+Számoljuk ki egy hypergeometrikus eloszlás várható értékét és varianciáját! Tegyük fel, hogy van egy 30 kacsát tartalmazó tavunk, mely kacsák 60% -a hím. Ezek közül véletlenszerűen lelövünk 6-ot. Számoljuk ki annak az eloszlásnak a várható értékét és varianciáját, amelyik azt írja le, hány gácsér van a lelőtt kacsák között!
+
+Az eloszlásra specifikus képletekkel:
+
+```{r}
+N=30 # ennyi kacsa van osszesen
+k = 6 # ennyi kacsat lovunk le
+m = N*0.6 # 18 : ennyi kacsa him 
+n = 30-m # 12 : ennyi kacsa nosteny
+M = k*m/N # varhato ertek : ugye (m+n) = N
+M
+
+k * m/N*(1-m/N)*(1-(k-1)/(N-1)) #variancia
+```
+
+Általános képletekkel:
+
+```{r}
+N=30 # ennyi kacsa van osszesen
+k = 6 # ennyi kacsat lovunk le
+m = N*0.6 # 18 : ennyi kacsa him 
+n = 30-m # 12 : ennyi kacsa nosteny
+
+x <- 0:6 # ennyi lelott kacsa lehet him
+p <- dhyper(x, m=m, n=n, k=k) #kategoriak gyakorisaga
+
+sum(p*x) #varhato ertek
+sum(p*x^2) - sum(p*x)^2 #variancia
+sqrt(sum(p*x^2) - sum(p*x)^2) #szoras
+```
+
+Számoljuk ki mennyi az esélye, hogy páratlan számú hím kacsát lövünk le a hatból! Ez ugye a következő esetekben fordulhat elő: $x={1;3;5}$. Azaz ki kell számolni:
+
+$$P(páratlan ~ hím)=P(X=1)+P(X=3)+P(X=5)= \\ \frac{ {18 \choose 1}{ 12 \choose 6-1} }{30 \choose 6} +\frac{ {18 \choose 3}{ 12 \choose 6-3} }{30 \choose 6} + \frac{ {18 \choose 5}{ 12 \choose 6-5} }{30 \choose 6}$$
+
+**R**-ben:
+
+```{r}
+dhyper(1, m=18, n=12, k=6) + dhyper(3, m=18, n=12, k=6) + dhyper(5, m=18, n=12, k=6)
+#vagy
+sum( dhyper(c(1,3,5), m=18, n=12, k=6) )
+```
+
+Számoljuk ki, mennyi az esélye annak, hogy több mint 2 hím van a lelőtt kacsák között. Ezt kiszámolhatjuk az előző módon is:
+
+$$P(több ~ mint ~ 2 ~ hím)=P(X=3) + P(X=4) + P(X=5) + P(X=6)$$
+
+Vagy kihasználva, hogy $\sum P_i =1$ kivonjuk az 1-ből az $X={0,1,2}$ esetek valószínűségét (lásd: PMF zöld oszlopok).
+
+$$P(több ~ mint ~ 2 ~ hím)= 1- \left ( P(X=2) + P(X=1) + P(X=0) \right ) = 1- P(X=2) - P(X=1) - P(X=0) $$
+
+De sokkal egyszerűbb, ha az eloszlásfüggvényt kihasználva kivonjuk az 1-ből a $P(X \le 2)$ valószínűségét (PMF: zöld oszlopok, CDF: zöld pont).
+
+$$P(több ~ mint ~ 2 ~ hím)= 1- P(X \le 2) $$
+
+Ez utóbbi **R**-ben:
+
+```{r}
+1 - phyper(2, m=18, n=12, k=6)
+```
+
+Számoljuk ki, hogy az esetek alsó 15%-ában maxmium hány hím kacsát lövünk ki! A CDF-en ki kell keresni az y-tengelyen a 0.15 -öt (zöld pötty), majd megkeresni, hogy melyik az a legnyagyobb oszlop, ami még alatta van (piros pötty). **R**-ben egyszerűbb:
+
+```{r}
+qhyper(0.15, m=18, n=12, k=6)
+```
+Azaz maximum 2 hím kacsa lesz a lelőttek között az esetek alsó 15%-ában.
+
+## Binomiális eloszlás
+
+Binomiális eloszlás esetén mintákat veszünk egy bináris objektumokat (ezt keresem - nem ezt keresem) tartalmazó populációból és a valószínűségi változó természetes szám lesz, ami meghatározza, hogy hány olyan objektum van a mintában, amilyet keresek. Fontos, hogy megadott a minta mérete (hány objektumot veszek ki) és az, hogy a populációban milyen az aránya annak az objektumnak, amilyet keresek. **Fontos**: binomiális eloszlás esetén a mintavétel során **nem változik a megfelelő objektumok aránya a populációban**, a megfelelő objektumok kihúzásának valószínűsége állandó! Vagyis, az elemi események megtörténte binomiális eloszlás esetén **független** egymástól.  
+Tehát a legegyszerűbben úgy lehet választani aközül, hogy egy eloszlás hipergeometrikus vagy binomiális, hogy megnézzük, hogy ha kihúzok a pool-ból egy objektumot változik-e a valószínűsége annak, hogy egy második húzás során nekem megfelelő objektumot húzok ki:
+
+	* ha változik: hipergeometrikus
+	* ha nem változik: binomiális
+
+A természetben ez a fajta eloszlás gyakran előfordul ha **nagy** populációk esetén keresünk valamilyen tulajdonság meglétét, tehát az előfordulásnak van egy adott rátája. Főleg az ökológusok és statisztikával többet foglalkozó genetikusok fognak ezzel sokat találkozni.
+
+A binomiális eloszlás fő paraméterei:
+
+	* $p$: a megfelelő objektumok *aránya* a populációban
+	* $n$: a mintavétel során kihúzott objektumok száma, a *minta nagysága*
+
+Annak a valószínűségét, hogy $k$ db megfelelő objektumot veszünk ki a mintából, a következőképpen számolhatjuk ki:  
+Először is vegyük azt, hogy mennyi az esélye, hogy egy random kihúzott objektum megfelelő - ez ugye $p$. Mivel függetlenek egymástól az elemi események, ezért annak a valószínűsége, hogy 2 kihúzott objektumból 2 megfelelő $p *p=p^2$, annak a valószínűsége pedig, hogy $k$ kihúzott objektumból $k$ megfelelő $p^k$. Ezt megszorozzuk azzal, hogy hányféleképpen lehet az $n$ nagyságú mintából $k$ objetumot kiválogatni, ami ugye $n \choose k$. Ezzel még nem végeztünk, mert számolni kell azzal, hogy a minta maradékának ($n-k$) a másik típusból kell lennie. Annak a valószínűsége, hogy egy random objektum a másik típusú lesz $1-p$. Így annak a valószínűsége, hogy $n-k$ objektum a másik típusú lesz $(1-p)^{n-k}$. A képlet összerakva:
+
+$$P(X=k) = {n \choose k} p^k (1-p)^{n-k}$$
+
+Az eloszlás várható értéke a minta elemszáma szorozva a megfelelő objektumok gyakoriságával 
+
+$$E(X)= np$$
+
+Az eloszlás varianciája:
+
+$$SD^2(X)= np(1-p)$$
+
+```{r binom, echo=FALSE, fig.cap="Binomiális eloszlás PMF és CDF. Az eloszlás paraméterei: *n* = 40, *p* = 0.4 \\label{bino}"}
+
+plot1 <- ggplot(data.frame(x=0:40,
+									y=dbinom(0:40, size=40, prob=0.4), 
+									col=as.character(c(rep("green",15),rep("grey",26))))) +
+	geom_step(aes(x, y), data=data.frame(	x= c(14, -Inf),	y= dbinom(c(14,14),size=40, prob=0.4)), colour="lightblue", lwd=1.5)+
+  #geom_bar(aes(y = ..prop.., fill=col)) +
+	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
+	#xlim(0,15)+
+	#scale_x_discrete(labels=c("5"="min", "7"="x", "10"="max"))
+	scale_x_continuous(labels=c("0", "a", "M", "n"), breaks=c(0, 14 , 0.4*40,40))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "grey40"))+
+	annotate(geom = "point", x = -Inf, y = dbinom(14,size=40, prob=0.4), size = 2, color = 'blue')+
+	annotate(geom = "point", x = 14, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Probability Mass Function")
+
+
+plot2 <- ggplot(data.frame(x=0:40,y=pbinom(0:40, size=40, prob=0.4)) )+
+	geom_step(aes(x, y), data=data.frame(	x= c(14, -Inf),	y= pbinom(c(14,14),size=40, prob=0.4)), colour="lightgreen", lwd=1.5)+
+	geom_bar(aes(x=x, y=y), stat="identity")+
+	scale_x_continuous(labels=c("0", "a", "M", "n"), breaks=c(0, 14 , 0.4*40,40))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "darkgrey"))+
+	annotate(geom = "point", x = -Inf, y = pbinom(14,size=40, prob=0.4), size = 2, color = 'green4')+
+	annotate(geom = "point", x = 14, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y=expression(P(X <= x) ), title="Cumulative Density Function")
+
+
+grid.arrange(plot1, plot2, ncol=1)
+```
+
+A . ábrán látható a binomiális eloszlás tömegfüggvénye és eloszlásfüggvénye.  
+Ezeket **R**-ben vagy a fenti képlettel, vagy specifikus függvényekkel tudjuk kiszámolni. A tömegfüggvényt a `dbinom(..., size, prob)` függvénnyel, az eloszlásfüggvényt pedig a `pbinom(..., size, prob)` függvénnyel, ahol a `size` a mintaméret, azaz $n$, a `prob` pedig az elemi esemény valószínűsége, tehát $p$. Az eloszlásfüggvény inverzét a `qbinom(..., size, prob)` függvénnyel tudjuk kiszámítani. Ha elfelejtenénk, hogy a függvény paraméterei mit jelentenek futtassuk le a `?dbinom` parancsot az **R**-ben és a helpből kikereshetjük.
+
+Számoljuk ki egy binomiális eloszlás várható értékét és szórását! Tegyük fel, hogy van egy génváltozat ami az emberi populáció 2/5-ében megtalálható. Számítsuk ki annak az eloszlának a várható értékét és szórását ami azt mutatja meg hány emberben van meg ez a génváltozat, ha 40 véletlenszerűen kiválasztott emberből álló mintát veszünk!
+
+Az eloszlásra specifikus képletekkel:
+
+```{r}
+n = 40
+p = 0.4
+
+n*p # varhato ertek
+
+n*p*(1-p) # variancia
+sqrt(n*p*(1-p)) # szoras
+```
+
+Általános képletekkel:
+
+```{r}
+x <- 0:40 # ennyi ember tartalmazza lehetsegesen a gent
+p <- dbinom(x, size = n, prob = 0.4) #kategoriak gyakorisaga
+
+sum(p*x) #varhato ertek
+sum(p*x^2) - sum(p*x)^2 #variancia
+sqrt(sum(p*x^2) - sum(p*x)^2) #szoras
+```
+
+Számoljuk ki mennyi az esélye, hogy nem pontosan 14 ember ember tartalmazza ezt gént! Ezt úgy lehet legegyszerűbben kiszámolni, hogy az 1-ből kivonjuk annak a valószínűségét, hogy 14 ember (PMF: piros pont) tartalmazza a gént (PMF: kék pont).
+
+$$P(nem ~ 14)=1-P(X=14)= 1- {40 \choose 14} 0.4^{14} (1-0.4)^{40-14}$$
+
+**R**-ben:
+
+```{r}
+1 - dbinom(14, size=40, prob=0.4)
+```
+
+Számoljuk ki mennyi az esélye annak, hogy legfeljebb 14 vagy legalább 26 emberben benne van a gén! Ehhez részfeladataira bontjuk a feladatot: ki kell számolni mennyi az esélye, hogy 14 vagy kevesebb embernek van (PMF: zöld oszlopok; CDF: zöld pötty) és ehhez hozzá kell adni annak a valószínűségét, hogy legalább 25 embernek van.
+
+$$P(legfeljebb ~ 14 ~ vagy ~ legalább ~ 26)=P(legfeljebb ~ 14) + P(legalább ~ 26)= \\ P(X \le 14) + (1-P(X \le 25))= \\ 1-P(X \le 25) + P(X \le 14)  $$
+
+**R**-ben:
+
+```{r}
+1 - pbinom(25, size=40, prob=0.4) + pbinom(14, size=40, prob=0.4)
+```
+
+Számítsuk ki, hogy
+
+## Poisson eloszlás
+
+A Poisson eloszlás objektumok térben vagy időben való **véletlenszerű** eloszlását modellezi. Ebben az esetben is nekünk fontos objektumokat keresünk és mintákat veszünk, viszont itt csak azokat az objektumokat számoljuk meg (és nem számoljuk azokat amiket nem keresünk) és mintát úgy veszünk, hogy megfigyelünk adott méretű térrészt (pl. fa hektáronként vagy homoszemcse literenként) vagy adott hosszúságú időtartamot (pl. vízcsepp percenként). Fontos, hogy a megfigyelt idő-, vagy térrészek nem fedik egymást, azaz az elemi események megtörténte Poisson eloszlás esetén **független** egymástól.  
+
+A természetben ez a fajta eloszlás van, ha nincs mechanizmus, ami miatt ettől eltérnek az objektumok. Ökológusok, etológusok és mikroszkópos biológusok (élet-, sejttanászok) számára ez az egyik legfontosabb eloszlás, tekintve ha a Poisson eloszlástól való eltérést érzékelnek, megéri vizsgálódni azért, hogy megtalálják azt a háttérmechanizmust, ami miatt nem random fordulnak elő az objektumok (taszítják vagy vonzzák egymást aktívan).
+
+A Poisson eloszlásnak egy paramétere van ($\lambda$), ami az eloszlás **várható értéke** és **varianianciá**ja is egyben! A $\lambda$-t át lehet skálázni más mintaméretre!
+
+$$M(X)=SD^2(X)=\lambda$$
+
+```{r}
+curve(log(x))
+```
+
+
+Az eloszlást a természetes logaritmus alapját képező Euler féle $e$ szám segítségével vezethetjük le.
+
+$$e = \sum_{i=0}^{\infty}\frac{1}{i!}=\frac{1}{0!} + \frac{1}{1!}+ \ldots +\frac{1}{\infty!}$$
+
+Ez nagyszerű, csak az abaj, hogy 1-re van skálázva. Viszont nem csak 1-es várható értékű eloszlásokat szeretnénk számolni, így emeljük $\lambda$ hatványára !
+
+$$e^{\lambda} = \sum_{i=0}^{\infty} \lambda^i\frac{1}{i!}=\lambda^0\frac{1}{0!} + \lambda^1 \frac{1}{1!}+ \ldots +\lambda^\infty \frac{1}{\infty!}$$
+
+Egy valószínűségi eloszlás esetén a tagok összege 1. $e^{\lambda}$ pedig akkor lesz egy, ha megszorozzuk a reciprokával!
+
+$$ 1 = e^{\lambda} e^{-\lambda} =  \sum_{i=0}^{\infty} e^{-\lambda}\frac{\lambda^i}{i!}=e^{-\lambda} \frac{\lambda^0}{0!} + e^{-\lambda} \frac{\lambda^1}{1!}+ \ldots + e^{-\lambda} \frac{\lambda^\infty}{\infty!}$$
+
+Ez ugye egy végtelen sorozat, ami leírja valószínűségi eloszlást. Ha ebből kivesszük mondjuk a 2. tagot ($e^{-\lambda} \lambda^1 / 1!$), akkor megkapjuk, hogy mekkora a valószínűsége, hogy véletleszerű eloszlás esetén 1 objektumot találok a mintámban, $\lamdba$ várható érték mellett. Ezt általánosítva:
+
+$$P(X=k)= e^{-\lambda}\frac{\lambda^k}{k!} $$
+
+
+```{r pois, echo=FALSE, fig.cap="Poisson eloszlás PMF és CDF. \\label{poi}"}
+
+plot1 <- ggplot(data.frame(x=0:40,
+									y=dpois(0:40, lambda=25), 
+									col=as.character(c(rep("green",35),rep("grey",6))))) +
+	geom_step(aes(x, y), data=data.frame(	x= c(34, -Inf),	y= dpois(c(34,34), lambda=25)), colour="lightblue", lwd=1.5)+
+  #geom_bar(aes(y = ..prop.., fill=col)) +
+	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
+	#xlim(0,15)+
+	#scale_x_discrete(labels=c("5"="min", "7"="x", "10"="max"))
+	scale_x_continuous(labels=c("0", expression(lambda), "a"), breaks=c(0, 25, 34))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "grey40"))+
+	annotate(geom = "point", x = -Inf, y = dpois(34, lambda=25), size = 2, color = 'blue')+
+	annotate(geom = "point", x = 34, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Probability Mass Function")
+
+
+plot2 <- ggplot(data.frame(x=0:40,
+									y=ppois(0:40, lambda=25)) )+
+	geom_step(aes(x, y), data=data.frame(	x= c(34, -Inf),	y= ppois(c(34,34),lambda = 25)), colour="lightgreen", lwd=1.5)+
+	geom_bar(aes(x=x, y=y), stat="identity")+
+	#scale_x_continuous(labels=c("min", "a", "max"), breaks=c(5,7,10))+ 
+	scale_x_continuous(labels=c("0", expression( lambda ), "a"), breaks=c(0, 25, 34))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "darkgrey"))+
+	annotate(geom = "point", x = -Inf, y = ppois(34,lambda=25), size = 2, color = 'green4')+
+	annotate(geom = "point", x = 34, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y=expression(P(X <= x) ), title="Cumulative Density Function")
+
+
+grid.arrange(plot1, plot2, ncol=1)
+```
+
+A . ábrán látható a Poisson eloszlás tömegfüggvénye és eloszlásfüggvénye.  
+Ezeket **R**-ben vagy a fenti képlettel, vagy specifikus függvényekkel tudjuk kiszámolni. A tömegfüggvényt a `dpois(..., lamdba)` függvénnyel, az eloszlásfüggvényt pedig a `ppois(..., lambda)` függvénnyel. Az eloszlásfüggvény inverzét a `qpois(..., lamdba)` függvénnyel tudjuk kiszámítani. A `?dpois` parancsot az **R**-ben lefuttatva elérjük a függvények help-jét.
+
+Számoljuk ki mennyi az esélye, hogy ha hektáronként átlagosan 25 fa van a szavannán, akkor mennyi az esélye, hogy egy egy véletlenszerűen kiválasztott 1 hektáros parcellán pontosan 34 fa álljon!  
+Mivel csak azt tudjuk, hogy átlagosan hány fa van egy hektáron, az alapfeltételezésünk az, hogy a fák a térben véletlenszerűen helyezkednek el. Ezért ezt egy $\lambda = 25$ paraméterű Poisson eloszlásból számoljuk ki. (Ugye tudjuk, hogy ennek az eloszlásnak a várható értéke és varianciája megegyezik $\lambda$-val, tehát 25!) Ezt a PMF-en úgy találjuk meg, hogy kikeressük a 34-et az x-tengelyen (piros pötty), majd leolvassuk az ehhez tartozó y-tengely értéket (kék pötty). Kézzel kiszámítva:
+
+$$P(X=34)= e^{-25}\frac{25^{34}}{34!}$$
+
+**R**-ben:
+
+```{r}
+dpois(34, lambda=25)
+```
+
+Számoljuk ki mennyi az esélye annak, hogy nem több mint 34 fa áll a területen ($P(X \le 34)$)! PMF: zöld oszlopok összesen, CDF: kék pötty.
+
+```{r}
+ppois(34, lambda=25)
+```
+
+Számoljuk ki, hogy hány fa van maximum egy a legkopárabb parcellák 20% -ához tartozó területen!
+
+```{r}
+qpois(0.2, lambda=25)
+```
+
+A Poisson eloszlás a véletlenszerűség közelítése. Tehát ha azt tapasztaljuk, hogy minták átlaga *megegyezik* a varianciájukkal, akkor sejthetjük, hogy Poisson eloszláshoz tartozik, tehát eloszlása **véletlenszerű**. De mi van akkor, ha a variancia *kisebb*, mint az átlag? Ekkor elképzeljük, hogy lehetséges ez: csakis akkor, ha az objektumok egymástól való távolságai sokkal egyformábbak, tehát ha valahogyan ezek az objektumok "tudnák" milyen messze szabad lenniük egymástól. Ez esetben az objektumok tér vagy időbeli eloszlása **szabályos**. Ha a variancia *nagyobb*, mint az átlag, akkor vannak olyan tér- vagy időrészek ahol alig találunk objektumokat és vannak olyan tér- vagy időrészek, ahol nagyon sűrűn találjuk őket. Ekkor **aggregált** eloszlásról beszélünk.
+
+| viszony                         | variancia M(X)-hez képest \ldots | eloszlás        |
+|:--------------------------------|:---------------------------------|:----------------|
+| \(\displaystyle V(X) = M(X) \)  | megegyezik                       | véletlenszerű   |
+| \(\displaystyle V(X) < M(X) \)  | kicsi                            | szabályos       |
+| \(\displaystyle V(X) > M(X) \)  | nagy                             | aggregált       |
+
+Ezt a biológusok gyorstesztre szokták használni, vagyis megnézik gyors, hogy hány objektumot találnak mintánként, kiszámolják ennek átlagát és varianciáját, majd megnézik a viszonyukat így gyorsan (akár terepen vagy mikroszkóp mellett) meg tudják mondani, hogy milyen eloszlású adatataik vannak.  
+
+Például tegyük fel, hogy detektálják, hogy 5 percenként hány madár látogatta meg a téli etetőt. Az adatok: 2, 1, 5, 9, 10, 4, 0, 0, 0, 1, 0, 1, 3. Kérdés: gyorsan becsüljük meg, hogy szabályosan érkeznek-e a madarak az etetőhöz.
+
+| star | end | bird (pieces) |
+|:------|:------|------------|
+| 12:00 | 12:05 | 2          |
+| 12:05 | 12:10 | 1          |
+| 12:10 | 12:15 | 5          |
+| 12:15 | 12:20 | 9          |
+| 12:20 | 12:25 | 10         |
+| 12:25 | 12:30 | 4          |
+| 12:30 | 12:35 | 0          |
+| 12:35 | 12:40 | 0          |
+| 12:40 | 12:45 | 0          |
+| 12:45 | 12:50 | 1          |
+| 12:50 | 12:55 | 0          |
+| 12:55 | 13:00 | 1          |
+| 13:00 | 13:05 | 3          |
+
+Kiszámoljuk a varianciát és átlagot!
+
+```{r}
+madar <- c(2, 1, 5, 9, 10, 4, 0, 0, 0, 1, 0, 1, 3)
+var(madar) # variancia
+mean(madar) # varhato ertek
+```
+
+Látjuk, hogy a variancia az átlaghoz képest nagy, így tippünk szerint inkább aggregáltan érkeznek a madarak.  
+Sajnos néha a két érték közel van egymáshoz (pl. $M(X)=5.1$ és $V(X)=5.3$ ), így csak a mérőszemélyen múlik mit mond az adatairól. **Ez a módszer csak gyorstesztnek jó, a félév későbbi részében tanulunk majd jóval pontosabb módszereket is!**
