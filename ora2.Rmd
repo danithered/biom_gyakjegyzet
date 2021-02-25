@@ -164,10 +164,108 @@ A diszkrét eloszlásokat valószínűségi tömegfüggvénnyel (PMF = **P**roba
 
 ### Valószínűségek számítása
 
-blabla
-előző szekció definíciói is borzalmasak, át kell írnom.
-legfeljebb, legalább
-qbinom és qhyper példa!!
+Sokszor előfordul, hogy számolni kell azt, hogy adott eloszlás milyen valószínűséggel vesz fel bizonyos értékeket. Diszkrét eloszlások esetén ez egyszerű. Ha azt kell kiszámolni, hogy mekkora a valószínűsége, hogy egy valvált **pontosan** megegyezik egy adott számmal, akkor csak be kell helyettesíteni az adott számot a tömegfüggvénybe. Azonban, ha arra vagyunk kíváncsiak, hogy milyen valószínűséggel vesz fel egynél több adott kategóriát, bonyolódik a helyzet. Ilyen esetekben az mindig jó (diszkrét eloszlás esetén), ha felsoroljuk azokat a ketegóriákat, amikre kíváncsiak vagyunk, kiszámoljuk a gyakoriságokat és összeadjuk őket.
+
+$$P(X \in \underline v)= \sum_{i=1}^{n} P(\underline v_i) = P(\underline v_1) + P(\underline v_2) + \cdots + P(\underline v_n)$$
+
+Ha blokkokra / intervallumokra vagyunk kíváncsiak, akkor is használható a fenti módszer, de egyszerűbb ha az eloszlásfüggvénnyel számolunk. Ha pl. arra vagyunk kíváncsiak, hogy mekkora eséllyel vesz fel egy valvált egy adott $x$ értékkel megegyező vagy kisebb értéket. Ha másfajta intervallumokra vagyunk kíváncsiak, akkor használjuk fel a következő összefügggést:
+
+$$\sum_{x=0}^{max} P(X=x) = 1$$
+
+vagyis az összes eset valószínűségének összege 1.  
+Ha tehát arra vagyunk kíváncsiak, hogy mekkora eséllyel vesz fel egy valvált egy adott $x$ értékkel megegyező vagy nagyobb értéket, akkor az eloszlásfüggvény segítségével kiszámolhatjuk, hogy mekkora valószínűséggel vesz fel $x-1$-et vagy annál kisebbet és ezt kivonjuk 1-ből.  
+
+Ha több intervallumhatárral (pl. "A" és "B") dolgozunk, nehezedik a dolgunk.  
+$$P(legalább ~A ~és~ legfeljebb ~B) = P(X \le B) - P(X \le A-1)$$
+
+Ebben az esetben először kiszámoljuk $P(X \le B)$-t (Step 1 zöld rész), majd kivonjuk belőle azt a részt, ami nem kell (Step 2 piros rész), ez pedig $P(X \le A-1)$ és ami marad az a végeredmény (Result). Azért $A-1$, mert a "legalább A" -ban benne van az $A$, így az nem szabad kivonni végeredményből!
+
+```{r}
+
+p1 <- ggplot(data.frame(x=0:40,
+									y=dbinom(0:40, size=40, prob=0.4), 
+									col=as.character(c(rep("green",15), rep("green",5),rep("grey",41-15-5))))) +
+	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
+	scale_x_continuous(labels=c("A", "B"), breaks=c(14 , 19))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("red"="coral","green" = "lightgreen", "grey" = "grey40"))+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Step 1")
+
+
+p2 <- ggplot(data.frame(x=0:40,
+									y=dbinom(0:40, size=40, prob=0.4), 
+									col=as.character(c(rep("red",14), rep("green",6),rep("grey",41-15-5))))) +
+	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
+	scale_x_continuous(labels=c("A", "B"), breaks=c(14 , 19))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("red"="coral","green" = "lightgreen", "grey" = "grey40"))+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Step 2")
+
+p3 <- ggplot(data.frame(x=0:40,
+									y=dbinom(0:40, size=40, prob=0.4), 
+									col=as.character(c(rep("grey",14), rep("green",6),rep("grey",41-15-5))))) +
+	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
+	scale_x_continuous(labels=c("A", "B"), breaks=c(14 , 19))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("red"="coral","green" = "lightgreen", "grey" = "grey40"))+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Result")
+
+
+grid.arrange(p1, p2, p3, ncol=3)
+```
+
+$$P(maximum ~A ~vagy~ minimum ~B) = 1- (P(X \le B-1) - P(X \le A))=1- P(X \le B-1) + P(X \le A)$$
+Ehhez először kiszámoljuk a "minimum B" részt: $1- (P(X \le B-1)$ (Step 1 zöld). Azért $B-1$, mert a "minimum B" -ben benne van a $B$, így az nem szabad kivonni! Majd ehhez hozzáadjuk a "maximum A" részt: $P(X \le A)$ (Step 2 másik zöld rész).
+
+```{r}
+
+p1 <- ggplot(data.frame(x=0:40,
+									y=dbinom(0:40, size=40, prob=0.4), 
+									col=as.character(c(rep("grey",15), rep("grey",4),rep("green",41-15-4))))) +
+	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
+	scale_x_continuous(labels=c("A", "B"), breaks=c(14 , 19))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("red"="coral","green" = "lightgreen", "grey" = "grey40"))+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Step 1")
+
+
+p2 <- ggplot(data.frame(x=0:40,
+									y=dbinom(0:40, size=40, prob=0.4), 
+									col=as.character(c(rep("green",15), rep("grey",4),rep("green",41-15-4))))) +
+	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
+	scale_x_continuous(labels=c("A", "B"), breaks=c(14 , 19))+ 
+	theme(legend.position = "none")+
+	scale_fill_manual("", values = c("red"="coral","green" = "lightgreen", "grey" = "grey40"))+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="P(X)", title="Step 2")
+
+
+grid.arrange(p1, p2, nrow=1)
+```
+
+
+Figyeljünk a következő szinonímákra és arra, hogy ne keverjük őket:
+
+  * "$x$ és nagyobb", "legalább $x$", "minimum $x$", "nem kevesebb mint $x$" 
+  * "$x$-nél nagyobb", "több mint $x$"
+  * "$x$ és kisebb", "legfeljebb $x$", "maximum $x$", "nem több mint $x$"
+  * "$x$-nél kisebb", "kevesebb mint $x$"
+
+Néha visszafelé is számolni kell: adott egy valószínűségi érték és ehhez kell kiszámolni, hogy a valvált melyik értéktartományához tartozik tartozik. Ezt a reverz CDF-el tudjuk kiszámolni.
+
+**R**-ben a PMF-et, a CDF-et és a reverzét a `d...()`, `p...()` és `q...()` formájú függvényekkel fogjuk elérni.
+
+$$
+\begin{gathered}
+valvált \rightarrow \mathbf{d} \rightarrow P(X=x) \\
+valvált \rightarrow \mathbf{p} \rightarrow P(X \le x) \\
+P(X \le x) \rightarrow \mathbf{q} \rightarrow valvált 
+\end{gathered}
+$$
 
 ## Egyenletes eloszlás
 
@@ -494,7 +592,13 @@ $$P(legfeljebb ~ 14 ~ vagy ~ legalább ~ 26)=P(legfeljebb ~ 14) + P(legalább ~ 
 1 - pbinom(25, size=40, prob=0.4) + pbinom(14, size=40, prob=0.4)
 ```
 
-Számítsuk ki, hogy
+Számítsuk ki, hogy ha a "sok génhordozó" kategóriában az adatok 30%-van, hány, az adott gént tartalmazó embertől mondjuk, hogy "sok a génthordozó"?  
+Úgye, ha sok a gén, akkor az eloszlás "jobb oldali" végére vagyunk kíváncsiak, tehát a 40 génhordozó felé keresünk. Azt nem tudjuk, hogy ebbe melyik értékek tartoznak, de azt igen, hogy ezeknek az értékeknek a gyakoriságainak összege 30%. Tehát nekünk most az eloszlásfüggvény inverze kell! Azonban az azt számolja ki, hogy adott valószínűséghez tartozó értékek közül melyik a legnagyobb. Ezért nekünk először a legkisebb 70% -ot kell kiszámolni.
+```{r}
+qbinom(0.7, size=40, prob=0.4)
+```
+
+Ez a 18-as. Tehát a 18 még az előző kategóriába tartozik, tehát a sok génhordozó" kategória 19 az adott gént tartalmazó embertől tart.
 
 ## Poisson eloszlás
 
@@ -602,21 +706,21 @@ Ezt a biológusok gyorstesztre szokták használni, vagyis megnézik gyors, hogy
 
 Például tegyük fel, hogy detektálják, hogy 5 percenként hány madár látogatta meg a téli etetőt. Az adatok: 2, 1, 5, 9, 10, 4, 0, 0, 0, 1, 0, 1, 3. Kérdés: gyorsan becsüljük meg, hogy szabályosan érkeznek-e a madarak az etetőhöz.
 
-| star | end | bird (pieces) |
-|:------|:------|------------|
-| 12:00 | 12:05 | 2          |
-| 12:05 | 12:10 | 1          |
-| 12:10 | 12:15 | 5          |
-| 12:15 | 12:20 | 9          |
-| 12:20 | 12:25 | 10         |
-| 12:25 | 12:30 | 4          |
-| 12:30 | 12:35 | 0          |
-| 12:35 | 12:40 | 0          |
-| 12:40 | 12:45 | 0          |
-| 12:45 | 12:50 | 1          |
-| 12:50 | 12:55 | 0          |
-| 12:55 | 13:00 | 1          |
-| 13:00 | 13:05 | 3          |
+| start | end   | bird (pieces) |
+|:------|:------|---------------|
+| 12:00 | 12:05 | 2             |
+| 12:05 | 12:10 | 1             |
+| 12:10 | 12:15 | 5             |
+| 12:15 | 12:20 | 9             |
+| 12:20 | 12:25 | 10            |
+| 12:25 | 12:30 | 4             |
+| 12:30 | 12:35 | 0             |
+| 12:35 | 12:40 | 0             |
+| 12:40 | 12:45 | 0             |
+| 12:45 | 12:50 | 1             |
+| 12:50 | 12:55 | 0             |
+| 12:55 | 13:00 | 1             |
+| 13:00 | 13:05 | 3             |
 
 Kiszámoljuk a varianciát és átlagot!
 
