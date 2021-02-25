@@ -359,7 +359,7 @@ A hipergeometrikus eloszlás fő paraméterei:
 	
 Annak a valószínűségét, hogy $x$ db megfelelő objektumot veszünk ki a mintából, a következőképpen számolhatjuk ki:
 
-$$P(X=x) = \frac{n_{megfelelő ~ kombinációk}}{n_{összes ~ kombinációk}} = \frac{ {m \choose x}{ n \choose k-x} }{m+n \choose k}$$
+$$P(X=x) = \frac{n_{megfelelő ~ kombinációk}}{n_{összes ~ kombinációk}} = \frac{ {m \choose x}{ {n \choose {k-x} }} }{ {{m+n} \choose k} }$$
 
 A kombináció $N \choose n$ ugye azt mutatja meg, hogy hányféleképpen húzhatunk ki egy $N$ elemű halmazból $n$ elemű részhalmazt. Ezt a műveletet tudományos számológépeken legtöbbször az "nCr" gombbal hívhatjuk elő, **R**-ben így:
 
@@ -368,7 +368,7 @@ choose(8,2) #combination: 10C2
 combn(10, 2) #kidobja az osszes kombinaciot 
 ```
 
-A fenti képletben az $m+n$ a kiindulási pool mérete, tehát ennyi objektumunk van összesen. Tehát $m+n \choose k$ azt jelenti, hogy összesen ennyiféleképpen húzhatunk ki $k$ darab objektumot a poolból. A tört számlálójában a nekünk megfelelő esetek száma van. $m \choose x$ azt jelzi, hogy hányféleképp tudjuk a kellő $x$ számú megfelelő objektumot kihúzni, ha összesen $m$ ilyen objektum van a poolban, Ez nekünk azonban nem elég, elő kell húznunk $k-x$ számú nem megfelelő objektumot is, mert ha nem tennénk, akkor a maradék golyó lehetne bármilyen, ez azonban nem lenne jó nekünk, tekintve, hogy pontosan $x$ darab jót akarunk kihúzni és nem többet. Tehát $n \choose k-x$ féleképpen tudjuk kihúzni $n$ nem megfelelő objektumból $k-x$ jót. Mivel független elemi események esetén $P(A|B)=P(A)P(B)$, ezért a nekünk megfelelő jó húzások száma $ {m \choose x} { n \choose k-x}$. 
+A fenti képletben az $m+n$ a kiindulási pool mérete, tehát ennyi objektumunk van összesen. Tehát $m+n \choose k$ azt jelenti, hogy összesen ennyiféleképpen húzhatunk ki $k$ darab objektumot a poolból. A tört számlálójában a nekünk megfelelő esetek száma van. $m \choose x$ azt jelzi, hogy hányféleképp tudjuk a kellő $x$ számú megfelelő objektumot kihúzni, ha összesen $m$ ilyen objektum van a poolban, Ez nekünk azonban nem elég, elő kell húznunk $k-x$ számú nem megfelelő objektumot is, mert ha nem tennénk, akkor a maradék golyó lehetne bármilyen, ez azonban nem lenne jó nekünk, tekintve, hogy pontosan $x$ darab jót akarunk kihúzni és nem többet. Tehát $n \choose k-x$ féleképpen tudjuk kihúzni $n$ nem megfelelő objektumból $k-x$ jót. Mivel független elemi események esetén $P(A|B)=P(A)P(B)$, ezért a nekünk megfelelő jó húzások száma ${m \choose x}* { n \choose {k-x} }$. 
 
 Az eloszlás várható értéke a minta elemszáma szorozva a megfelelő objektumok eredeti gyakoriságával 
 
@@ -447,7 +447,7 @@ sqrt(sum(p*x^2) - sum(p*x)^2) #szoras
 
 Számoljuk ki mennyi az esélye, hogy páratlan számú hím kacsát lövünk le a hatból! Ez ugye a következő esetekben fordulhat elő: $x={1;3;5}$. Azaz ki kell számolni:
 
-$$P(páratlan ~ hím)=P(X=1)+P(X=3)+P(X=5)= \\ \frac{ {18 \choose 1}{ 12 \choose 6-1} }{30 \choose 6} +\frac{ {18 \choose 3}{ 12 \choose 6-3} }{30 \choose 6} + \frac{ {18 \choose 5}{ 12 \choose 6-5} }{30 \choose 6}$$
+$$P(páratlan ~ hím)=P(X=1)+P(X=3)+P(X=5)= \\ \frac{ {18 \choose 1}{ 12 \choose {6-1} } }{ {30 \choose 6} } +\frac{ {18 \choose 3}{ 12 \choose {6-3} } }{ {30 \choose 6} } + \frac{ {18 \choose 5}{ 12 \choose {6-5} } }{ {30 \choose 6} }$$
 
 **R**-ben:
 
@@ -627,7 +627,7 @@ Egy valószínűségi eloszlás esetén a tagok összege 1. $e^{\lambda}$ pedig 
 
 $$ 1 = e^{\lambda} e^{-\lambda} =  \sum_{i=0}^{\infty} e^{-\lambda}\frac{\lambda^i}{i!}=e^{-\lambda} \frac{\lambda^0}{0!} + e^{-\lambda} \frac{\lambda^1}{1!}+ \ldots + e^{-\lambda} \frac{\lambda^\infty}{\infty!}$$
 
-Ez ugye egy végtelen sorozat, ami leírja valószínűségi eloszlást. Ha ebből kivesszük mondjuk a 2. tagot ($e^{-\lambda} \lambda^1 / 1!$), akkor megkapjuk, hogy mekkora a valószínűsége, hogy véletleszerű eloszlás esetén 1 objektumot találok a mintámban, $\lamdba$ várható érték mellett. Ezt általánosítva:
+Ez ugye egy végtelen sorozat, ami leírja valószínűségi eloszlást. Ha ebből kivesszük mondjuk a 2. tagot ($e^{-\lambda} \lambda^1 / 1!$), akkor megkapjuk, hogy mekkora a valószínűsége, hogy véletleszerű eloszlás esetén 1 objektumot találok a mintámban, $\lambda$ várható érték mellett. Ezt általánosítva:
 
 $$P(X=k)= e^{-\lambda}\frac{\lambda^k}{k!} $$
 
@@ -669,7 +669,7 @@ grid.arrange(plot1, plot2, ncol=1)
 ```
 
 A . ábrán látható a Poisson eloszlás tömegfüggvénye és eloszlásfüggvénye.  
-Ezeket **R**-ben vagy a fenti képlettel, vagy specifikus függvényekkel tudjuk kiszámolni. A tömegfüggvényt a `dpois(..., lamdba)` függvénnyel, az eloszlásfüggvényt pedig a `ppois(..., lambda)` függvénnyel. Az eloszlásfüggvény inverzét a `qpois(..., lamdba)` függvénnyel tudjuk kiszámítani. A `?dpois` parancsot az **R**-ben lefuttatva elérjük a függvények help-jét.
+Ezeket **R**-ben vagy a fenti képlettel, vagy specifikus függvényekkel tudjuk kiszámolni. A tömegfüggvényt a `dpois(..., lambda)` függvénnyel, az eloszlásfüggvényt pedig a `ppois(..., lambda)` függvénnyel. Az eloszlásfüggvény inverzét a `qpois(..., lambda)` függvénnyel tudjuk kiszámítani. A `?dpois` parancsot az **R**-ben lefuttatva elérjük a függvények help-jét.
 
 Számoljuk ki mennyi az esélye, hogy ha hektáronként átlagosan 25 fa van a szavannán, akkor mennyi az esélye, hogy egy egy véletlenszerűen kiválasztott 1 hektáros parcellán pontosan 34 fa álljon!  
 Mivel csak azt tudjuk, hogy átlagosan hány fa van egy hektáron, az alapfeltételezésünk az, hogy a fák a térben véletlenszerűen helyezkednek el. Ezért ezt egy $\lambda = 25$ paraméterű Poisson eloszlásból számoljuk ki. (Ugye tudjuk, hogy ennek az eloszlásnak a várható értéke és varianciája megegyezik $\lambda$-val, tehát 25!) Ezt a PMF-en úgy találjuk meg, hogy kikeressük a 34-et az x-tengelyen (piros pötty), majd leolvassuk az ehhez tartozó y-tengely értéket (kék pötty). Kézzel kiszámítva:
