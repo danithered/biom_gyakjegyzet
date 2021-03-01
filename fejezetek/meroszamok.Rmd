@@ -1,0 +1,156 @@
+# Mérőszámok (5. óra)
+
+Az adatokat és eloszlásukat statisztikai mérőszámokkal szokás jellemezni. Ezek a valós eloszlásokat különbözőképpen egyszerűsítik le, ezért mindig az adott vizsgálathoz kell igazítani, hogy melyiket használjuk. Fontos még figyelni arra, hogy az adott mérőszám a populációt, vagy egy mintát jellemez-e. Populációk mérőszámait extrém ritkán tudjuk vizsgálni, mivel akkor az előforduló összes esetet figyelembe kell venni. Ilyen esetek lehetnek a dobókocka oldalainak értékei vagy mondjuk a kakapók (*Strigops habroptilus*) szárnyhosszai (mivel ott fel van mérve az összes élő egyed). Így az esetek többségében minták mérőszámaival dolgozunk.  
+A mérőszámok tulajdonságaival, jelentésével és használatával az előadás anyaga foglalkozik.
+
+## Minta elemszáma
+
+```{r}
+length(beka$tomeg) # elemek szama a mintaban
+```
+
+
+## Átlag
+
+Képlete:
+
+$$ \bar x = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+
+Ha gyakoriságadataink is vannak (diszkrét kategóriák - pl. utódok száma):
+
+$$ \bar x = \sum_{i=1}^n {x_i*p_i} ,$$
+
+ahol $p_i$ az $i$-edik kategória gyakorisága.
+
+```{r atlag, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+#adatok beolvasasa
+beka <- read.table("beka.csv", sep=",", header=TRUE, dec=".")
+str(beka)
+
+#atlag
+mean(beka$tomeg)
+mean(beka$tomeg, na.rm = TRUE)
+```
+
+Újfent felhívjuk a figyelmet, hogy a hiányzó adatot valamilyen módon kezelni kell ha van az adatbázisban. Kezelés hiányában az eredmény \texttt{NA}, az \texttt{NA}-któl megszabadulni az \texttt{na.rm = TRUE} opcióval lehet. 
+
+## Medián
+
+A mediánnal kiszámíthatjuk a középpontot, vagyis azt a számot, ami alatt a nagyság szerint sorba rendezett adatok fele, és ami felett a nagyság szerint sorba rendezett adatok másik fele található.
+
+```{r median, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+median(beka$tomeg)
+median(beka$tomeg, na.rm = TRUE)
+```
+
+## Módusz
+
+Gyakoriság táblázatot kell készíteni (\texttt{table(beka\$tomeg)}) és a leggyakoribb elemet kell kiválasztani
+
+## Terjedelem
+
+\texttt{max-min} értéke a változónak
+
+```{r range, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+range(beka$tomeg, na.rm = TRUE) ## ez nem fogadható el ZH-n a terjedelemre
+range(beka$tomeg, na.rm = TRUE)[2]-range(beka$tomeg, na.rm = TRUE)[1]
+max(beka$tomeg, na.rm = TRUE)-min(beka$tomeg, na.rm = TRUE) # egyenerteku a kozvetlenul felette levovel 
+```
+
+## Kvantilisek, kvartilisek és percentilisek
+
+Kva**n**tilis: A nagyság szerint sorba rendezett adatokat adott arányban osztjuk ketté.  
+Medián: A nagyság szerint sorba rendezett adatokat egyenlő arányban osztjuk ketté.  
+Kva**r**tilis: A nagyság szerint sorba rendezett adatokat negyedek szerint osztjuk ketté pl. 3/4 vagy 1/4.  
+Percentilis: A nagyság szerint sorba rendezett adatokat adott arányban osztjuk ketté, amit százalékban adunk meg.  
+
+Részek száma szerint: 
+
+* 50-50% -> medián  ($Q_2$) vagy 50%-os percentilis
+
+* 25-75% -> alsó kvartilis ($Q_1$) vagy 25%-os percentilis
+
+* 75-25% -> felső kvartilis  ($Q_3$) vagy 75%-os percentilis
+
+* bármilyen arány pl. 10-90% ezek a percentilisek (A kvartilis \'\'speciális\'\' kvantilis!) 
+
+```{r quantile, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+#quantile(c(0.25,0.75),beka$thossz) # hibas kod
+quantile(probs=c(0.25,0.75),beka$tomeg, na.rm = TRUE) # Q1 és Q3
+quantile(beka$thossz,probs=c(0.5,0.15,0.45,0.95), na.rm = TRUE)
+```
+
+## Inter kvartilis terjedelem (IQR)
+
+Definíció szerint a felső és az alsó kvartilis különbsége: $Q_3 - Q1$
+
+```{r iqr, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+IQR(beka$tomeg, na.rm = TRUE)
+```
+
+## Eltérés négyzetösszeg (\emph{Sum of Square})
+
+Képlete: 
+
+$$\sum (x_i-\bar x)^2$$
+
+Erre nincs függvény (legalábbis az alap **R**-ben), ki kell számolni  a képlet alapján
+
+```{r ss, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+ss <- sum((beka$thossz-mean(beka$thossz))^2) 
+ss
+```
+
+## Variancia 
+
+Képlete:
+
+$$ var(x) = \frac{1}{n-1} \sum_{i=1}^{n} (x_i-\bar x)^2$$
+
+Ez mindig a torzítatlant számolja (azaz \emph{n-1= minta elemszám-1}-el oszt) és ez az, amit gyakorlatilag használunk 
+
+```{r var, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+var(beka$thossz)
+```
+
+de kiszámolható az eltérés négyzetösszegből is (minta elemszáma a \texttt{length()} függvénnyel adható meg)
+
+```{r var2, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+ss <- sum((beka$thossz-mean(beka$thossz))^2) 
+ss/(length(beka$thossz)-1)
+```
+
+a torzított variancia pedig
+
+$$ var(x) = \frac{1}{n} \sum_{i=1}^{n} (x_i-\bar x)^2$$
+
+```{r var3, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+ss <- sum((beka$thossz-mean(beka$thossz))^2) 
+ss/(length(beka$thossz))
+```
+
+
+## Szórás
+
+a variancia négyzetgyöke (\texttt{sqrt()} függvény)
+
+$$ sd(x) = \sqrt{var(x)} = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (x_i-\bar x)^2} $$
+
+```{r sd, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+sd(beka$thossz)
+sqrt(var(beka$thossz))
+```
+
+## Variációs koefficiens
+
+Képlet alapján számoljuk:
+
+$$CV = \frac{sd_x}{\bar x}$$
+
+```{r cv, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+sd(beka$thossz)/mean(beka$thossz)
+# VAGY
+sd(beka$thossz)/mean(beka$thossz) * 100
+```
+
+ 

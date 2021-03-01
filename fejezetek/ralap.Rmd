@@ -1,0 +1,699 @@
+
+# Szükséges **R** alapok (1. óra)
+
+## Miért **R**?
+
+A gyakorlat során a statisztikai számításokat kézzel és az **R** statisztikai programcsomag segítségével fogjuk elvégezni. Az **R** használata mellett több érvünk is van:
+
+ * ingyenes
+ * konzolos (szöveges vagy más néven *script*) alapú felület
+ * az egyik leggyakrabban használt statisztikai program a biológiában
+ * erős támogatottság, hatalmas közösség
+ * platform független (bár alapvetően Linux-ra lett fejlesztve)
+ * *package*-ekkel bővíthető, konkrétan bármilyen számítástechnikai feladat elvégzésére képes
+ * megbízható és pontos
+ * viszonylag könnyen kezelhető
+ * programozni is lehet benne (az órán erre nem lesz szükség!)
+ * biológusok által leggyakrabban használt 
+ * ELTE biológus hallgatók más kurzusokon is találkozni fognak vele
+
+A hallgatóknak leggyakrabban az **R** konzol alapú irányításával van gondja, azonban oktatási tapasztalataink szerint a kezdeti nehézségek után sokkal könnyebben tanulható, mint a grafikus kezelőfelületű programok "most ide kattints - majd oda kattints" stílusú kezelése. Valamint így sokkal könnyebben ellenőrizhető a hallgatók tudásának mélysége is.  
+
+## Az **RStudio** használata
+
+Az **R** használatát nagyban megkönnyíti az **RStudio** nevű program, ami egy grafikus kezelőfelületet nyújt az **R** kezeléséhez.  
+Az **R** és az **RStudio** feltelepítéséhez ebben a segédanyagban nincs útmutatás!  
+
+![Az RStudio kezelőfelülete első indításkor. A bal felső sarokban lévő ikon segítségével lehet új script fájlt nyitni \label{rst1}](./pics/rst1_2.png)
+
+Az **RStudio**-ban alapvetően két helyre írhatunk parancsokat: a megnyitott script fájlunkba és a *Console*ba (Fig. \ref{rst2}). 
+Új script fájlt megnyitni a *"File -> New file -> R script"* útvonalon, a bal felső sarokban lévő ikon segítségével, vagy a *"CTR + SHIFT + N"* billentyűkombinációval lehet (lásd: Fig. \ref{rst1}).  
+
+![Az RStudio kezelőfelülete 4 panellel. Parancsokat lefuttatni lehet a script fájlban (felső nyíl) és a Console-ban (alsó nyíl). A script fájlt a bal felső sarokban lévő ikon segítségével lehet menteni (bekarikázva), míg ettől jobbra lehet soronként és egészében lefuttatni a fájlt. Jobb alsó sarokban van a Help fül, ahol függvények leírására lehet keresni (lila keret). \label{rst2}](./pics/rst2_2.png)
+
+Ha meg van nyitva egy script fájl, akkor az **RStudio** felülete négy panelből áll (Fig. \ref{rst2}). A bal felső panelban találjuk a megnyitott script fájlokat. Ezek egyszerű szövegfájlok, amikbe írhatjuk, szerkeszthetjük az **R** parancsokat. A script fájlokban található parancsok egyszerre történő lefuttatásához a panel jobb felső sarkában lévő *"Source"* gombot kell megnyomni, vagy a *"CTRL + SHIFT + ENTER"* billentyűkombinációt.
+
+Az **R** egy interpreter nyelv, tehát a parancsokat egyesével is futtathatjuk, nem csak egyszerre az összeset (Interpreter programozó nyelv: sorról sorra haladva értékeli ki, és az eredményt azonnal kiszámolja, megjeleníti.). Egy parancs külön lefuttatásához a panel jobb felső sarkában lévő *"Run"* gombot, vagy a *"CTRL + ENTER"* billentyűkombinációt kell leütni. Ez egyszerre csak egy sort fog kiértékelni/lefuttatni, ezt fogjuk  a gyakorlatok során a legtöbbször alkalmazni. Ha több parancsot szeretnénk egyszerre lefuttatni, de nem az egész script fájl tartalmát, akkor jelöljük ki azt a lefuttatni szándékozott parancsokat tartalmazó szövegrészt, majd nyomjuk le a *"Run"* gombot.
+
+A script fájlokat a *"File -> Save As..."* útvonalon tudjuk menteni, vagy a *"CTRL + S"* billentyűkombinációval. Az **R** scriptek általánosan használt kiterjesztése (a fájlnév pont utáni része) a .R  vagy .r (például: *myScriptFile.R*).
+
+Alapértelmezés szerint bal oldalon, vagy a bal alsó sarokban találhatjuk a *Console* panelt. A *Console* valójában az **R** igazi kezelőfelülete, az **RStudio** ide másolja be és futtatja a script fájlból a futtatandó sorokat a *"RUN"* (és az összes fent említett) gomb hatására. Ide közvetlenül is írhatunk parancsokat, melyeket az *ENTER* gomb megnyomásával futtathatunk. Érdemes megjegyezni, hogy innen a már lefuttatott parancsok visszakereshetők és újra lefuttathatók a *felfele* gomb megnyomásával (ahogy az megszokott Linux konzol és Windows cmd környezetekben).  
+
+![Az Environment fül. Tartalma megmutatja milyen változókat definiáltunk eddig, a "seprű" gomb pedig kiüríti a környezetet (törli a változókat). \label{rst_env}](./pics/rst_env_2.png)
+
+A jobb felső panelban találhatjuk az *Environment* és *History* paneleket. Az *Environment* kilistázza az **R** környezet változóit (Fig. \ref{rst_env}). Ugyancsak itt tudjuk kiüríteni a környezetet a "seprű" gomb segítségével. Erre akkor lehet majd szükség, ha belekavarodtunk a változóneveinkbe és újra akarjuk futtatni a parancsainkat. A *History* panelből visszakereshetjük a korábban kiadott parancsainkat (Fig. \ref{rst_hist}).  
+
+![Az RStudio History füle a korábbi parancsok visszakereséséhez \label{rst_hist}](./pics/rst_hist.png)
+
+A jobb alsó sarokban további fontos panelek találhatók. A *Files* fülön egy kezdetleges fájlböngészőt kapunk. A *Packages* fül segítségével kezelhetjük az **R** kiterjesztéseiként működő csomagokat, melyekkel újabb funkciókkal bővíthetjük ki az **R** repertoárját. A *Help* fül az egyik leggyakrabban használt fül, itt nézhetünk utána a különböző parancsok leírásának (Fig. \ref{rst2}). A *Plots* fülön pedig az ábráink fognak megjelenni.
+
+## **R** alapok
+
+### Változótípusok
+
+Az **R**-t legegyszerűbben úgy képzelhetjük el, mint egy túlbonyolított számológépet. Amit minden számológépnek tudnia kell, azok a számokkal történő egyszerű és bonyolult műveletek. Írjunk be a script fájlba egy egész számot és futtassuk mint egy parancs:
+
+```{r}
+-13
+```
+
+Az **R** értelmezte a beírt sort és mivel csak egy számot tartalmazott, vissza is adta nekünk. A szám elé került [1] azt jelenti, hogy ennek a parancsnak csak egy visszatérési értéke volt és az pedig a szám maga. De az **R**, mint a számológépek is, tud kezelni törtszámokat is:
+
+```{r}
+0.0069
+```
+
+A számokat megadhatjuk normálalak formájában is. A normálalak matematikai definíció szerint (ettől el lehet térni) egy szorzat mely egy 0 és 10 közötti tényezőből, és egy 10 hatványaként megadott tényezőből áll.
+
+$$ 0.006 = 6 \cdot  10^{-3} = 6e-3 $$
+Ebben az esetben a $6$ a 0 és 10 közti tényező, míg a $10^{-3}$ a hatványtényező. Ezt az alakot rövidíthetjük úgy is, hogy az első tényező után egy $e$ karaktert rakunk majd utána a 10 hatványkitevőjét. Az **R** ezt a formátumot is felismeri:
+
+```{r}
+6e-3
+```
+
+**A gyakorlat során gyakran találkozunk majd normálalakba írt eredményekkel, így fontos, hogy figyeljünk rá és ismerjük fel!**  
+
+A legtöbb programnyelv két fő számtípust különít el: az egész számokat (*integer*, gyakran *int*-ként jelölve) és valós számokat (*float* vagy *number*, gyakran *num*-ként jelölve). Az **R** alapból minden számot valós számként kezel, de ha valaki memória spórolás céljából egész számokat szeretne használni, azt a szám után írt *L* karakterrel jelezheti az **R**-nek. 
+
+```{r}
+56L
+```
+
+Az **R** képes komplex számokat is kezelni, de a gyakorlat során erre nem lesz szükségünk.  
+
+Használhatunk még szöveget is. Szöveg vagy karakter használatakor mindig idézőjelbe kell tenni! Az idézőjel lehet 'egyszeres' vagy "kétszeres" is.
+
+```{r}
+"szoveg"
+```
+
+Az utolsó típus amivel találkozni fogunk a logikai érték. Logikai érték kétféle lehet: **igaz (igen)** vagy **hamis (nem)**. Az **R**-ben az igazat **TRUE**-val vagy egyszerű **T**-vel jelöljük, míg a hamist **FALSE**-al, vagy **F**-el (mindig nagybetű!) \emph{Megjegyzés}. Az egybetűs kódok nagyon zavaróak lehetnek, ha hasonló egybetűs változókat definiálunk. 
+
+```{r}
+TRUE
+```
+
+### Operátorok
+
+A számológépekben, mint az **R**-ben is az értékekkel műveleteket végezhetünk el. Elvégezhetünk például alap matematikai műveleteket:
+
+```{r}
+4.5 + 8
+```
+
+```{r}
+-2e2 - 36.2
+```
+
+```{r}
+5 * 8
+```
+
+```{r}
+-26 / 3
+```
+
+Az **R** kiértékelte a parancsokat, így a műveletek eredménye a kimeneti érték. Hatványozni a **^** jel segítségével lehet:
+
+```{r}
+2^5
+```
+
+Lehet használni kerek zárójeleket is a műveletek sorrendjének meghatározásához:
+
+```{r}
+2 * 5 + 6 / 2
+```
+
+```{r}
+2 * (5 + 6) / 2
+```
+
+```{r}
+((2 * 5) + 6) / 2
+```
+
+Az **R**-ben logikai operátorokat is használhatunk:
+
+| kérdés | operátor |
+|--------|----------|
+| egyenlő-e? | == |
+| nem egyenlő? | != |
+| kisebb? | < |
+| nagyobb? | > |
+| kisebb vagy egyenlő? | <= |
+| nagyobb vagy egyenlő? | >= |
+| eleme-e halmaznak? | %in% |
+
+Ezeknek a visszatérési értéke logikai érték lesz. Például:
+
+```{r}
+5 < 3
+```
+
+```{r}
+"szoveg1" != "szoveg2"
+```
+
+A logikai értékekkel mindig elvégezhető a *NEM* operátor (**R**-ben jelölése: **!**). Ez az igaz értékekből hamisat, a hamis értékekből igazat csinál.
+
+\begin{center}
+\begin{tabular}{ |c||c|c|}
+\hline
+ & \textbf{TRUE} & \textbf{FALSE} \\
+\hline
+\hline
+\textbf{!} & FALSE & TRUE \\
+\hline
+\end{tabular}
+\end{center}
+
+Például:
+```{r}
+!TRUE
+```
+
+Vagy alkalmazható egyéb műveletekre is:
+
+```{r}
+!(5 < 3)
+```
+
+Itt ugye az öt még mindig kisebb a háromnál, tehát a *5 < 3* kifejezés eredménye még mindig *FALSE*, de erre alkalmazva lett egy *!* operátor, így kaptuk a *TRUE*-t.
+
+Ha több logikai értékünk van, használhatjuk a *vagy* (**R**-ben jelölése: **|**), illetve az *és* (**R**-ben jelölése: **&**) operátorokat.
+
+\begin{center}
+\begin{tabular}{ |c||c|c|}
+\hline
+\textbf{|} & \textbf{TRUE} & \textbf{FALSE} \\
+\hline
+\hline
+\textbf{TRUE} & TRUE & TRUE \\
+\hline
+\textbf{FALSE} & TRUE & FALSE \\
+\hline
+\end{tabular}
+\end{center}
+
+```{r}
+TRUE | FALSE
+```
+
+\begin{center}
+\begin{tabular}{ |c||c|c|}
+\hline
+\textbf{\&} & \textbf{TRUE} & \textbf{FALSE} \\
+\hline
+\hline
+\textbf{TRUE} & TRUE & FALSE \\
+\hline
+\textbf{FALSE} & FALSE & FALSE \\
+\hline
+\end{tabular}
+\end{center}
+
+```{r}
+TRUE & FALSE
+```
+
+Hasznos tudni, hogy logikai értékekre alkalmazhatunk matematikai műveleteket. Például összeadásnál a *TRUE* értékek számát kapjuk vissza:
+
+```{r}
+TRUE + FALSE + TRUE
+```
+
+Mindezt azért tehetjük meg, mert a  *TRUE* értéknek az *1*, a *FALSE* értéknek a *0* felel meg. Így válik érthetővé a következő példa eredménye is
+
+```{r}
+TRUE * FALSE + TRUE
+```
+
+Van az **R**-ben egy érdekes érték is: az **NA**. Ez azt jelöli, hogy nem áll rendelkezésünkre az adott adat. Ez fontos lesz bizonyos statisztikai számításoknál, amikor szeretnénk jelölni, hogy van valami, aminek ez értékét nem tudjuk, mert megsemmisült az adott mérés, vagy valami más ok miatt. Az **NA**-val végzett műveletek eredménye többnyire **NA** lesz.
+
+```{r}
+NA + 3
+```
+
+### Változók
+
+A matematikában nem csak számokat használunk értékek jelzésére, hanem néha karaktereket is, amiket változóknak hívunk. Az **R**-ben is van lehetőség értékeket elmenteni változókba. A változókat változónevekkel jelöljük és a nevekhez az értékeket a **<-** (*nyíl operátor*ral), vagy az **=** jellel adjuk hozzá. Hivatalosan **R** kódokban a változók definiálásakor a **<-** jelet használják. Mentsünk el egy számot az **R**-ben egy változóba!
+
+```{r}
+a <- 54.2
+```
+
+Most hívjuk elő a változó értékét!
+
+```{r}
+a
+```
+
+Visszakaptuk az értéket, csakúgy, mintha magát a számot írtuk volna be. Ettől kezdve a változóval ugyanúgy lehet matematikai műveleteket végezni, mint számokkal.
+
+```{r}
+a + 1
+```
+
+A változókban az a jó, hogy értéküket felül is írhatjuk!
+
+```{r}
+a <- a + 1
+a
+```
+
+Most a változót egyszerre felhasználtuk mint az összeadás egyik tagja, utána pedig az értékét felülírtuk az összeadás eredményével.
+
+Miért hasznos eltárolni az értékeket egy változóban? Egyrészt ezután nem kell visszakeresgélni, hogy mennyi volt egy művelet (akár bonyolult) eredménye, hanem egyből használható is lesz a változóban eltárolva. Másrészt így írhatunk olyan kódokat, amiket később újra felhasználhatunk más kiindulási adatokra is.
+
+A változónevek mindig betűvel kezdődnek, nincs bennük szóköz és nincs bennük speciális karakter (de **.** vagy \emph{\_} lehet)!
+
+### Függvények
+
+Az **R**-ben definiálhatunk függvényeket is. Ezek egyfajta műveleteket határoznak meg, amiket a beadott értékekkel/értékeken hajt végre, pont úgy hogyan a matematikában definiált függvények is működnek. Formailag így írható le:
+
+$$ f(x) = x^2+1$$
+Itt az *f* a függvényünk neve, *x* azok a számok, amikre a függvényt alkalmazzuk (*értelmezési tartomány* a matematikában), A $f(3)$ például azt jelenti hogy a 3-as értéken hattatjuk az $f$  függvényt. A $x^2+1$ az szabály, ami megmondja, hogy a beadott értékek hogyan változzanak meg. A függvény alkalmazása során az **R** behelyettesíti a változók ($x$) helyére az értékeket ($3$) és elvégezi a műveletet:
+
+$$ f(3) = 3^2+1=10 $$
+$$ f(-4) = -4^2+1=17 $$
+
+Vannak függvények, amiknek több bemeneti értékei is van:
+
+$$ g(x,y)=(x+y)^x $$
+$$ g(1, 0.5)=(1+0.5)^1=1.5$$
+
+Néha a függvények tartalmaznak *konstans*okat is, amiket nem kell megadnunk a függvény zárójelein belül.
+
+$$ h(x)=x^3+\alpha, \: \alpha=4$$
+Ekkor:
+
+$$ h(2)=2^3+\alpha=12$$
+
+Az **R**-en belül is használni fogunk függvényeket. A gyakorlatok során nem fogunk függvényeket létrehozni, használni viszont annál többet. A szintaxis hasonló a matematikában látotthoz: a függvénynév után zárójelbe írjuk az értékeket, amikre alkalmazni szeretnénk, vesszővel elválasztva.  
+
+A *szumma* függvény az **R**-ben a **sum()**
+
+```{r}
+sum(2, 3, 100)
+```
+
+```{r}
+sum(13, 4, NA)
+```
+
+A **sum()** függvénybe annyi változót adhatunk meg, amennyit szeretnénk.
+
+A matematikai függvényektől eltérően az **R** függvényeiben nem csak az a változó adható meg, amivel a függvény dolgozik, hanem a függvény működését befolyásoló utasítások is, ezek hívjuk *argumentum*oknak. Például a **sum()** függvénynek is van egy argumentuma, az *na.rm*. Ennek értéke alapértelmezetten (tehát ha azt kézzel meg nem változtattuk) *FALSE*, ami azt mondja meg, hogy a változóként megadott számokból eltávolítsa-e az *NA* értékeket. Ha igazra (*na.rm = TREU*) állítjuk ezt, akkor figyelmen kívül hagyja változóban a *NA* értéket, és máris ki tudjuk számolni az előző parancs eredményét:
+
+```{r}
+sum(13, 4, NA, na.rm = TRUE)
+```
+
+A *produktum*ot a **prod()** függvénnyel számíthatjuk ki. Ennek is argumentuma az *na.rm*.
+
+```{r}
+prod(1, 2, 3, 4, 5)
+```
+
+Függvényt lehet függvénybe ágyazni! Itt az előbb kiszámolt kifejezést rakjuk bele egy **sum()** függvénybe. Az **R** először a belső függvényt értelmezi, aztán a külsőt!
+
+```{r}
+sum(100, prod(1,2,3,4,5) )
+```
+
+A fenti **R** kód a következő matematikai felírásnak felel meg:
+
+$$\sum \left ( 100, \prod_{j=1}^5 {j} \right )$$
+
+A függvényekről és használatukról az **R** tartalmaz súgót. Ezt úgy érjük el, hogy begépelünk egy kérdőjelet, majd a függvény nevét. **RStudio**-ban a jobb oldali alsó panelban fog megjelenni a help szövege. Például:
+
+```{r helpcall, eval=FALSE}
+?sum
+```
+
+De a help elérhető az **RStudio** jobb alsó ablakában is, egy külön fülön, ahol a keresőben kell a parancsot beírni.
+
+\emph{Megjegyzés.} A függvény argumentumainak nevét nem feltétlenül kell kiírni, de ekkor a függvény a help-ben megadott sorrendben értelmezi az argumentumokat. Tehát felcserélhetők az  argumentumok a függvény \'\'hasán\'\' belül, de csak akkor ha kiírjuk az argumentumok neveit, egyébként pedig nem feltétlenül értelmezhető kimenetet kapunk. Ebben a példában 1-től 2-ig előállítjuk  a számokat 0.2-es lépésközzel:
+
+```{r wrong, eval=FALSE}
+seq(from = 1, by = 0.2, to = 2) # helyes kód 
+seq(1, 0.2, 2) # hibás kód
+```
+
+
+### **R** kommentek
+
+Ha az **R** kódba megjegyzéseket szeretnénk írni, azt kettőskereszt (*hash mark*) jellel tehetjük meg. Ha az **R** találkozik egy kettőskereszt jellel, az utána következő részt nem futtatja le a sor végéig!
+
+```{r}
+# 3 + 2
+```
+
+
+### Vektorok
+
+A vektorok nem éppen matematikai pontossággal megfogalmazva számhalmazok. A vektorokhoz nagyon hasonló számhalmaz a mátrix is, mely felfogható egymás mellé rendelt vektorok halmazának. Mindkettőnek nagy jelentősége van a modern tudományokban. Az **R**ben a vektorok és a mátrixok összetett adattípusnak felelnek meg, mely az egyszerű adattípusokból hozható létre. A vektorok, mátrixok és a velük elvégezhető matematikai műveletek elméletileg a tárgy előkövetelményeként szereplő *Matematika GY* tárgy programjában szerepelnek és itt egy részét alkalmazni fogjuk.
+
+Az **R**-ben vektorokat sokféleképp adhatunk meg. Az egyik módja, hogy megadjuk mettől meddig menjen a vektorunk egyesével egy **:** jel segítségével.
+
+```{r}
+1:5 #egy kifejezes utan is irhatunk kommentet, igen!!
+-1:8 #negativbol is tud
+8:-1 #visszafele is szamol
+1.5:8 #tud tizedestortekkel is dolgozni, de akkor is egyesevel lepdel
+```
+
+Egy másik megoldás, hogy megadjuk az elemeit és összefűzzük egy vektorba a \texttt{c()}, azaz *concatenate* (= összefűz) függvény segítségével.
+
+```{r}
+c(0,2,4,NA,-0.8)
+c("bla", "BLA") # az R-ben nem csak szamvektorok vannak, hanem szovegvektorok ...
+c(FALSE, TRUE, FALSE) # ... es logikai vektorok is
+# de csak egyfajta ertektipusuk lehet, igy ha kerul bele szoveg, mindent szovegge alakit at!
+c(2,4,"szoveg") # szoveggel pedig nem tudunk matematikai muveletet vegrehajtani!
+```
+
+Használhatunk függvényeket is vektorok létrehozásához. Ha ugyanazt az értéket akarjuk sokszor egymás után leírni, használjuk a \texttt{rep()}, azaz *replicate* függvényt, melynek első változója az, hogy mit szeretnénk ismételni, a második pedig az, hogy hányszor.
+
+```{r}
+rep(1, 52)
+rep("blabla", 10) 
+rep(FALSE, 4) 
+```
+
+A \texttt{seq(from, to, by)} függvénnyel pedig egy szekvenciát generálunk a *from* értéktől a *to* értékig *by* lépésközzel.
+
+```{r}
+seq(3, 50, 2)
+seq(2, -5, -0.2) #visszafele ne felejtsetek el a by-t negativra allitani!
+```
+
+Vagy használhatjuk a \texttt{seq()} függvény \texttt{length.out} argumentumát is, ami megadja, hogy mennyi számot szeretnénk kapni és kiszámolja az optimális lépésközt.
+
+```{r}
+seq(1, 50, length.out = 4)
+```
+
+A vektorokat el is menthetjük változókba:
+
+```{r}
+myvektor1 <- 0:10
+myvektor1
+```
+
+```{r}
+myvektor2 = rep(2, 3)
+myvektor2
+```
+
+A vektorok hosszát (azaz elemeinek számát) a \texttt{length()} függvénnyel érjük el.
+
+```{r}
+length(myvektor1)
+length(343:678)
+```
+
+
+A vektorok elemeit indexeléssel kérhetjük le. Ehhez az indexelő operátort \texttt{[ ]} kell használnunk.
+
+```{r}
+myvektor1[3]
+myvektor1[c(3, 5)]
+```
+
+A második esetben egy vektort raktunk be az indexelő operátorba, így hívtuk le a vektor több elemét egyszerre! De logikai értékeket is berakhatunk az indexelő operátorba:
+
+```{r}
+myvektor1[c(TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)]
+```
+
+Ha egy vektor adott elemén (pl. harmadikon) kívül az összeset akarjuk lehívni, azt így tehetjük meg:
+
+```{r}
+myvektor1[-3]
+```
+
+A vektor utolsó elemét a \texttt{length()} függvény és az indexelő operátor segítségével érjük el.
+
+```{r}
+myvektor1[length(myvektor1)]
+myvektor1[length(myvektor1) - 1] #utolsó előtti
+```
+
+
+A vektor elemeit módosíthatjuk is indexelés segítségével.
+```{r}
+myvektor1[2] <- 88
+myvektor1
+```
+
+```{r}
+
+myvektor1[2:4] <- myvektor2
+myvektor1
+```
+
+Ha vektorokkal végzünk műveleteket, akkor az **R** alapértelmezés szerint mindegyik elemével elvégzi a műveletet.
+
+```{r}
+myvektor1 * (-1)
+myvektor1 + 100
+1:5*2 # a muveletek sorrendiseget figyeljuk meg!
+1:(5*2)
+```
+
+Matematikai értelemben vett vektor- és mátrixműveletek is vannak az **R**-ben, ezekről azonban egy későbbi órán fogunk beszélni!
+
+**Fontos** megjegyezni, hogy az **R**-ben a vektorok alapértelmezettként mindig oszlopvektorok jelentenek, még ha az **R** nem is úgy jeleníti meg őket!
+
+### Az *eleme-e* operátor
+
+Az *eleme-e* operátor egy különleges lekérdezés, azt nézi meg, hogy egy $x$ változó eleme-e egy $\boldsymbol{H}$ halmaznak.
+
+$$x \in \boldsymbol{H}$$
+
+Az $\in$ jel az **R**-ben az `%in%` operátornak felel meg. Például a "B" vagy az "X" eleme-e az {"A", "B", "C", "D"} halmaznak?
+
+```{r}
+"B" %in% c("A", "B", "C", "D")
+"X" %in% c("A", "B", "C", "D")
+```
+
+Ha az $x$ helyére egy vektort teszünk, akkor a vektor elemeit sorra végignézi és eldönti, hogy eleme-e a az adott elem a $\boldsymbol{H}$ halmaznak, így visszatérési értéke egy az $x$ elemszámának megfelelő hosszú logikai vektor lesz.
+
+```{r}
+c("B", "X") %in% c("A", "B", "C", "D")
+```
+
+### Mátrixok
+
+Mátrixokat a \texttt{matrix()} függvény segítségével hozhatunk létre. Változónak megadjuk a mátrix elemeit. Argumentumnak beírhatjuk az oszlopok számát (`ncol`) és a sorok számát (`nrow`).
+
+```{r}
+matrix(1, ncol = 2, nrow = 3)
+```
+
+Mivel általában nem egyféle értékkel akarjuk a mátrixunkat inicializálni (kezdőértéket adni, feltölteni), megadhatunk több értéket is a változóban. Ezt természetesen vektor formájában tesszük meg, hisz így tudunk egy változóban több értéket tárolni!
+
+```{r}
+matrix(1:9, ncol = 3)
+```
+
+A \texttt{byrow} argumentum \texttt{TRUE}-ra állításával tudjuk a mátrixunkat soronként feltölteni. (Vesd össze az előzővel!)
+
+```{r}
+matrix(1:9, ncol = 3, byrow = TRUE)
+```
+
+A mátrixokkal is úgy tudunk műveleteket elvégezni egyszerre, mint a vektorok esetében is.
+
+```{r}
+matrix1 <- matrix(1:12, nrow = 3, byrow = TRUE)
+matrix1
+```
+```{r}
+matrix1 + 10
+```
+
+Mátrixokat transzponálni (főátlóra tükrözni) a `t()` függvénnyel tudunk.
+
+```{r}
+t(matrix1)
+```
+
+Ugyanezzel a függvénnyel tudjuk bizonyítani, hogy a vektorok az **R**-ben valójában oszlopvektorok. Ehhez persze tudnunk kell, hogy egy vektor (vagy mátrix) transzponáltjának a transzponáltja maga az eredeti vektor (vagy mátrix).
+
+```{r}
+myvektor1
+t(myvektor1)
+t(t(myvektor1) )
+```
+
+Mátrixok elemeit ugyancsak az indexelő operátorral lehet előhívni, csak meg kell adni a sorszámot és az oszlopszámot is (ebben a sorrendben), vesszővel elválasztva: \texttt{matrix[sorszam, oszlopszam]}. Ha valamelyiket üresen hagyjuk (de nem felejtjük el a vesszőt!!), akkor az egész oszlopot/sort kapjuk vissza.
+
+```{r}
+matrix1
+matrix1[3, 2] # 3.sor, 2. oszlop
+matrix1[2,] #2.sor, az egész
+matrix1[, 2] #az egész 2. oszlop
+matrix1[, 3] * 10 #muvelet a 3. oszloppal
+```
+
+Ugyanígy tudjuk módosítani is a mátrix elemeit.
+
+```{r}
+matrix1
+```
+
+```{r}
+matrix1[2, 2] <- 0
+matrix1
+```
+
+```{r}
+matrix1[, 2] <- 7:9
+matrix1
+```
+
+Mátrix \emph{dimenzió}it (sorok és oszlopok számát) a következő függvényekkel kérdezhetjük le:
+
+```{r}
+ncol(matrix1) #oszlopok szama
+nrow(matrix1) #sorok szama
+dim(matrix1) #sorok szama, oszlopok szama
+```
+
+Ha a mátrix celláinak összegére vagyunk kíváncsiak:
+
+```{r}
+sum(matrix1)
+```
+
+A mátrix minden adatának típusa azonos, azaz vannak \texttt{numeric}, \texttt{integer}, \emph{szöveg} stb típusú mátrixok!
+
+```{r}
+m2 <- matrix1
+m2
+m2[1, 1] <- "alma"
+m2
+```
+
+### *data.frame*-ek
+
+A *data.frame*-ek olyan adatstruktúrák, melyeket adatbázisok tárolására használjuk. Ez egy két dimenziós adatstruktúra, melyben az oszlopokban különféle adatokat tárolunk (ezek felfoghatók egy-egy vektornak is). Ezeket hívjuk **mező**knek. A sorokban pedig a vizsgált objektumok, minta elemek tulajdonságait tároljuk. Általában, de nem feltétlenül egy sorban csak egy objektum tulajdonságait tároljuk. Ezeket a sorokat **rekord**oknak hívjuk. Ez az adatbázis struktúra minden adatbázis kezelő szoftverben megjelenik. Nézzünk egy példát!
+
+```{r}
+data.frame(c("bela", "jano"), c(TRUE, FALSE), c(10,12))
+```
+
+Ebben a *data.frame*-ben emberek adatai a rekordok. Az első mezőben a nevüket tároljuk, a másodikban azt, hogy láttak-e már kanalasgémet, a harmadikban pedig az életkorukat. A \texttt{data.frame()} függvénybe sorra megadjuk a mezők adatait, vesszővel elválasztva. Ha egynél több rekordot szeretnénk megadni, akkor azokat vektor formájában kell bevinnünk. A mezőknek nevet is adhatunk, így már látni fogjuk, hogy milyen adatokat tartalmaznak:
+
+```{r}
+data.frame(nev=c("bela", "jano"), kanalasgem=c(TRUE, FALSE), kor=c(10,12))
+```
+
+Fontos megjegyezni, hogy csak egyforma hosszú vektorokat rakhatunk egy *data.frame*-be!  
+
+Azért hasznos ez az adatstruktúra, mert egy változóban tudunk tárolni többféle típusú adatot is (a mátrixokkal ellentétben). Itt a *nev* oszlopban szoveges adatok vannak, a *kanalasgem* oszlopban logikai értékek, míg a *kor* oszlopban számok.
+
+A *data.frame*-ek adatait tárolhatjuk, lekérdezhetjük és módosíthatjuk úgy, mint a mátrixoknál láttuk.
+
+```{r}
+df <- data.frame(nev=c("bela", "jano"), kanalasgem=c(TRUE, FALSE), kor=c(10,12))
+df[1, 3]
+df[2,]
+```
+
+Az oszlopokat többféleképp is lekérdezhetjük
+
+```{r}
+df[, 1]
+df[, "nev"] #ez ugyanaz mint az elozo
+df$nev #jee, ez is!
+```
+
+Az utolsó módszer azért hasznos, mert gyorsan hozzá lehet férni az adatokhoz és műveleteket végezni velük. Például:
+
+```{r}
+sum(df$kor) #az emberek osszeletkora
+```
+
+
+*RStudio*-ban hasznos függvény még a \texttt{View()} is, ami a *data.frame*-eket jeleníti meg szebb formában.
+
+```{r viewnotrun, eval=FALSE}
+View(df)
+```
+```{r viewsee, echo=FALSE}
+kable(df)
+```
+
+### Adatdiagnosztika
+
+A változóinkat több függvénnyel is elemezhetjük. Ezek közül a legfontosabb az \texttt{str()}, azaz *structure* függvény. Nézzük meg pár egyszerű változóra:
+
+```{r}
+str(a)
+str(4L)
+str("szoveg")
+```
+
+Egyszerű változóra/értékekre kiadja, hogy milyen adattípusba tartoznak, és mi az értékük. 
+
+```{r}
+str(myvektor1)
+```
+
+Vektorokra megjeleníti, hogy milyen típusú vektor, hány eleme van (11), és megmutatja még az első pár elemet is.
+
+```{r}
+str(matrix1)
+```
+
+Mátrixok esetén azt is látjuk, hogy hány sora (3), és hány oszlopa (4) van.
+
+```{r}
+str(df)
+```
+
+*data.frame*-ek esetén már több mindent megmutat: hány rekord (2) és hány változó (mező) van (3), felsorolja a változók nevét, a változó típusát, és az első pár elemet belőle. A *\$nev* oszlopban például egy érdekes adattípust látunk: ez a *faktor*. 
+
+### Faktorok
+
+A faktorok diszkrét nominális vagy ordinális skálájú változók, melyeknek az értékeivel nem akarunk számolni. Az \texttt{str()} megjeleníti, hogy milyen szintjei vannak: ezek a diszkrét értékek, melyekhez egy számot rendel az **R**. Az adattáblában valójában ezek a számok vannak tárolva, így gyorsan lehívhatók és kevesebb memóriát használnak fel. Később fontos lesz számunkra ezeknek az ismerete. A faktor szintjeit a \texttt{levels()} paranccsal tudjuk lekérni.
+
+```{r}
+levels(df$nev)
+```
+
+### Egyéb hasznos függvények
+
+A \texttt{table()} függvénnyel meg tudjuk számolni, hogy mennyi elem van az egyes típusokból.
+
+```{r}
+elemek <- c("b", "b", "t", "b")
+table(elemek)
+```
+
+Itt láthatjuk, hogy az *elemek* vektorban 3 db *b* és 1 db *t* van.
+
+A \texttt{round()} paranccsal kerekíthetjük a számokat a második argumentumként megadott tizedesjegyre.
+
+```{r}
+1/3
+round(1/3)
+round(1/3, 2)
+```
+
+## Általános tanácsok
+ 
+ * ha az **R** megkérdezi, hogy milyen karakterkódolást használjuk a script fájl mentése során, akkor az **UTF-8** -at válasszuk (Fig. \ref{rst_encoding})! 
+ * **ne** használjunk ékezetes karaktereket az **R** kódunkban!
+ * az **R** **tizedespont**ot használ, nem tizedesvesszőt!
+ * fájl és mappanevekben soha **ne** használjunk ékezetes karakter, speciális karaktert vagy szóközt! (helyette mondjuk alulvonás _ használható)
+ 
+![Karakter kódolás választó panel. Az esetek többségében válasszuk az UTF-8-at! \label{rst_encoding}](./pics/rst_encoding.png)
+ 
+ 

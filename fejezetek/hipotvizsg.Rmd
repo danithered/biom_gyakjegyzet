@@ -1,0 +1,35 @@
+
+# Hipotézis vizsgálatok (6. óra)
+
+Biológiai kísérleteket azért csinálunk / adatokat azért gyűjtünk, hogy segítségükkel megértsük a minket körülvevő világ működését. Eközben a kutatók felvetnek ötleteket, hogy szerintük mi - miért úgy működik ahogy. Ezek a felvetések a hipotézisek. Az adatok azért kellenek, hogy segítsenek ezeket a hipotéziseket elvetni / igazolni. Így a statisztika szerves része a kutatásoknak, azoktól el nem különíthető. A kutatások logikai felépítése:
+
+  1) Kérdés felvetése
+  2) Irodalmi adatok áttekintése
+  3) Hipotézisek felvetése
+  4) Kísérlet / adatvétel tervezése
+  5) Kísérlet / adatfelvétel elvégzése
+  6) Statisztikai elemzés
+  7) Döntés. Innentől két útvonal lehetséges:
+    a) Ha nem volt helyes az elképzelés $\rightarrow$ új hipotézis felállítása (3-as pont)
+    b) Ha helyesnek tűnik az elképzelés $\rightarrow$ predikció felállítása (8-as pont)
+  8) Predikció felállítása és tesztelése
+  9) Publikáció (ha predikció helyes volt)
+  
+A statisztikai feladatok a fenti sémában már a 4-es pontnál előjönnek: meg kell tervezni milyen adatokat és hogy kell venni, hogy megfelelő statisztikai elemzéssel tudjuk igazolni / elvetni a hipotéziseinket. Már ekkor el kell dönteni, hogy milyen statisztikai módszereket alkalmazunk!  
+
+Tehát hipotézisvizsgálatoknak nevezzük azokat a statisztikai módszereket, amikkel egy általunk felállított hipotézist tudunk egy adott bizonyossággal elvetni, vagy megtartani. A statisztikai hipotézisek olyan hipotézisek amiket a statisztikai módszerekkel elemzünk. Leggyakrabban ezek nem egyeznek szó szerint a biológiai hipotéziseinkkel. A biológiai hipotézisek ugyanis legtöbbször egyfajta egyenlőtlenséget feltételeznek. Például feltételezzük azt, hogy különböző műtrágyák hatására máshogy nőnek a növényeink. Ebben az egyenlőtlenség az, hogy feltételezzük, hogy a különbözően kezelt növények nem egyformán viselkednek. Azonban a statisztikai próbák leggyakrabban egyezőséget tesztelnek. Például, két növényi csoport magasságának egyezőségét képesek adott szignifikancia mellett tesztelni. Így egy statisztikai nullhipotézis (**H0**) lehet az, hogy $A \equiv B$, amennyiben $A$ és $B$ két különböző műtrágyával kezelt növényi csoport magasságai. Mivel mi pont ennek az ellenkezőjére vagyunk kíváncsiak, nekünk az alternatív hipotézis (**HA**) lesz a biológiai kérdésünk. Ebben az esetben az alternatív hipotézis: $A \ne B$, amit akkor fogadhatunk el, ha a nullhipotézist elvetettük.  
+
+A hipotézisvizsgálatoknak megvan a sajátos logikája, mindig egy bizonyos séma mentén kell végigmenni:
+
+  1) **Próba kiválasztása** a kérdésünknek, hipotézisünknek és lehetséges adatainknak megfelelően
+  2) A megfelelő **H0 és HA** hipotézisek felállítása
+  3) A szignifikanciaszint meghatározása (ezt követheti az adatgyűjtés)
+  4) **Előfeltételek** tesztelése
+  5) **Előszámítások** elvégzése
+  6) A kiválasztott próbához tartozó **próbastatisztika** kiszámolása
+  7) **Döntés**: H0 elvetése / megtartása
+  8) **Értelmezés**
+
+Az előbbi gondolati sémát a gyakorlat során szigorúan számonkérjük!
+
+ 

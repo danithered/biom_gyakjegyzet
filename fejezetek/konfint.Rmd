@@ -1,0 +1,374 @@
+# Konfidenciaintervallumok (*KI* vagy *CI*)
+
+A konfidenciaintervallumokat azért számolunk, mert ebből látható a becslés pontossága: minél szűkebb annál pontosabb a becslés. 
+
+A fejezetben az *asztal.csv* adatbázist használjuk, melyben az első mintát egy olyan gyárból kaptuk, ahol a gyártó állítása szerint az asztallábak hosszának szórása $\sigma = 1 cm$, míg a második minta gyártója nem hozott nyilvánosságra ilyen adatokat. Vegyük észre, hogy az első minta szórását ($SD_x$) kiszámolva nem azt kapjuk, mint amit a gyártó nyilvánosságra hozott, ugyanis $\sigma$ a populáció szórása, míg $SD_x$ csak a mintánk szórása $\sigma \ne SD_x$!
+
+```{r}
+asztal <- read.table("asztal.csv", dec=",", sep="_", header=TRUE)
+str(asztal)
+
+sd(asztal$minta1.cm)
+```
+
+## A konfidenciaintervallum számítás logikája
+
+  1. El kell döntenünk, **milyen eloszlás**t használunk. Ehhez azt kell tudnunk, hogy ismerjük-e a **populáció szórását**. Figyelem: a minta szórását nem elég tudnunk, mert nem arra vagyunk kíváncsiak, hanem a populáció szórására. Ha tehát van egy szórás értékünk, amit egy mintából számoltunk ki, attól még nem fogjuk tudni a populáció szórását! A populáció szórását nagyon kevés helyzetben tudjuk. Ilyen esetek, ha ismerjük a populáció összes elemét, így megismertük a populáció valós paramétereit (az ilyen esetek beláthatóan extrém ritkák), vagy ha egy előzetes tanulmány már megbízhatóan megbecsülte azt (irodalmi adatok).    
+    _**A.**_ Ha **ismerjük a szórást**, akkor **normális eloszlás** segítségével kiszámíthatjuk a konfidenciaintervallumot. Ekkor **nem kell szórást becsülni**, mivel azt már ismerjük.  
+    _**B.**_ Ha **nem ismerjük a szórást**, akkor egy olyan eloszlást kell választanunk, amivel megbízhatóan tudjuk közelíteni a normális eloszlást, de nem kell hozzá tudnunk a populáció szórását. Ez a **t-eloszlás**. 
+    
+```{r tnorm, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE, fig.cap="A standard normál eloszlás jól közelíthető t-eloszlással. Minél nagyobb a t-eloszlás szabadságfokainak száma, annál jobban közelíti a st. normál eloszlást."}
+curve(dnorm(x, mean = 0,sd = 1)
+      , from =-4, to = 4
+      , col = "red"
+      , las = 1
+      , lty = 1, lwd = 2
+      , ylab = "Suruség"
+      )
+curve(dt(x, df = 3)
+      , from =-4, to = 4
+      , col = "blue"
+      , las = 1
+      , lty = 2, lwd = 2
+      , add = TRUE # igy nem hoz letre uj plotot, hanem az elozore rajzol
+      )
+curve(dt(x, df = 10)
+      , from =-4, to = 4
+      , col = "lightblue"
+      , las = 1
+      , lty = 2, lwd = 2
+      , add = TRUE
+      )
+# Jelmagyarazat
+legend("topleft"
+       , c("st. normális eloszlás", "t-eloszlás (df=3)", "t-eloszlás (df=10)")
+       , lwd = c(2,2,2), lty = c(1,2,2), col = c("red", "blue", "lightblue")
+       )
+```
+    
+  2. Kijelöljük a **konfidenciaintervallum határai**t. 
+
+```{r echo=FALSE}
+alp = 0.3
+ggplot(data.frame(x = c(-3, 3)), aes(x)) +
+  stat_function(fun = dnorm 
+                , xlim = c(qnorm(alp/2), qnorm(1-alp/2))
+                , geom = "area"
+                , fill="red"
+                ) + 
+  stat_function(fun = dnorm 
+                , xlim = c(-3, qnorm(alp/2))
+                , geom = "area"
+                , fill="blue"
+                ) + 
+  stat_function(fun = dnorm 
+                , xlim = c(qnorm(1-alp/2), 3)
+                , geom = "area"
+                , fill="blue"
+                ) +
+  stat_function(fun = dnorm) +
+  geom_label( x=0, y=0.15, label="1 - alpha", size=7, parse=T) +
+  geom_label( x=mean(c(-3, alp/2)), y=0.025, label="alpha / 2", size=6, parse=T, hjust=1) +
+  geom_label( x=mean(c(1-alp/2, 3)), y=0.025, label="alpha / 2", size=6, parse=T, hjust=1) 
+
+```
+
+Ez nem bonyolultabb, mint amikor annak a tartománynak a határoló értékeit kerestük, ami az átlag körüli x \%-ot tartalmazza és szimmetrikus az átlagra. Akkor a \texttt{q..()} függvényeket használtuk az intervallum határainak kiszámításához. Hogy milyen valószínűségnél kell kiszámítani? Ehhez csak azt tudjuk tanácsolni, hogy rajzoljátok le az eloszlást és a kérdéses tartományt. Az $\alpha$ megadja annak a valószínűségét, hogy egy véletlen szám nem esik bele a konfidenciaintervallumba. Mivel a *normális* és a *t* eloszlás szimmetrikus, a konfidenciaintervallum az átlagra szimmetrikusan fog elhelyezkedni, vagyis azt az átlaghoz közeli tartományt keressük, aminek határozott integrálja (a görbe alatti terület / valószínűség) egyenlő $1-\alpha$ -val. Értelemszerűen a konfidenciaintervallum előtti és utáni görbe alatti területek nagysága egyaránt $\alpha/2$ és $\alpha/2$ nagyságú. Mivel a teljes görbe alatti terület nagysága 1, ezért $1=(1-\alpha)+(\alpha/2)+(\alpha/2)$. Tehát, a konfidenciaintervallumok határai: $\alpha/2$ és $1-\alpha/2$  
+
+  3. **Kiszámoljuk** az átlag konfidenciaintervallumának határait az 1. pontban kiválasztott eloszlás és a 2. pontban meghatározott határok alapján. Ebben a további fejezetek nyújtanak segítséget.
+  
+## Az átlag konfidenciaintervallumának kiszámítása a populáció ismert szórása esetén
+
+Mivel ismert a szórás, ezért kiszámíthatjuk normális eloszlással. Azonban gondoljuk végig, hogy minek a konfidenciaintervallumát akarjuk is kiszámítani? Nem a mintáét, hanem a populáció **paramétereinek** a konfidenciaintervallumát! Ez azt jelenti, hogy nem a populáció egyedeinek a szórásával ($\sigma$) akarunk számolni, hanem egy olyan mérőszámmal, ami a populációból kivett mintáknak a szórását jellemzi! Ez a standard error ($SE$). A standard error-t ki tudjuk számolni a populáció elemeinek szórásának ($\sigma$) és a minta nagyságának ($n$) ismeretével.
+
+$$SE=\frac {\sigma} {\sqrt{n}}$$
+
+A konfidenciaintervallum határai így:  
+$F_{normális}(\alpha/2, \bar x, \sigma)$ és $F_{normális}(1-\alpha/2, \bar x, \sigma)$
+
+Ha kézzel akarjuk kiszámolni, akkor először át kell alakítanunk a normális eloszlást standard normális eloszlásra. Erre a *Z*-transzformációt használjuk.
+
+$$Z=\frac{x-\bar x}{\sigma}$$
+
+Átrendezve, hogy mi a standard normális eloszlásból kapjuk meg a mi nem-standard normális eloszlásunk adatait:
+
+$$x=\bar x + Z*\sigma$$
+
+Így a konfidenciaintervallum kiszámítása:
+
+$$\bar x \pm F_{st. norm.}(\alpha/2) * SE = \bar x \pm F_{st. norm.}(\alpha/2) * \frac {\sigma}{\sqrt{n}} $$
+
+kikeressük az $\alpha /2$-höz tartozó értéket a *z*-táblázatból (mivel valószínűségből keressük az *z*-értéket, ezért a táblázat belsejében keressük ki az $\alpha/2$-t és megnézzük a margón az *z* értékét $\rightarrow F_{st.norm.}(\alpha/2)$), kiszámítjuk a minta darabszámát ($n$) és átlagát ($\bar x$), majd behelyettesítjük a képletbe az ismert $\sigma$ értékkel együtt.
+
+**R**-ben kiszámolva az átlag konfidenciaintervallumát $\alpha=0.05$-höz, azaz 95\%-os konfidenciaintervallumhoz:
+
+```{r}
+# az elso mintahoz tartozik gyarto altal megjelolt szoras!
+minta <- asztal$minta1.cm
+
+sigma = 1 # gyarto altal megadva
+alpha = 0.05
+
+n = length(minta)
+atlag = mean(minta)
+
+qnorm( c(alpha/2, 1-alpha/2), mean=atlag, sd=sigma/sqrt(n)) # mindkét érték
+```
+
+Ha standard normális eloszlással akarunk számolni, akkor kihasználjuk, hogy mivel a standard normális eloszlás sűrűségfüggvénye 0-ra szimmetrikus, ezért $-F_{st.norm}(\alpha/2) =F_{st.norm}(1-\alpha/2)$. Így a fenti egyenlet módosított változatát használjuk:
+
+$$ x_{krit~1,2} =\bar x + F_{st. norm.}(\alpha/2 ~ és ~ 1-\alpha/2) * \frac {\sigma}{\sqrt{n}} $$
+
+
+```{r}
+atlag + qnorm(alpha/2)*sigma/sqrt(n) # alsó érték, qnorm(alpha/2): negetív!
+atlag + qnorm(1-(alpha/2))*sigma/sqrt(n) # felső érték
+
+# VAGY egyszerűen:
+atlag + qnorm(c(alpha/2,1-(alpha/2)))*sigma/sqrt(n) # mindkettő
+
+```
+
+## Az átlag konfidenciaintervallumának kiszámítása a populáció szórásának ismerete nélkül
+
+*t*-eloszlást használunk, aminek csak egy paramétere van: a szabadsági fokok száma. Mivel a *t*-eloszlás a standard normál eloszlást követi, ezért nekünk is át kell alakítani a paramétereinket a $x=\bar x + Z*\sigma$ képlet használatával. A konfidenciaintervallum határai:
+
+$$\bar x \pm t_{\alpha/2, df=n-1} * \frac {sd_x}{\sqrt{n}} ,$$
+
+amiben $sd_x$ a mintából becsült szórás, $n-1$ pedig a szabadsági fokok száma. Az kvantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ nál és a $1-\alpha/2$  keressük \emph{n-1} szabadságfokú *t*-eloszlásból. 
+
+Ez **R**-ben, 95\%-os konfidenciaintervallum kiszámításához megint kihasználjuk, hogy a *t*-eloszlás sűrűségfüggvénye szimmetrikus 0-ra, tehát $-t_{a/2,df} =t_{1-\alpha/2, df}$. A fenti képlet módosítva:
+
+$$\bar x + t_{\alpha/2 ~ és ~ 1-\alpha/2, df=n-1} * \frac {sd_x}{\sqrt{n}}$$
+  
+```{r}
+minta = asztal$minta2.cm
+alpha = 0.05
+
+n = length(minta)
+atlag = mean(minta)
+szoras = sd(minta) # becsuljuk a szorast, mert nem ismert
+
+atlag + qt(alpha/2, df = n - 1)*( szoras/sqrt(n) ) # also
+atlag + qt(1-alpha/2, df = n - 1)*( szoras/sqrt(n) ) # felso
+# VAGY egyszerűen:
+atlag + qt(c(alpha/2,1-alpha/2), df = n - 1)*( szoras/sqrt(n) ) # mindkettő
+```
+
+## A variancia konfidenciaintervallumának kiszámítása
+
+Ha nem ismert a variancia, akkor becsülnünk kell. Ezt $\chi^2$ eloszlással tesszük meg, melynek egyetlen paramétere a szabadsági fokok száma ($n-1$). 
+
+```{r chi, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+curve(dchisq(x, df = 3)
+      , from =0, to = 15
+      , col = "red"
+      , las = 1
+      , lty = 1, lwd = 2
+      , ylab = "Suruség"
+      , main = "Khi^2 eloszlás (df=3)"
+      )
+
+```
+
+
+Így a konfidenciaintervallum határai:  
+$\frac {(n-1){sd_x}^2} {\chi^2_{\alpha/2, df=n-1} }$ és $\frac {(n-1){sd_x}^2} {\chi^2_{1-\alpha/2,df= n-1}}$  
+A kvantilis értékeket (az eloszlás \emph{x} tengelyének értékeit) $\alpha/2$ \%-nál és a $1-\alpha/2$ \%-nál keressük \emph{n-1} szabadságfokú $\chi^2$-eloszlásból. 
+
+Ez **R**-ben, 90\%-os konfidenciaintervallumhoz:
+
+```{r}
+minta = asztal$minta2.cm
+alpha = 0.1
+
+n = length(minta)
+variancia = var(minta)
+
+(n - 1) * variancia / qchisq( c(alpha/2, 1 - alpha/2), df = n - 1)
+```
+
+## Példák statisztikai mérőszámok kiszámítására
+
+Doctor Strange készít egy saját varázsuniverzumot amiben csak és kizárólag unkák vannak. De abból "végtelen" sok. Mivel ő kezeli az unkák paraméterét, a hosszukat a következők alapján határozza meg.
+
+```{r}
+# Adatsor (populacio) generalasa. Ez a kodreszlet nem resze a tananyagnak!!!
+
+set.seed(1156421456) #véletlenszám generátor beállítása
+POP_SIZES = 1000000 #populációméretek
+#hosszúságok normáleloszlásának paraméterei
+voros_MU = 25
+voros_SIGMA = 3
+
+sarga_MU = 20
+sarga_SIGMA = 5
+
+#random generált hosszúságok egy-egy millió brekihez
+voros_pop = rnorm(mean = voros_MU, sd = voros_SIGMA, n = POP_SIZES)
+sarga_pop = rnorm(mean = sarga_MU, sd = sarga_SIGMA, n = POP_SIZES)
+
+```
+
+Ezután vett belőle két mintát. Véletlenszerű mintát a `sample()` függvénnyel tudunk venni: első argumentumaként a populációt adjuk meg, a `size` argumentumban pedig a minta darabszámát.
+
+```{r}
+#Vegyünk egy vöröshasú és egy sárgahasú mintát, mindkettő 100-100-as mintamérettel
+voros_sample=sample(voros_pop, size=100)
+sarga_sample=sample(sarga_pop, size=100)
+
+df=data.frame(
+  hossz=c(voros_sample,sarga_sample),
+  szin= c(rep("voroshasu",100), rep("sargahasu", 100))
+)
+
+str(df)
+
+```
+
+
+### Hisztogramok
+
+```{r}
+hist(voros_pop, xlim=c(0,45), col="red")
+hist(sarga_pop, add=T, col=rgb(1,1,0, 0.5))
+```
+
+### Sűrűségfüggvények
+
+```{r}
+voros_density <- density(voros_pop) # returns the density data
+sarga_density <- density(sarga_pop) # returns the density data
+plot(voros_density, col="red", lwd=4,xlim=c(0,45),
+     main="Unkahosszúságok eloszlása",
+     xlab="Hossz (cm)")
+lines(sarga_density, col="orange",lwd=4)
+#hist(veres_pop, freq = FALSE , xlim=c(0,45), col="red", main="Unkahosszúságok eloszlása")
+#hist(sarga_pop, freq = FALSE , add=T, col=rgb(1,1,0, 0.5))
+```
+
+
+
+### KÍSÉRLET 1 $\rightarrow$ boxplot magyarázat
+
+Nézzük meg a minták hisztogramja és a boxplotok közötti kapcsolatot!
+
+```{r}
+par(mfrow = c(2,1))
+hist(voros_sample, breaks=10, xlim=c(0,45),ylim=c(0,25), col="red",
+     main="100 elemes unkaminták eloszlása (hisztogram)",
+     xlab="Hossz (cm)")
+hist(sarga_sample, breaks=10, add=T, col=rgb(1,1,0, 0.5))
+
+boxplot(df$hossz~df$szin, boxfill=c("yellow","red"),ylim=c(0,45),
+        main="100 elemes unkaminták eloszlása (boxplot)", horizontal=TRUE,
+        xlab="Hossz (cm)")
+
+```
+
+
+### Alap mérőszámok
+
+Középértékek:
+
+```{r}
+mean(voros_sample)
+median(voros_sample)
+voros_MU #a valódi populációs érték más!
+mean(voros_pop) #nyilván a véges populáció is mutat minimális eltérést
+median(voros_pop)
+```
+
+```{r}
+mean(sarga_sample)
+median(sarga_sample)
+sarga_MU #a valódi populációs érték más!
+mean(sarga_pop)#nyilván a véges populáció is mutat minimális eltérést
+median(sarga_pop)
+```
+
+Szórások $\rightarrow$ megint csak eltér egymástól a populáció valódi szórása és a mintából becsült szórás
+
+```{r}
+sd(voros_sample)
+voros_SIGMA
+sd(voros_pop)
+```
+
+```{r}
+sd(sarga_sample)
+sarga_SIGMA
+sd(sarga_pop)
+```
+
+### KÍSÉRLET 2 $\rightarrow$ Standard Error avagy az átlagok szórása
+
+Most koncentráljunk csak a vöröshasú unkákra, vegyünk megint 100 elemes mintákat, de ezt csináljuk meg 10000-szer!
+
+```{r output.lines=20}
+#MINDIG CSAK AZ ÁTLAGOT VESSZÜK!
+voros_multisample=replicate(10000, mean(sample(voros_pop, 100)))
+voros_multisample
+```
+
+```{r}
+par(mfrow = c(2,1))
+
+hist(voros_multisample, xlim=c(0,45), col="purple",
+     main="10000 db 100-elemű unkaminta ÁTLAGAINAK eloszlása (hisztogram)",
+     xlab="Átlagos hossz (cm)")
+
+voros_simasample=sample(voros_pop, 10000)
+hist(voros_simasample, xlim=c(0,45), col="red",
+     main="10000 db unka hosszúságának eloszlása (hisztogram)",
+     xlab="Hossz (cm)")
+```
+
+```{r}
+#az átlagok szórása (standard error) a 10000 db 100-as mintában
+sd(voros_multisample) 
+#mint láthatjuk köze sincs a rendes szóráshoz
+voros_SIGMA
+#vagyishát van valami köze:
+voros_SIGMA/(sqrt(100)) #<--- az átlagok szórása kb. ennyi
+```
+
+### KÍSÉRLET 3
+
+Konfidenciaintervallumok: Vegyük újfent a vöröshasú unkákat, abból egy 50 db-os mintát
+
+```{r}
+n=50
+
+voros_minisample=sample(voros_pop, n)
+```
+
+```{r}
+mean(voros_minisample)
+sd(voros_minisample)
+```
+
+Meg szeretnénk állapítani ez alapján hogy az eredeti populáció középértéke ($\mu$) mennyi lehet. Nyilván nagyjából a minta átlaga környékén helyezkedhet el de nem akarunk túl pongyolák lenni, inkább egy tartományt jelölünk ki: 99%-os konfidenciaintervallum $\rightarrow$ 99% hogy ott van az átlag.  
+ELSŐDLEGES kérdés: Ismerjük-e a populáció átlagok szórását meghatározó paramétert?  
+
+  1. Doctor Strange ismeri $\sigma=3 \rightarrow SE= {\sigma} / { \sqrt{n} }$
+
+```{r}
+S0=voros_SIGMA
+ukrit1 = qnorm(0.005, mean = 0, sd = 1)
+ukrit2 = qnorm(0.995, mean = 0, sd = 1)
+mean(voros_minisample) + ukrit1*(S0/sqrt(n)) #alsó határ
+mean(voros_minisample) + ukrit2*(S0/sqrt(n)) #felső határ
+```
+
+  2. Tony Stark nem tudja, de cserébe okos
+
+```{r}
+s=sd(voros_minisample)
+tkrit1 = qt(0.005, df = n-1)
+tkrit2 = qt(0.995, df = n-1)
+mean(voros_minisample) + tkrit1*(s/sqrt(n))
+mean(voros_minisample) + tkrit2*(s/sqrt(n))
+```
+
+ 
