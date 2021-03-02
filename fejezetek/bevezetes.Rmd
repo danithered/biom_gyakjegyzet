@@ -2,8 +2,39 @@
 
 ## A jegyyzet célja
 
-A jegyzet az *Eötvös Lóránd Tudományegyetem* *Biológia BSc* képzésén induló **Biometria, alapozó biostatisztika** kuzus gyakorlati anyagához készült. A célja, hogy a hallgatók felkészülését segítse. Figyelem: a jegyzet **nem tartalmazza a kurzus előadás részén elhangzó elméleti anyagot** (amiből számonkérés van), csak a gyakorlatok anyagához nyújt segítséget! Ugyan a jegyzetben vannak blokkok, amik az elméleti anyagot ismétlik, azok sem terjedelemben, sem precízségben nem közelítik az elősadáson elhangzottakat. Ugyan a jegyzet segít a gyakorlatok anyagának megértésében, azokat nem váltja ki. Ezért fokozottan javaslott a gyakorlatok látogatása, nem csak a seg
+A jegyzet az *Eötvös Lóránd Tudományegyetem* *Biológia BSc* képzésén induló **Biometria, alapozó biostatisztika** kuzus gyakorlati anyagához készült. A célja, hogy a hallgatók felkészülését segítse. Figyelem: a jegyzet **nem tartalmazza a kurzus előadás részén elhangzó elméleti anyagot** (amiből számonkérés van), csak a gyakorlatok anyagához nyújt segítséget! Ugyan a jegyzetben vannak blokkok, amik az elméleti anyagot ismétlik, azok sem terjedelemben, sem precízségben nem közelítik az előadáson elhangzottakat. Ugyan a jegyzet segít a gyakorlatok anyagának megértésében, azokat nem váltja ki. Ezért fokozottan javaslott a gyakorlatok látogatása, nem csak a jobb megértés érdekében, hanem mert a **gyakorlatvezetők a tananyag és a számokért anyagrész pontos összetételének változtatásának jogát fenntartják**. Valamint a gyakorlat során előkerülő statisztikai és kódolási problémák több módon is megoldhatók, így lehet, hogy valamely gyakorlatvezető sokkal egyszerűbb megoldást is tud mutatni.
 
 ## A jegyzet szerkezete
 
+A jegyzet fejezetekre tagolt, minden fejezet külön óránként lesz leadva a kurzus során. Ezt próbáljuk jelezni a fejezetek nevében, de ez gyakorlati csoportonként eltérhet. A jegyzet törzsanyaga a gyakorlati anyag elsajátításához szükséges anyagot adja le. A gyakorlat során a bonyolultabb számításokat **R** programban végezzük el. A lefuttatott kódot (pl. `ppois(2, lambda=1)`) és az **R** program kód futásának eredményei (pl. `[1] 0.9196986`) a jegyzetben a következőképpen fognak megjelenni:
+
+```{r}
+ppois(2, lambda=1)
+```
+
+Azon **R** függvények, maiknek grafikus kimemetelei vannak, így fognak megjelenni ( . ábra):
+
+```{r, fig.cap="Példa grafikus kimenet"}
+pie(rep(1,3))
+```
+
+
+\begin{plusinfo}
+A jegyzet tartalmaz plusz információkat is, ami ugyan nem lesz számonkérve (szigorúan véve nem tartozik a törzsanyaghoz) viszont **segíti a megértést**, illetve az **érdeklődő hallgatók**nak érdekes adalék lehet. Ezek az infromációk ilyen formában fognak megjelenni.
+\end{plusinfo}
+
+\begin{elmelet}
+
+Néha az **elméleti anyag ismétlése** is előkerül, ilyen formában. Újfent kiemelendő: ez csak gyors összefoglaló, nem ad olyan bő ismeretanyagot, mint az előadás!
+
+\end{elmelet}
+
 ## Author contributions
+
+* Vörös Dániel
+	+ szerkesztés
+	+ írás: 1, 2, 3, 4, 5, 6, 7. fejezet
+* Radványi Ádám
+	+ írás: 4. fejezet
+* Könnyű Balázs:
+	+ lektorálás

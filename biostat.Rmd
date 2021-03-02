@@ -44,6 +44,10 @@ knit_hooks$set(output = function(x, options) {
 
 ```
 
+<!-- 1. Bevezetés -->
+```{r child="fejezetek/bevezetes.Rmd"}
+```
+
 <!-- 1. Ora, matematikai alapok -->
 ```{r child="fejezetek/matalap.Rmd"}
 ```
