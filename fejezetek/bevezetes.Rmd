@@ -1,0 +1,9 @@
+# Bevezetés 
+
+## A jegyyzet célja
+
+A jegyzet az *Eötvös Lóránd Tudományegyetem* *Biológia BSc* képzésén induló **Biometria, alapozó biostatisztika** kuzus gyakorlati anyagához készült. A célja, hogy a hallgatók felkészülését segítse. Figyelem: a jegyzet **nem tartalmazza a kurzus előadás részén elhangzó elméleti anyagot** (amiből számonkérés van), csak a gyakorlatok anyagához nyújt segítséget! Ugyan a jegyzetben vannak blokkok, amik az elméleti anyagot ismétlik, azok sem terjedelemben, sem precízségben nem közelítik az elősadáson elhangzottakat. Ugyan a jegyzet segít a gyakorlatok anyagának megértésében, azokat nem váltja ki. Ezért fokozottan javaslott a gyakorlatok látogatása, nem csak a seg
+
+## A jegyzet szerkezete
+
+## Author contributions
