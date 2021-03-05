@@ -135,7 +135,7 @@ $$P(X \le a) =F(a) = \int_{- \infty}^{a} f(X)$$
 
 Ne felejtsük el, hogy mivel az elemi előfordulás valószínűsége 0 ($P(X=a)=0$), ezért $P(X \le a) = P(X < a)$!
 
-Előbbi valószínűséget a sűrűségfüggvényről úgy lehet "leolvasni", hogy x tengelyen kikeressük $a$ értékét (piros pont az ábrán) és megnézzük, hogy mekkora az $a$ pont előtt a függvény alatti (az ábrán zöld) terület nagysága. Természetesen ezt ténylegesen leolvasni nem tudjuk. A CDF-ről viszont igen
+Előbbi valószínűséget a sűrűségfüggvényről úgy lehet "leolvasni", hogy x tengelyen kikeressük $a$ értékét (piros pont az ábrán) és megnézzük, hogy mekkora az $a$ pont előtt a függvény alatti (az ábrán zöld) terület nagysága. Természetesen ezt ténylegesen leolvasni nem tudjuk. A CDF-ről viszont igen, csak meg nézni, hogy a valvált adott értékéhez milyen érték tartozik az y-tengelyen (zöld pötty). 
 
 ```{r}
 a=2
@@ -173,11 +173,7 @@ grid.arrange(plot1, plot2, ncol=2)
 
 ```
 
-
-
-Sokszor előfordul, hogy számolni kell azt, hogy adott eloszlás milyen valószínűséggel vesz fel bizonyos értékeket. Diszkrét eloszlások esetén ez egyszerű. Ha azt kell kiszámolni, hogy mekkora a valószínűsége, hogy egy valvált **pontosan** megegyezik egy adott számmal, akkor csak be kell helyettesíteni az adott számot a tömegfüggvénybe. Azonban, ha arra vagyunk kíváncsiak, hogy milyen valószínűséggel vesz fel egynél több adott kategóriát, bonyolódik a helyzet. Ilyen esetekben az mindig jó (diszkrét eloszlás esetén), ha felsoroljuk azokat a kategóriákat, amikre kíváncsiak vagyunk, kiszámoljuk a gyakoriságokat és összeadjuk őket.
-
-$$P(X \in \underline v)= \sum_{i=1}^{n} P(\underline v_i) = P(\underline v_1) + P(\underline v_2) + \cdots + P(\underline v_n)$$
+Azonban, ha arra vagyunk kíváncsiak, hogy milyen valószínűséggel vesz fel egy adott értéknél
 
 Ha blokkokra / intervallumokra vagyunk kíváncsiak, akkor is használható a fenti módszer, de egyszerűbb ha az eloszlásfüggvénnyel számolunk. Ha pl. arra vagyunk kíváncsiak, hogy mekkora eséllyel vesz fel egy valvált egy adott $x$ értékkel megegyező vagy kisebb értéket. Ha másfajta intervallumokra vagyunk kíváncsiak, akkor használjuk fel a következő összefüggést:
 
