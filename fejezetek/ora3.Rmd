@@ -152,7 +152,7 @@ plot1 <- ggplot() +
 	theme(legend.position = "none")+
 	annotate(geom = "point", x = -Inf, y = dnorm(a), size = 2, color = 'blue')+
 	annotate(geom = "point", x = a, y = dnorm(a), size = 2)+
-	annotate(geom = "point", x = a, y = -Inf, size = a, color = 'red')+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
 	coord_cartesian(clip = 'off')+
 	labs(x="X", y="f(X)", title="Probability Density Function")
 
@@ -164,7 +164,7 @@ plot2 <- ggplot() +
 	theme(legend.position = "none")+
 	annotate(geom = "point", x = -Inf, y = pnorm(a), size = 2, color = 'green')+
 	annotate(geom = "point", x = a, y = pnorm(a), size = 2)+
-	annotate(geom = "point", x = a, y = -Inf, size = a, color = 'red')+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
 	coord_cartesian(clip = 'off')+
 	labs(x="X", y="F(X)", title="Cumulative Density Function")
 
@@ -200,7 +200,7 @@ plot1 <- ggplot() +
 	theme(legend.position = "none")+
 	#annotate(geom = "point", x = -Inf, y = dnorm(a), size = 2, color = 'blue')+
 	#annotate(geom = "point", x = a, y = dnorm(a), size = 2)+
-	#annotate(geom = "point", x = a, y = -Inf, size = a, color = 'red')+
+	#annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
 	#coord_cartesian(clip = 'off')+
 	labs(x="X", y="f(X)", title="Step 1")
 
@@ -264,7 +264,7 @@ ggplot() +
 	theme(legend.position = "none")+
 	#annotate(geom = "point", x = -Inf, y = dnorm(a), size = 2, color = 'blue')+
 	#annotate(geom = "point", x = a, y = dnorm(a), size = 2)+
-	#annotate(geom = "point", x = a, y = -Inf, size = a, color = 'red')+
+	#annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
 	#coord_cartesian(clip = 'off')+
 	labs(x="X", y="f(X)")
 ```
@@ -328,7 +328,7 @@ plot1 <- ggplot() +
 	theme(legend.position = "none")+
 	annotate(geom = "point", x = -Inf, y = dunif(a), size = 2, color = 'blue')+
 	annotate(geom = "point", x = a, y = dunif(a), size = 2)+
-	annotate(geom = "point", x = a, y = -Inf, size = a, color = 'red')+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
 	coord_cartesian(clip = 'off')+
 	labs(x="X", y="f(X)", title="Probability Density Function")
 
@@ -341,7 +341,7 @@ plot2 <- ggplot() +
 	theme(legend.position = "none")+
 	annotate(geom = "point", x = -Inf, y = punif(a), size = 2, color = 'green')+
 	annotate(geom = "point", x = a, y = punif(a), size = 2)+
-	annotate(geom = "point", x = a, y = -Inf, size = a, color = 'red')+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
 	coord_cartesian(clip = 'off')+
 	labs(x="X", y="F(X)", title="Cumulative Density Function")
 
@@ -376,8 +376,8 @@ Azért $1-1/3$ -ra számoltuk, mert a harmadik harmadra voltunk kíváncsiak.
 
 ### Általános leírás
 
-A normális eloszlás a természetben leggyakrabban előforduló eloszlás. Ennek okairól lásd az előadás centrális határeloszlás tételről szóló részét!  
-Az eloszlást valahogy úgy kell elképzelni, hogy van egy érték ($\mu$ - várható érték) ami jelöli, hogy az értékek leggyakrabban arrafelé, annak közvetlen környezetében vannak, ettől az értéktől távol meg ugyan előfordulhatnak értékek, de csak nagyon ritkán. Ez az eloszlás a várható értékére **szimmetrikus** és csak 1 csúcsa van!
+A normális eloszlás (Gauss eloszlás, haranggörbe) a természetben leggyakrabban előforduló eloszlás. Ennek okairól lásd az előadás centrális határeloszlás tételről szóló részét!  
+Az eloszlást valahogy úgy kell elképzelni, hogy van egy érték ($\mu$ - várható érték) ami jelöli, hogy az értékek leggyakrabban arrafelé, annak közvetlen környezetében vannak, ettől az értéktől távol meg ugyan előfordulhatnak értékek, de csak nagyon ritkán. Ezért hívják haranggörbének is, mert harang alakú. Ez az eloszlás a várható értékére **szimmetrikus** és csak 1 csúcsa van!
 Gondoljuk például az emberek magasságára! Ugyan mi látjuk a különbségeket egymás közt, de a többség körülbelül egyforma magas. Ha pedig találkozunk egy 0.5 méter vagy egy 2,3 m méter magas emberrel, akkor csodálkozunk, mert ugyan előfordulhat, de nagyon-nagyon ritkán.  
 
 A normális eloszlás paraméterei:
@@ -390,7 +390,7 @@ A normális eloszlás paraméterei:
 
 Ha több normális eloszlást össze akarunk hasonlítani, kell lennie egy alapnak, amihez minden mást viszonyítunk. Ez lesz a standard. Definíció szerint a standard normális eloszlás várható értéke 0 ($\mu=0$), szórása 1 ($\sigma=1$). Sok más eloszlásnak, így sok statisztikai módszernek/próbának ez lesz az alapja, így érdemes az eloszlás főbb jellegzetességeit eszünkbe vésni!
 
-A standard normális eloszlás képletét akár magunknak is levezethetjük. Először is vegyük a főbb jellegzetességeket: 0-ra szimmetrikus, valahogyan "görbülő" függvény. Erre a legegyszerűbb pélfa a négyzet függvény:
+A standard normális eloszlás ($\Phi(x)$ - görög fí) képletét akár magunknak is levezethetjük. Először is vegyük a főbb jellegzetességeket: 0-ra szimmetrikus, valahogyan "görbülő" függvény. Erre a legegyszerűbb példa a négyzet függvény:
 
 $$f(x) = x^2$$
 ```{r}
@@ -406,7 +406,7 @@ $$f(x) = -x^2$$
 curve(-x^2, xlim=c(-2,2))
 ```
 
-Máris jobb, azonban a görbülete nem jó - nekünk konkáv függvény kellene, ráadásul negatív az egész. A legegyszerűbb függvény, ami az előző két feltételt teljesíti, az a az exponenciális függvény ($e^x$). Emeljük az előző függvényünket exponenciálisra!
+Máris jobb, azonban a görbülete nem jó - nekünk konkáv függvény kellene, ráadásul negatív az egész (nem szabadna sosem elérnie a 0-t). A legegyszerűbb függvény, ami az előző két feltételt teljesíti, az a az exponenciális függvény ($e^x$). Emeljük az előző függvényünket exponenciálisra!
 
 $$f(x) = e^{-x^2}$$
 
@@ -414,120 +414,379 @@ $$f(x) = e^{-x^2}$$
 curve(exp(-x^2), xlim=c(-2,2))
 ```
 
-Máris sokkal jobb! Már csak pár probléma van:
+Máris sokkal jobb! Már csak pár probléma van: egy kicsit túl "szűk", valamint a függvény görbéje alatti terület nem 1. Ahhoz, hogy a szórása egység méretű ($\sigma=1$) legyen a hatványkitevőt le kell osztani 2-vel:
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Annak a valószínűségét, hogy $k$ db megfelelő objektumot veszünk ki a mintából, a következőképpen számolhatjuk ki:  
-Először is vegyük azt, hogy mennyi az esélye, hogy egy random kihúzott objektum megfelelő - ez ugye $p$. Mivel függetlenek egymástól az elemi események, ezért annak a valószínűsége, hogy 2 kihúzott objektumból 2 megfelelő $p *p=p^2$, annak a valószínűsége pedig, hogy $k$ kihúzott objektumból $k$ megfelelő $p^k$. Ezt megszorozzuk azzal, hogy hányféleképpen lehet az $n$ nagyságú mintából $k$ objektumot kiválogatni, ami ugye $n \choose k$. Ezzel még nem végeztünk, mert számolni kell azzal, hogy a minta maradékának ($n-k$) a másik típusból kell lennie. Annak a valószínűsége, hogy egy random objektum a másik típusú lesz $1-p$. Így annak a valószínűsége, hogy $n-k$ objektum a másik típusú lesz $(1-p)^{n-k}$. A képlet összerakva:
-
-$$P(X=k) = {n \choose k} p^k (1-p)^{n-k}$$
-
-### Várható érték, variancia
-
-Az eloszlás várható értéke a minta elemszáma szorozva a megfelelő objektumok gyakoriságával 
-
-$$E(X)= np$$
-
-Az eloszlás varianciája:
-
-$$SD^2(X)= np(1-p)$$
-
-Számoljuk ki egy binomiális eloszlás várható értékét és szórását! Tegyük fel, hogy van egy génváltozat ami az emberi populáció 2/5-ében megtalálható. Számítsuk ki annak az eloszlásnak a várható értékét és szórását ami azt mutatja meg hány emberben van meg ez a génváltozat, ha 40 véletlenszerűen kiválasztott emberből álló mintát veszünk!
-
-Az eloszlásra specifikus képletekkel:
+$$f(x) = e^{-x^2 \frac{1}{2}}$$
 
 ```{r}
-n = 40
-p = 0.4
-
-n*p # varhato ertek
-
-n*p*(1-p) # variancia
-sqrt(n*p*(1-p)) # szoras
+curve(exp(-x^2/2), xlim=c(-2,2))
+curve(exp(-x^2), xlim=c(-2,2), add=T, col="grey", lty=2) #elozo gorbe
 ```
 
-Általános képletekkel:
+Kell egy skálázó faktor ($a$), hogy a függvény integrálja 1 legyen:
+
+$$\int a \cdot e^{-x^2 \frac{1}{2}} ~dx=1$$
+
+Ezt úgy kapjuk meg legegyszerűbben, hogy a függvényt leosztjuk az integráljával (ne felejtsük el, hogy $a$ konstans lesz!), mert ugye $x/x=1$. Az integrál:
+
+$$\int_{-\infty}^{+\infty} e^{-x^2 \frac{1}{2}} ~dx= \sqrt {2 \pi}$$
+
+Szóval $a$ helyére beírjuk az integrál értékét és kész is a standard normál eloszlás sűrűségfüggvénye:
+
+$$\Phi(x) = \frac{1}{\sqrt{2 \pi}} e^{-x^2 \frac{1}{2}}$$
 
 ```{r}
-x <- 0:40 # ennyi ember tartalmazza lehetsegesen a gent
-p <- dbinom(x, size = n, prob = 0.4) #kategoriak gyakorisaga
+curve(exp(-x^2/2)/sqrt(2*pi), xlim=c(-2,2))
 ```
 
-A fenti függvény (`dbinom(x, size = n, prob = 0.4)`) az $x$-hez tartozó valószínűségeket számolta ki. Erről bővebben a következő alfejezetben lesz szó.  
-Mivel így már ismertek a válvált lehetséges értékei és azok valószínűsége, a várható érték és a variancia kiszámítása általános képletekkel:
+Egy ábrán lásd: . ábra.
 
 ```{r}
-sum(p*x) #varhato ertek
-sum(p*x^2) - sum(p*x)^2 #variancia
-sqrt(sum(p*x^2) - sum(p*x)^2) #szoras
+cols <- brewer.pal(4, "Set1")
+curve(exp(-x^2/2)/sqrt(2*pi), xlim=c(-2,2), ylim=c(-1.5,1), lwd=1.5, ylab="f(x)", las=1)
+abline(h=0, col="grey")
+abline(v=0, col="grey")
+curve(exp(-x^2/2), add=T, col=cols[1], lty=2, lwd=1.5)
+curve(exp(-x^2), add=T, col=cols[2], lty=2, lwd=1.5)
+curve(-x^2, add=T, col=cols[3], lty=2, lwd=1.5)
+curve(x^2, col=cols[4], add=T, lty=2, lwd=1.5)
+legend("bottom", 
+			 legend=c(expression(x^2), 
+			 				 expression(-x^2),
+			 				 expression(e^{-x^2}),
+			 				 expression(e^{-1/2*x^2} ),
+			 				 expression(1/sqrt(2* pi )*e^{-1/2*x^2})),
+			 lty=c(2,2,2,2,1),
+			 col=c(rev(cols), "black"),
+			 lwd=1.5
+)
 ```
+
+### Általános normális eloszlás
+
+A standard normális eloszláshoz képest annyi a különbség, hogy az x-tengelyen eltoljuk a függvényt ($\mu$-t megváltoztatjuk 0-ról) és megváltoztatjuk a szórását. Ax x-tengelyen való eltoláshoz a képletben $x$ -et megváltoztatjuk $x+\mu$ -re. A szórás megváltoztatásához pedig (standard norm esetén $\sigma=1$) x-et leosztjuk $\sigma$-val. Mivel ezt megtettük, így az első tag is változik $1/(\sigma \sqrt {2 \pi})$ -re:
+
+$$f(x) = \frac{1}{\sigma\sqrt{2 \pi}} e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2 }$$
+
+Így kaptunk egy általános sűrűségfüggvényt, aminek mi állíthatjuk be a várható értékét és szórását.  
+Az eloszlásfüggvény pedig ennek integrálja:
+
+$$F(x)=\int_{-\infty}^x f(x) = \int_{-\infty}^x\frac{1}{\sigma\sqrt{2 \pi}} e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2 }$$
+
+### Konvertálás standardre és vissza (z-transzformáció)
+
+Előfordul, hogy egy normális eloszlást standard normális eloszlásra kell transzformálni. Ezt **z-transzformáció**nak hívjuk. 
+Ekkor először is, "eltoljuk" a normális eloszlást az x-tengelyen úgy, hogy várható értéke nulla legyen. Ezt úgy tudjuk megcsinálni, hogy kivonjuk az értékeiből a normális eloszlás várható értékét (ha nem ismerjük, akkor a minta átlagát). Az így kapott $x-\sigma$ eloszlásnak már csak a szórását kell standardizálni, ezt pedig úgy tudjuk, hogy leosztjuk az átalakított értékeinket az eloszlás (vagy minta) szórásával ($\sigma$). Meg is kaptuk az új, standardizált eloszlásunk értékeit ($z$)!
+
+```{r , fig.cap="Z-transzformáció. Egy általános normális eloszlás (piros vonal) átalakítása standard normál eloszlássá (fekete vonal). A pontozott vonalak jelzik a két eredeti eloszlás várható értékét, a nyíl pedig az eltolás írányát. Szaggatott halványpiros vonal jelzi az eltolt várható értékű normális eloszlást.", echo=T}
+m <- 5
+s <- 2
+
+par(lwd=2)
+curve(dnorm, xlim=c(-4,10), ylab="f(x)", las=1)
+curve(dnorm(x, mean=m, sd=s), add=T, col="red")
+curve( dnorm(x, sd=s) , add=T, col="coral", lty=2)
+legend("topright", 
+			 legend=c( expression(Phi), "x" , expression( x - bar(x) ) ),
+			 lty=c(1,1,2), lwd=1.5, col=c("black", "red", "coral" )  )
+abline(v=m, col="coral", lty=3, lwd=1)
+abline(v=0, col="grey", lty=3, lwd=1)
+arrows(m, 0.3, 0, length=0.1, col="lightblue", lwd=1)
+```
+
+$$z=\frac{x-\mu}{\sigma}$$
+
+$$z= \frac{x- \bar x}{SD_x}$$
+
+Például van egy adatsorunk $x=\{9.9; 8.3; 10.3; 14.3; 10.8; 9.8; 4.8; 9.4; 8.6; 9.5\}$, amit szeretnénk standard normál eloszlásúvá alakítani. Kiszámoljuk, hogy ennek átlaga $\bar x = 9.6$, szórása $SD_x=2.4$. Ekkor kiszámítjuk a standardizált értékeket a $z=(x-9.6)/2.4$ képlettel, vagyis $z_1=(9.9-9.6)/2.4=0.14$, $z_2=(8.3-9.6)/2.4=-0.54$, stb. Ezt **R**-ben:
+
+```{r}
+x <- c(9.9, 8.3, 10.3, 14.3, 10.8, 9.8, 4.8, 9.4, 8.6, 9.5)
+atlag= mean(x)
+szoras=sd(x)
+
+(x-atlag)/szoras # z ertekek
+```
+
+Azonban megjelenik egy munkatársunk aki megmondja, hogy ismeri az eredeti populációnk várható értékét ($\mu=10$) és szórását ($\sigma=2$). Ekkor, mivel ez a pontosabb érték ezzel kell számolnunk:
+
+```{r}
+x <- c(9.9, 8.3, 10.3, 14.3, 10.8, 9.8, 4.8, 9.4, 8.6, 9.5)
+mu = 10
+sigma = 2
+
+(x-mu)/sigma # z ertekek
+```
+
+Van olyan eset is, amikor az eredményeket $z$-értékben, vagyis standard normális eloszlás értékeiként kapjuk meg ($z$), nekünk meg át kell alakítani olyan értékekre, amiket tudunk értelmezni a mi adatainkon ($x$). Ezt az előző egyenlet átrendezésével tudjuk megoldani:
+
+$$x=\mu + z \cdot \sigma$$
+
+$$x=\bar x + z \cdot SD_x$$
+
+Tehát, ha megkapjuk, hogy egy standard normális eloszlás egyik értéke $z=0.34$, de a mi vizsgált populációnk várható értéke $\mu=214$ és szórása $\sigma=24.1$, akkor, hogy ezt a z-értéket a mi populációnkon tudjuk értelmezni így számoljuk ki: $214+0.34*24.1 = 222.19$
 
 ### Valószínűségek számítása
 
-
-```{r binom, echo=FALSE, fig.cap="Binomiális eloszlás PMF és CDF. Az eloszlás paraméterei: *n* = 40, *p* = 0.4 \\label{bino}"}
-
-plot1 <- ggplot(data.frame(x=0:40,
-									y=dbinom(0:40, size=40, prob=0.4), 
-									col=as.character(c(rep("green",15),rep("grey",26))))) +
-	geom_step(aes(x, y), data=data.frame(	x= c(14, -Inf),	y= dbinom(c(14,14),size=40, prob=0.4)), colour="lightblue", lwd=1.5)+
-  #geom_bar(aes(y = ..prop.., fill=col)) +
-	geom_bar(aes(x=x,y=y,fill=col), stat="identity") +
-	#xlim(0,15)+
-	#scale_x_discrete(labels=c("5"="min", "7"="x", "10"="max"))
-	scale_x_continuous(labels=c("0", "a", "M", "n"), breaks=c(0, 14 , 0.4*40,40))+ 
+```{r norm, echo=FALSE, fig.cap="Normális eloszlás PDF és CDF"}
+a=2
+plot1 <- ggplot() +
+	stat_function(fun = dnorm 
+                , xlim = c(-3,a)
+                , geom = "area"
+                , fill="lightgreen"
+                ) +
+	geom_step(aes(x, y), data=data.frame(	x= c(a, -Inf),	y= dnorm(c(a,a))), colour="lightblue", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(a, a),	y= c(-Inf,dnorm(a) )), colour="coral", lwd=1.5)+
+	stat_function(fun=dnorm, xlim=c(-3,3)) +
+	scale_x_continuous(labels=c(expression(mu), "a"), breaks=c(0, a))+ 
 	theme(legend.position = "none")+
-	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "grey40"))+
-	annotate(geom = "point", x = -Inf, y = dbinom(14,size=40, prob=0.4), size = 2, color = 'blue')+
-	annotate(geom = "point", x = 14, y = -Inf, size = 2, color = 'red')+
+	annotate(geom = "point", x = -Inf, y = dnorm(a), size = 2, color = 'blue')+
+	annotate(geom = "point", x = a, y = dnorm(a), size = 2)+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
 	coord_cartesian(clip = 'off')+
-	labs(x="X", y="P(X)", title="Probability Mass Function")
+	labs(x="X", y="f(X)", title="Probability Density Function")
 
-
-plot2 <- ggplot(data.frame(x=0:40,y=pbinom(0:40, size=40, prob=0.4)) )+
-	geom_step(aes(x, y), data=data.frame(	x= c(14, -Inf),	y= pbinom(c(14,14),size=40, prob=0.4)), colour="lightgreen", lwd=1.5)+
-	geom_bar(aes(x=x, y=y), stat="identity")+
-	scale_x_continuous(labels=c("0", "a", "M", "n"), breaks=c(0, 14 , 0.4*40,40))+ 
+plot2 <- ggplot() +
+	geom_step(aes(x, y), data=data.frame(	x= c(a, -Inf),	y= pnorm(c(a,a))), colour="lightgreen", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(a, a),	y= c(-Inf,pnorm(a) )), colour="coral", lwd=1.5)+
+	stat_function(fun=pnorm, xlim=c(-3,3)) +
+	scale_x_continuous(labels=c(expression(mu), "a"), breaks=c(0, a))+ 
 	theme(legend.position = "none")+
-	scale_fill_manual("", values = c("green" = "lightgreen", "grey" = "darkgrey"))+
-	annotate(geom = "point", x = -Inf, y = pbinom(14,size=40, prob=0.4), size = 2, color = 'green4')+
-	annotate(geom = "point", x = 14, y = -Inf, size = 2, color = 'red')+
+	annotate(geom = "point", x = -Inf, y = pnorm(a), size = 2, color = 'green')+
+	annotate(geom = "point", x = a, y = pnorm(a), size = 2)+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
 	coord_cartesian(clip = 'off')+
-	labs(x="X", y=expression(P(X <= x) ), title="Cumulative Density Function")
+	labs(x="X", y="F(X)", title="Cumulative Density Function")
 
 
-grid.arrange(plot1, plot2, ncol=1)
+grid.arrange(plot1, plot2, ncol=2)
 ```
 
-A . ábrán látható a binomiális eloszlás tömegfüggvénye és eloszlásfüggvénye.  
-Ezeket **R**-ben vagy a fenti képlettel, vagy specifikus függvényekkel tudjuk kiszámolni. A tömegfüggvényt a `dbinom(..., size, prob)` függvénnyel, az eloszlásfüggvényt pedig a `pbinom(..., size, prob)` függvénnyel, ahol a `size` a mintaméret, azaz $n$, a `prob` pedig az elemi esemény valószínűsége, tehát $p$. Az eloszlásfüggvény inverzét a `qbinom(..., size, prob)` függvénnyel tudjuk kiszámítani. Ha elfelejtenénk, hogy a függvény paraméterei mit jelentenek futtassuk le a `?dbinom` parancsot az **R**-ben és a helpből kikereshetjük.
+A . ábrán látható a normális eloszlás sűrűségfüggvénye és eloszlásfüggvénye.  
+Az eloszlásfüggvényt a `pnorm(..., mean, sd)` függvénnyel lehet kiszámítani, ahol a `mean` a várható érték, azaz $\mu$, az `sd` pedig az eloszlás szórása, tehát $\sigma$. Az eloszlásfüggvény inverzét a `qnorm(..., mean, sd)` függvénnyel tudjuk kiszámítani. Ha elfelejtenénk, hogy a függvény paraméterei mit jelentenek futtassuk le a `?pnorm` parancsot az **R**-ben és a helpből kikereshetjük.
 
-
-Számoljuk ki mennyi az esélye, hogy nem pontosan 14 ember ember tartalmazza ezt gént! Ezt úgy lehet legegyszerűbben kiszámolni, hogy az 1-ből kivonjuk annak a valószínűségét, hogy 14 ember (PMF: piros pont) tartalmazza a gént (PMF: kék pont).
-
-$$P(nem ~ 14)=1-P(X=14)= 1- {40 \choose 14} 0.4^{14} (1-0.4)^{40-14}$$
-
-**R**-ben:
+Számoljuk ki mekkora az esélye egy standard normális eloszlás ($\sigma=1$, $\mu=0$) esetén, hogy $X \le 2$! 
+Ezt leolvashatjuk az ábráról is: kikerssük a CDF-en a 2-t az x-tengelyen (piros pötty), majd megnézzük milyen y-tengely értéket vesz fel (zöld pötty). Az ilyen számolásokat egyébként régebben a z-táblázatból számítottuk ki. Ehhez először is a keresett értéket z-transzformációval át kell alakítani standard normális eloszlás értékévé (jelen esetben ez megvan), majd az oszlopok és sor fejlécekből kikeressük a $z$ értéket (egyik fejléc tartalmazza általában egy tizedesjegyig a számokat, a másik a 2. tizedesjegyet tartalmazza), majd a megfelelő sor és oszlop metszetében lévő értéket leolvassuk. Azért **R**-ben ez jóval egyszerűbb:
 
 ```{r}
-1 - dbinom(14, size=40, prob=0.4)
+pnorm(2, mean=0, sd=1)
 ```
 
+Ha arra vagyunk kíváncsiak, hogy mekkora az értékek középső 25% -át tartlamazó intervallum ( . ábrán kék terület), akkor először kikeressük az intervallum határait (ez ugye kettő érték!) reverz eloszlásfüggvénnyel. Az alsó határ meghatározáshoz tudnunk kell, hogy mekkora a valószínűsége az intervallumunk előtti értékekenek.
+
+```{r}
+a=qnorm( (1-0.25)/2 )
+b=qnorm( 0.5+0.25/2   )
+ggplot() +
+	stat_function(fun = dnorm 
+                , xlim = c(-3,a)
+                , geom = "area"
+                , fill="lightgreen"
+                ) +
+	stat_function(fun = dnorm 
+                , xlim = c(a,b)
+                , geom = "area"
+                , fill="lightblue"
+                ) +
+	stat_function(fun = dnorm 
+                , xlim = c(b,3)
+                , geom = "area"
+                , fill="lightgreen"
+                ) +
+	geom_label(aes(x=c(-1, 0, 1), y=rep(0.1,3), label=c("37.5%", "25%", "37.5%"), size=3))+
+	stat_function(fun=dnorm, xlim=c(-3,3)) +
+	scale_x_continuous(labels=c(expression(mu), expression(x[1]), expression(x[2])), breaks=c(0, a, b))+ 
+	theme(legend.position = "none")+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="f(X)")
+```
+
+Az . ábrán ez az első zöld terület. Ha 0.25 a középső rész, akkor a maradék $1-0.25=0.75$. Azonban ez két egyenlő részre esik, szóval az intervallumunk előtti értékek kumulált valószínűsége $0.75/2=0.375$. Az intervallumunk felső határánál kisebb értékekhez tartozó kumulált valószínűséget ( . ábrán lila terület) pedig úgy kaphatjuk meg, hogy kivonjuk az 1-ből (a teljes eseménytér öszzesített valószínűsége) az adott intervallum feletti értékek kumulált valószínűségét ( . ábrán a zöld terület), az pedig, mint az imént kiszámítottuk $0.75/2=0.375$. Így a keresett valószínűség $1-0.75/2 = 0.625$.
+
+```{r}
+a=qnorm( (1-0.25)/2 )
+b=qnorm( 0.5+0.25/2   )
+ggplot() +
+	stat_function(fun = dnorm 
+                , xlim = c(-3,b)
+                , geom = "area"
+                , fill="purple"
+                ) +
+	stat_function(fun = dnorm 
+                , xlim = c(b,3)
+                , geom = "area"
+                , fill="lightgreen"
+                ) +
+	geom_label(aes(x=c(-0.5, 1), y=rep(0.1,2), label=c("62.5%", "37.5%"), size=3))+
+	stat_function(fun=dnorm, xlim=c(-3,3)) +
+	scale_x_continuous(labels=c(expression(mu), expression(x[1]), expression(x[2])), breaks=c(0, a, b))+ 
+	theme(legend.position = "none")+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="f(X)")
+```
+
+A keresett intervallumunk határait tehát így számolhatjuk ki **R**-ben:
+
+```{r}
+also = qnorm(0.75/2, mean=0, sd=1)
+also
+felso = qnorm(1-0.75/2, mean=0, sd=1)
+felso
+```
+
+Nem meglepő módon ezek abszolútértéke egyenlő, mivel a **standard** normális eloszlás szimmetrikus 0-ra! Az intervallumunk szélessége tehát:
+
+```{r}
+felso-also
+```
+
+## Exponenciális eloszlás
+
+### Általános leírás
+
+Exponenciális eloszlás a természetben akkor fordul elő, amikor valaminek van valami állandó megjelenési / eltűnési / átalakulási rátája és mi ennek a valaminek az időbeli előfordulását nézzük. Az exponenciális eloszlás úgy néz ki, hogy valami 0 időpontban teljes mennyiségében előfordul, majd az idő múlásával (az x-tengelyen haladva) ez exponenciálisan csökken. Ez az eloszlás **asszimetrikus**, 1 csúcsa van $f(0)$ -nál és csak 0-tól értelmezzük. Exponenciális eloszlásra példa a radioaktív izotópok bomlása.
+
+Egy paramétere van: $\lambda$, a változás rátája.  
+
+Ha $\lambda=0$, az exponenciális függvény sűrűségfüggvénye ( . ábra):
+
+$$e^{-X}$$
+```{r}
+curve(exp(-x), xlim=c(0,4))
+```
+
+Azonban, hogy más rátákhoz is igazíthassuk, a $\lambda$ tagot be kell építeni a függvénybe. Így az exponenciális eloszlás sűrűségfüggvénye:
+
+$$f(X)=\lambda e^{-\lambda X}$$
+
+```{r}
+lambda = 2
+curve(lambda*exp(-x*lambda), xlim=c(0,4), sub=bquote( lambda == 2))
+```
+
+Az eloszlásfüggvénye pedig ennek integrálja:
+
+$$F(X)=1-e^{-\lambda X}$$
+
+### Várható érték, variancia 
+
+Az eloszlás várható értéke a rátának a reciproka:
+
+$$E(X)=\frac{1}{\lambda}$$
+
+Ez fontos, mert legtöbbször ilyen formában kapjuk meg az adatokat (pl. valaminek a várható élettartama), amiből vissza kell fejtenünk $\lambda$-t.
+
+Az eloszlás varianciája:
+
+$$SD^2(X)= \frac{1}{\lambda^2}$$
+
+### Valószínűségek számítása
+
+```{r norm, echo=FALSE, fig.cap="Exponenciális eloszlás PDF és CDF"}
+a=0.6
+plot1 <- ggplot() +
+	stat_function(fun = dexp 
+                , xlim = c(0,a)
+                , geom = "area"
+                , fill="lightgreen"
+                ) +
+	geom_step(aes(x, y), data=data.frame(	x= c(a, -Inf),	y= dexp(c(a,a))), colour="lightblue", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(a, a),	y= c(-Inf,dexp(a) )), colour="coral", lwd=1.5)+
+	stat_function(fun=dexp, xlim=c(-1,3)) +
+	scale_x_continuous(labels=c("0", expression(1 / lambda), "a"), breaks=c(0, 1, a))+ 
+	theme(legend.position = "none")+
+	annotate(geom = "point", x = -Inf, y = dexp(a), size = 2, color = 'blue')+
+	annotate(geom = "point", x = a, y = dexp(a), size = 2)+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="f(X)", title="Probability Density Function")
+
+plot2 <- ggplot() +
+	geom_step(aes(x, y), data=data.frame(	x= c(a, -Inf),	y= pexp(c(a,a))), colour="lightgreen", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(a, a),	y= c(-Inf,pexp(a) )), colour="coral", lwd=1.5)+
+	stat_function(fun=pexp, xlim=c(-1,3)) +
+	scale_x_continuous(labels=c("0", expression(1 / lambda), "a"), breaks=c(0,1, a))+ 
+	theme(legend.position = "none")+
+	annotate(geom = "point", x = -Inf, y = pexp(a), size = 2, color = 'green')+
+	annotate(geom = "point", x = a, y = pexp(a), size = 2)+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="F(X)", title="Cumulative Density Function")
+
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+A . ábrán látható az exponenciális eloszlás sűrűségfüggvénye és eloszlásfüggvénye.  
+Az eloszlásfüggvényt a `pexp(..., rate)` függvénnyel lehet kiszámítani, ahol a `rate` a ráta, azaz $\lambda$. Az eloszlásfüggvény inverzét a `qexp(..., rate)` függvénnyel tudjuk kiszámítani. Ha elfelejtenénk, hogy a függvény paraméterei mit jelentenek futtassuk le a `?pexp` parancsot az **R**-ben és a helpből kikereshetjük.
+
+Számoljuk ki mekkora az esélye, hogy egy véletlenszerűen kiválasztott hangya levegőtől elzártan 10 perc múlva nem lesz életben, ha a hangyák várhatóan 15 percig élnek ilyen környezetben!
+Ezt leolvashatjuk az ábráról is: kikerssük a CDF-en a 10 percet az x-tengelyen (piros pötty), majd megnézzük milyen y-tengely értéket vesz fel (zöld pötty).  
+Ha ki akarjuk számolni, először is meg találnunk $\lambda$-t. Azt tudjuk, hogy a várható érték 15 perc, így $\lambda=1/15$ lesz.
+A kiszámoláshoz behelyettesíthetjük a fenti függvénybe is: $ 1-e^{-1/15 \cdot 10}= 0.49$
+
+Azért **R**-ben ez jóval egyszerűbb:
+
+```{r}
+pexp(10, rate=1/15)
+```
+
+Arra is kíváncsiak vagyunk, hogy legkevesebb hány percig bírják a hangyák legszívósabb 30%-a?  
+Ehhez fordítottan gondolkozunk: meg kell keresnünk, hogy a kevésbé szívós 70% meddig bírja maximum. Ehhez a reverz eloszlásfüggényt használjuk:
+
+$$1-e^{-1/15 \cdot x}= 0.7$$
+$$-ln(1-0.7) \cdot 15 = x$$
+
+Tehát $x=18.06$. Ez **R**-ben:
+
+```{r}
+qexp(0.7, rate=1./15)
+```
+
+## $\chi^2$ eloszlás
+
+
+```{r norm, echo=FALSE, fig.cap="Exponenciális eloszlás PDF és CDF"}
+a=40
+df=20
+plot1 <- ggplot() +
+	stat_function(fun = dchisq, args=list(df=df) 
+                , xlim = c(-5,a)
+                , geom = "area"
+                , fill="lightgreen"
+                ) +
+	geom_step(aes(x, y), data=data.frame(	x= c(a, -Inf),	y= dchisq(c(a,a), df=df)), colour="lightblue", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(a, a),	y= c(-Inf, dchisq(a , df=df))), colour="coral", lwd=1.5)+
+	stat_function(fun=dchisq, args=list(df=df), xlim=c(0,df*3)) +
+	scale_x_continuous(labels=c("0", "df", "a"), breaks=c(0, df, a))+ 
+	theme(legend.position = "none")+
+	annotate(geom = "point", x = -Inf, y = dchisq(a, df=df), size = 2, color = 'blue')+
+	annotate(geom = "point", x = a, y = dchisq(a, df=df), size = 2)+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="f(X)", title="Probability Density Function")
+
+plot2 <- ggplot() +
+	geom_step(aes(x, y), data=data.frame(	x= c(a, -Inf),	y= pchisq(c(a,a), df=df)), colour="lightgreen", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(a, a),	y= c(-Inf,pchisq(a, df=df) )), colour="coral", lwd=1.5)+
+	stat_function(fun=pchisq, args=list(df=df), xlim=c(0,df*3)) +
+	#scale_x_continuous(labels=c("0", expression(1 / lambda), "a"), breaks=c(0,1, a))+ 
+	theme(legend.position = "none")+
+	annotate(geom = "point", x = -Inf, y = pchisq(a, df=df), size = 2, color = 'green')+
+	annotate(geom = "point", x = a, y = pchisq(a, df=df), size = 2)+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="F(X)", title="Cumulative Density Function")
+
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+## Fischer féle F-eloszlás
+
+## Student féle t-eloszlás
+
+## 
 
