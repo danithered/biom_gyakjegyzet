@@ -60,6 +60,10 @@ knit_hooks$set(output = function(x, options) {
 ```{r child="fejezetek/ora2.Rmd"}
 ```
 
+<!-- 3. Ora folytonos eloszlasok -->
+```{r child="fejezetek/ora3.Rmd"}
+```
+
 
 # Adatok beolvasása és ábrázolása (4. óra)
 
