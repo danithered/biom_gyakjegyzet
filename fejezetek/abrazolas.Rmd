@@ -1,0 +1,578 @@
+# Adatok ábrázolása (4. óra)
+
+Az **R** alapcsomagjai elegendőek ahhoz, hogy a kurzus során szükséges ábrákat létre tudjuk hozni. **RStudio**-ban pedig a készített ábráink a jobb oldali **Plots** panelban fognak feltűnni alapértelmezetten (szóval nem kell definiálni grafikus eszközt).
+
+## A *plot()* függvény használata
+
+A `plot()` függvény egy általános adatábrázoló függvény. Viselkedése attól függ, hogy milyen adatokat adunk meg argumentumaként, de leggyakrabban pont- vagy vonaldiagram rajzolásához használjuk. Ha egyetlen számsort adunk meg változóként, akkor a számsor tagjait fogja sorban ábrázolni, *X* tengelyen azt, hogy hányadik a számsorban, *Y* tengelyen a szám számértékét. Ezt viszonylag ritkán szeretnénk ábrázolni, a jegyzetben azért van bent, hogy tudjuk mi történt, ha ilyesmit látunk.
+
+```{r}
+x <- c(1,2,3,2,1,1)
+plot(x)
+```
+
+Ha két vektort adunk meg neki változóként, akkor pontokként ábrázolja őket, úgy hogy az első argumentumból hívja be az *X* koordinátákat, míg a másodikból az *Y* koordinátákat.
+
+```{r myfirstplot, fig.cap="Pontdiagram"}
+x <- 1:10
+y <- sqrt(1:10)
+x
+y
+plot(x, y)
+```
+
+Ezzel egyenértékű, ha beírjuk a `y~x` kifejezést a függvény első argumentumaként, mely azt jelöli, hogy *y függvénye x-nek*. A hullámjelet *tilde*-nek is hívják.
+
+```{r eval=FALSE}
+plot(y ~ x)
+```
+
+Ha beleírjuk az `x` és az `y` helyére a számokat, akkor is ezt fogjuk kapni, csak a tengelyfeliratok változnak meg.
+
+```{r myfirstplot_short, fig.cap="Pontdiagram a vektorok közvetlen megadásával"}
+plot(1:10, sqrt(1:10))
+```
+
+Megadhatunk címet és alcímet az ábránknak a `main` és `sub` argumentumokkal.
+
+```{r, myfirstplot_cimek, fig.cap="Pontdiagram címmel és alcímmel"}
+plot(x, y
+     , main = "Ez egy cim"
+     , sub = "negyzetgyok"
+)
+```
+
+Testreszabhatjuk a tengelyfeliratokat az `xlab` és `ylab` argumentumokkal.
+
+```{r, myfirstplot_tfelirat, fig.cap="Pontdiagram címmel, alcímmel és tengelyfeliratokkal"}
+plot(x, y
+     , main = "Ez egy cim"
+     , sub = "negyzetgyok"
+     , xlab = "x tengely"
+     , ylab = "y tengely"
+)
+```
+
+A `type` argumentummal megadhatjuk, hogy milyen ábrázolási módot szeretnénk:
+
+  * "p": pontdiagram, ez az alapértelmezett
+  * "l": vonaldiagram
+  * "b": pont és vonaldiagram is (**b**oth), a pontok nincsenek a vonallal áthúzva
+  * "c": az előző típus vonalai kizárólag
+  * "o": pont és vonaldiagram is, a pontok át vannak húzva a vonallal
+  * "h": a pontokat oszlopok jelzik az *X* tengely felől
+  
+```{r myfirstplot_l, fig.cap="Vonaldiagram"}
+plot(x, y, type="l")
+```
+
+```{r myfirstplot_b, fig.cap="Vonal- és pontdiagram, nem metszik egymást"}
+plot(x, y, type="b")
+```
+
+```{r myfirstplot_c, fig.cap="Vonaldiagram, a pontoknál ki van hagyva a vonal"}
+plot(x, y, type="c")
+```
+
+```{r myfirstplot_o, fig.cap="Vonal- és pontdiagram, a pontokon átmegy a vonal"}
+plot(x, y, type="o")
+```
+
+```{r myfirstplot_h, fig.cap="Oszlopdiagram szerű ábrázolás"}
+plot(x, y, type="h")
+```
+
+Ha szeretnénk egyéb pontokat is hozzáadni a már létező ábránkhoz, akkor a `points()` függvényt használhatjuk, ami a `plot()` függvényhez hasonlóan működik, azzal a kivétellel, hogy egy már előzőleg létező ábrára rajzol.
+
+```{r, myfirstplot_points, fig.cap="Pontdiagram hozzáadott pontokkal"}
+z <- (1:10)^(1/3)
+z
+plot(x, y)
+points(x, z)
+```
+
+Hasonlóképpen hozzáadhatunk vonalakat is a `lines()` függvénnyel.
+
+```{r, myfirstplot_lines, fig.cap="Pontdiagram hozzáadott vonalakkal"}
+z <- (1:10)^(1/3)
+z
+plot(x, y)
+lines(x, z)
+```
+
+Az **R** alap grafikai függvényei az első plottolási parancsban lévő adatokhoz igazítják az ábrázolt területet. Ezt azonban meg lehet változtatni az `xlim` és `ylim` argumentumokkal. Ezeknek egy két elemből álló numerikus vektort kell megadni, ami meghatározza, hogy mettől meddig tartson az ábrázolandó terület az *X* és *Y* tengelyen.
+
+```{r myfirstplot_lim, fig.cap="Pontdiagram beállított plotterülettel"}
+plot(x, y
+     , xlim = c(2, 8) # x tengely minimuma es maximuma
+     , ylim = c(0, 4) # y tengely minimuma es maximuma
+     )
+```
+
+A tengelyek logaritmikus ábrázolása akkor hasznos, ha valamiről úgy gondoljuk, hogy nagyságrendű megváltozása a fontos. Tehát nem az additív távolságok a lényegesek (pl. $x_1$ 2-vel nagyobb, mint $x_2$), hanem a multiplikatív különbségek (pl. $x_1$ 100-szor nagyobb, mint $x_2$). Mindig mérlegeljük, hogy van-e biológiai relevanciája a tengelyek logaritmizálásának! A logaritmizálást a `log` argumentummal tudjuk beállítani: értéke `"xy"`, ha mindkét tengelyt, `"x"`, ha az x és `"y"`, ha az y tengelyt logaritmizáljuk. (Régi **R** verziókban a tengelyeket logaritmizálni sorra a `xlog=TRUE` és `ylog=TRUE` argumentumokkal lehetett.)
+
+```{r myfirstplot_log, fig.cap="Pontdiagram logaritmizált x és y tengelyekkel"}
+plot(x, y, log="xy")
+```
+
+## Argumentumok
+
+A plottolás és egyéb grafikus kimenetelek argumentumait a `par()` függvénnyel érhetjük el és módosíthatjuk. Ha valamit állítani szeretnénk a plotunkon, akkor érdemes lefuttatni a `?par` parancsot és a help-ből kikeresni a számunkra fontos argumentumot a különböző beállítási lehetőségek hosszú listájából. Ebben a fejezetben csak a fontosabbakat fogjuk tárgyalni.
+
+Az argumentum alapértelmezett beállításait úgy tudjuk elérni, hogy vagy lefuttatjuk a `par()` parancsot argumentum nélkül és kikeressük a listából az egyes paramétereket, vagy beírjuk a argumentum nevét a függvénybe. Például:
+
+```{r}
+par("col")
+```
+
+Átállítani úgy tudjuk, hogy argumentumnak írjuk be a paramétert a `par()` függvénybe és értéket adunk neki. Ha át akarjuk állítani például az ábrázolás színét pirosra, akkor:
+
+```{r myfirstplot_par, fig.cap="Pontdiagram ha az alapértelmezett szín a vörös"}
+par(col="red")
+plot(x, y)
+plot(x, y, col="black")
+```
+
+Innentől az összes ábrázolás alapértelmezetten piros lesz, amíg meg nem változtatjuk újra. Azonban az alapértelmezettől eltérhetünk, ha az ábrázoló függvényben megadjuk.  
+A legtöbbször használt paraméterek:
+
+  * `col`: az ábrázolás színe
+  * `pch`: a pontok alakja
+  * `lty`: vonalak típusa
+  * `lwd`: vonalak vastagsága
+  * `cex`, `cex.axis`, `cex.lab`: a karakterek / tengelycímkék / tengelycímek mérete
+  * `las`: a tengelycímkék iránya
+  * `mar`: margók mérete
+  
+A színeket megadhatjuk RGB kódokként is meg színnevekkel is. A használható színneveket így listázhatjuk:
+
+```{r list_colors, output.lines=10}
+colors()
+```
+
+Ha több színt akarunk megadni, akkor vektorként tegyük. Ha elfogytak a megadott színek, az **R** szekvenciálisan újrahasznosítja a vektort, az elejétől kezdve.
+
+```{r myfirstplot_col3, fig.cap="Pontdiagram színezett pontokkal"}
+plot(x, y
+     , col = c("purple", "tomato", "navy")
+     )
+```
+
+A különböző pontalakokat a `pch` (point character) paraméterrel lehet megadni. Ez lehet egy szám (mely különböző karaktereket jelöl) vagy egy karakter is (ebben az esetben maga a karakter kerül kiírásra). Vigyázzunk, hogy egy vektornak csak egyfajta elemei lehetnek, így egyszerre csak egyik módszer használható! Az alap karaktereket a `?points` help oldalon lehet kikeresni egy táblázatból. A színekhez hasonlóan itt is több karaktert lehet megadni, melyeket az **R** újrahasznosíthat. 
+
+```{r myfirstplot_pch, fig.cap="Pontdiagram, személyre szabott pontokkal"}
+plot(x, y
+     , pch = c(5, 19, 15)
+     )
+points(x, z
+       , pch = c(1, "a", "@")
+       )
+```
+
+Vonalak típusát (`lty`, azaz linetype) is megadhatjuk számokkal, vagy karakterekkel: 0 = "blank" (üres), 1 = solid (folytonos), 2 = "dashed" (szaggatott), 3 = "dotted" (pontozott), 4 = "dotdash" (pontos és szaggatott), 5 = "longdash" (hosszú szaggatott), 6 = "twodash" (pontos és szaggatott). A vonalak vastagságát (`lwd`, azaz line width) pedig számmal adhatjuk meg. A vonalakat is lehet színezni a `col` paraméterrel.
+
+```{r}
+plot(x, y
+     , type = "l"
+     , lty = 3 # type of line
+     , col = "violet" # color of line
+     , lwd = 2 # width of line
+     )
+lines(x, z
+      , lty = "dotted" # also type of line
+      , lwd = 3
+      )
+```
+
+A `cex`-el beállíthatjuk a karaktereink nagyságát. A `las` paraméter egy 0 és 3 közti szám, ami megadja, hogy állnak a tengelyek címkéi. Leggyakrabban a `las=1` opciót használják, ami minden feliratot horizontálisba fordít.
+
+```{r, myfirstplot_cex, fig.cap="Pontdiagram megnövelt karakter és tengelycímke méretekkel, horizontális tengelycímkékkel"}
+plot(x, y
+     , cex = 3
+     , cex.axis=2
+     , las = 1
+     )
+```
+
+A margók méretének megváltoztatásával a plotterület melletti sáv nagyságát változtathatjuk. Érdemes megjegyezni az eredeti beállítását.
+
+```{r}
+mar_orig <- par("mar")
+mar_orig
+```
+
+Megváltoztatni a `par()` függvénnyel tudjuk. Értéke egy négy tagú numerikus vektor, melynek elemei sorra megmutatják az alsó / bal / felső / jobb oldali margók méretét.
+
+```{r, myfirstplot_mar, fig.cap="Pontdiagram egyéni margókkal"}
+par(mar = c(1,1,0,3) )
+plot(x, y)
+par(mar = mar_orig)
+```
+
+## Osztott ábra
+
+Ha egy ábraterületen több ábrát szeretnénk lerajzolni, akkor először el kell döntenünk, hogy hány sorba és hány oszlopba akarjuk. Ezután az `mfrow = c(sor, oszlop)` argumentummal beállítjuk, hogy mekkorára osztjuk a plotterületet. Az argumentum bementi értéke egy két elemből álló numerikus vektor, mely elemek sorra megadják, hogy hány sorba és hány oszlopba szeretnénk ábrázolni. Ezután kiadjuk a megfelelő mennyiségű plot parancsot. A plotok helyei sor szerint töltődnek fel. Ha utána újból egy ábra / egy ábraterületen szeretnénk ábrázolni, akkor vissza is kell állítanunk az argumentumot eredeti állapotába: `mfrow = c(1, 1)`. 
+
+```{r fig.cap="Osztott ábra"}
+par(mfrow=c(3,2)) # 3 sor es 2 oszlop
+plot(x,y
+     , main="Elso plot"
+     )
+plot(x,y
+     , main="Masodik plot"
+     , log="x"
+     )
+plot(x,y
+     , main="Harmadik plot"
+     , log="y"
+     )
+plot(x,y
+     , main="Negyedik plot"
+     , log="xy"
+     )
+plot(log(x),log(y)
+     , main="Otodik plot"
+     )
+plot(x,y
+     , main="Hatodik plot"
+     , type="l"
+     , las=1
+     )
+par(mfrow=c(1,1)) # visszaallitjuk eredeti abrazolasra
+```
+
+## Eloszlások szemléltetése
+
+Először is olvassunk be adatbázisokat, melyeket a példákban bemutatunk!
+
+```{r huntbeolvas}
+hunt <- read.table("cells_huntington.dat", sep="\t", header=TRUE, dec=",")
+str(hunt)
+
+beka <- read.table("beka.csv", sep=",", header=TRUE, dec=".")
+str(beka)
+```
+
+A \texttt{hunt} adattáblát szűrjük meg, hogy csak a "TD_MPS1.3" kultúrából származó primer vezikulák kerületadatait lássuk! 
+
+```{r huntszures_1, output.lines=10}
+hunt[hunt$vesicle.type == "Prim", ] # csak a primer vezikulak
+hunt[hunt$Cell.culture == "TD_MPS1.3", ] # csak a TD_MPS1.3 kulturabol szarmazo vezikulak
+# csak azok a primer vezikulak melyek a TD_MPS1.3 kulturabol szarmaznak
+hunt[hunt$vesicle.type == "Prim" & hunt$Cell.culture == "TD_MPS1.3", ] 
+hunt[ , "Perimeter..nm."] # az adatbazis vezikula kerulet adatai
+
+# csak a vezikula adatai azoknak a primer vezikulaknak melyek a TD_MPS1.3 kulturabol szarmaznak
+hunt[hunt$vesicle.type == "Prim" & hunt$Cell.culture == "TD_MPS1.3", "Perimeter..nm."]
+
+# az utobbival egyenerteku:
+# ez azert van mert a "Perimeter..nm." a hatodik oszlop neve. 
+#Vagyis az oszlop neveket behelyettesithetjuk azzal, hogy hanyadik oszlop!!!
+hunt[hunt$vesicle.type == "Prim" & hunt$Cell.culture == "TD_MPS1.3", 6]
+
+```
+
+Mentsük el ezeket a vezikula adatokat egy változóba!
+
+```{r}
+vezik <- hunt[hunt$vesicle.type == "Prim" & hunt$Cell.culture == "TD_MPS1.3", 6]
+str(vezik)
+vezik
+```
+
+Ábrázoljuk ezeknek az adatoknak az eloszlását! Ezt legkönnyebben hisztogramon tudjuk elérni.
+
+```{r}
+hist(vezik)
+```
+
+A hisztogramra alkalmazhatjuk azokat az argumentumokat, amiket a `par()` parancsban találhatok (help intenzív tanulmányozása javallott). A `col` itt az oszlopok színeit adja meg. Az ábra specifikus argumentumok az adott ábra készítő függvényben találhatók pl. a hisztogram esetén a `hist()` függvény `breaks` argumentuma, amiben megadhatjuk hány oszlopra tördelje a függvény az adatokat. A se túl sok, se túl kevés oszlop nem adja ki jól az adatok eloszlását, így megéri próbálgatni különböző értékekre!
+
+```{r}
+hist(vezik
+     , col=rainbow(5)
+     , breaks=5
+     , xlab="Vezikula kerulet [nm]"
+     , main= "Primer vezikulak TD_MPS1.3 sejtvonalbol"
+     , las=1
+     )
+
+```
+
+```{r}
+hist(vezik
+     , col=rainbow(5)
+     , breaks=200
+     , xlab="Vezikula kerulet [nm]"
+     , main= "Primer vezikulak TD_MPS1.3 sejtvonalbol"
+     , las=1
+     )
+
+```
+
+Simított hisztogram:
+
+```{r}
+plot( density(vezik) )
+```
+
+Boxplot:
+ Öt pontos ábrázolásnak is nevezik mert alapvetően öt értéket ábrázol
+
+```{r boxplpot, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+par(mfrow=c(2,2))
+boxplot(beka$thossz, main= "Alap beállítás", cex.main = 0.7)
+boxplot(beka$thossz,range = 0, main = "min-Q1-median-Q3-max", cex.main = 0.7)
+boxplot(beka$thossz,range = 1, main = "(Q1-1*IQR)-Q1-median-Q3-(Q3+1*IQR)", cex.main = 0.7)
+boxplot(beka$thossz,range = 1.5, main = "(Q1-1.5*IQR)-Q1-median-Q3-(Q3+1.5*IQR)", cex.main = 0.7)
+par(mfrow=c(1,1))
+```
+
+Láthatók a kiugró adatok (körök), és látható az eloszlás ferdesége (medián helyzete alapján), elnyúltsága a \'\'szálkák\'\' alapján). Ez itt most eléggé szimmetrikus és nincs nagy elnyúlása.
+
+Lehet csinosítgatni a `par()` függvényben található argumentumok megadásával / beállításával
+
+```{r boxplpot2, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+boxplot(beka$thossz, col = "red", las = 1)
+```
+
+Ez az ábrázolás arra nagyon jó hogy több csoportot össze lehessen hasonlítani, ekkor a tulajdonság és a csoportosító változó közé egy $\sim$ vonalat kell írni. Ez kb. annak felel meg, hogy azt mondjuk \'\'a \texttt{tomeg}  értéke függ a \texttt{faj} értékétől\'\' -- ezt a jelölést még sokszor fogjuk használni!
+
+```{r boxplpot3, echo = TRUE, include = TRUE, tidy = TRUE, eval = TRUE}
+boxplot(beka$tomeg ~ beka$faj, col = 2:4, las = 1, xlab = "", ylab = "Tömeg [g]")
+```
+
+Amit lehet látni, hogy a piros, és a kék viszonylag szimmetrikus, de a zöld ferdébb és elnyúltabb. 
+
+## Barplot és hisztogram
+
+Gyakran összekeverik ezt a két típust. Amit érdemes megjegyezni, hogy a hisztogram (részletesen előző fejezetben bemutatva) esetén az oszlopok összeérnek, ezzel is jelzik, hogy felosztottak egy folytonos intervallumot darabokra és ezeknek a rövidebb intervallumoknak az összesített gyakoriságát ábrázolják (*osztály gyakoriság*). Ellenben az oszlopdiagramoknál az oszlopok nem érnek össze, ezzel pedig azt mutatják, hogy ezek diszkrét kategóriák (*kategória gyakoriság*). Az oszlopdiagram értékei nem csak gyakoriságok lehetnek, hanem másfajta változók is. Legegyszerűbb a különbséget akkor megérteni, ha ábrázoljuk ugyanazt az adatot.
+
+```{r}
+par(mfrow=c(1,2))
+hist(vezik, main="Hisztogram")
+barplot(vezik, main="Barplot")
+par(mfrow=c(1,1))
+```
+
+Míg a hisztogram kiszámította a belerakott adatoknak az **eloszlását**, a barplot csak sorra egymás után ábrázolta őket. Egy példa barplot helyes használatára:
+
+```{r fig.cap="Barplot példa"}
+barplot(c(CHF=322.45,EUR=340.17,USD=303.91,AUD=187.48,BGN=173.92,BRL=62.54,CAD=218.72,CNY=43.39), 
+        main="Arfolyamok", ylab="HUF")
+```
+
+Diszkrét adatok adatok gyakoriságát `barplot()`-tal érdemes megjeleníteni. Azonban az adatokat előtte táblázatba kell gyűjteni, össze kell számolni a gyakoriságukat. Ezt a `table()` függvénnyel tudjuk megtenni.
+
+```{r }
+table(beka$faj)
+barplot(table(beka$faj), las = 1, xlab = "", ylab = "Gyakoriság")
+```
+
+A hisztogram (`hist()` függvény) osztálygyakoriságokat ábrázol: egy adott intervallumba eső esetek gyakorisága (lásd korábban).
+
+## Függvények rajzolása
+
+Függvényeket a `curve()` paranccsal tudunk ábrázolni. Első argumentumaként egy **R** képletet kell megadni (nem idézőjelben!), melyben csak az *x* szerepel, mint változó. Alapértelmezettként 0 és 1 között ábrázol, így szükséges megadni az x tengely kiterjedését az `from` és `to` argumentumokkal. A `par()` argumentumai itt is használhatók.
+
+```{r}
+curve(x^2, xlim=c(-2,2))
+```
+
+## Kördiagram
+
+Kördiagramot csak nagyon speciális esetekben alkalmazzunk, mert használata sokszor megtévesztő (nehezen becsülnek az emberek szögeket)!  
+
+Ha mondjuk ábrázolni akarjuk a csőr adatbázisunk csőrhossz kategóriának arányát kördiagramon, akkor először is meg kell számolnunk hány egyed esik az egyes kategóriákba.
+
+```{r}
+table(csoradat$Csorhossz_kat)
+```
+
+Ezeket a számokat már ábrázolhatjuk.
+
+```{r}
+pie(table(csoradat$Csorhossz_kat))
+```
+
+A `plot()` és `par()` argumentumai közül most is legtöbb használható. Ami különleges: a `labels` argumentumban meghatározhatjuk a különböző kategóriákhoz írt címkéket, a `clockwise = TRUE`-val pedig megváltoztathatjuk a körcikkek irányát.
+
+## További ábrázolás példák
+
+Ez a fejezet csak példákat tartalmaz arra, hogy hogyan kell jó ábrákat készíteni.
+
+```{r}
+myfile = read.csv("EduMicrobialEnvironmentSE.csv", header=T, sep=",")
+
+#View(myfile)
+str(myfile)
+table(myfile$Group2)
+table(myfile$oxotol)
+table(myfile$temprange)
+
+```
+
+
+### "UGLY" PLOTS
+
+```{r}
+barplot(table(myfile$Group2))
+
+barplot(table(myfile$temprange))
+
+hist(myfile$temp_opt.C.)
+plot(density(myfile$temp_opt.C.))
+
+boxplot(myfile$temp_opt.C.~myfile$oxotol)
+
+plot(x=myfile$temp_opt.C.,y=myfile$Q)
+plot(x=myfile$temp_opt.C.,y=log10(myfile$Genome_size))
+plot(x=(myfile$bG+myfile$bC),y=myfile$A)
+```
+
+### NICE PLOTS
+
+```{r}
+par(mar=(c(bottom=4,left=10,top=4, right=4))) #margok beallitasa
+barplot(table(myfile$Group2)
+        , main="Taxonomic distribution"
+        , xlab="Domain", ylab="Occurence"
+        , col=rainbow(2)
+        , cex.lab=2
+        , cex.axis=1.5
+        , cex.names=2
+        )
+
+par(mar=(c(bottom=4,left=5,top=4, right=4)))
+barplot(table(myfile$temprange) 
+        , main="Temperature range"
+        , xlab="", ylab="Occurence"
+        , col=c("red","green","blue", "orange")
+        , cex.lab=2 
+        , cex.axis=1.5
+        , cex.names=2
+        )
+
+barplot(table(myfile$oxotol),main="Oxygen tolerance",
+        xlab="",ylab="Occurence",
+        col=rainbow(length(names(table(myfile$oxotol)))),
+        cex.lab=2, cex.axis=1.5, cex.names=1.5
+        )
+
+par(mar=(c(bottom=4,left=5,top=4, right=4)))
+hist(myfile$temp_opt.C.
+        , main="Histogram of temperature optimum"
+        , xlab="Temperature(°C)", ylab="Occurence"
+        , col=c("red")
+        , cex.lab=2
+        , cex.axis=1.5
+        , ylim=c(0,200)
+     )
+
+par(mar=(c(bottom=4,left=5,top=4, right=4)))
+hist(myfile$pH_opt
+     , main="pH optimum"
+     , xlab="ph", ylab="Occurence"
+     , col=c("green")
+     , cex.lab=2
+     , cex.axis=1.5
+     , ylim=c(0,200)
+     )
+
+par(mar=(c(bottom=5,left=5,top=4, right=4)))
+hist(myfile$pH_opt
+     , main="Salt conc. optimum"
+     , xlab="NaCl conc.[(w/V)%]",ylab="Occurence"
+     , col=c("blue")
+     , cex.lab=2
+     , cex.axis=1.5
+     , ylim=c(0,200)
+     )
+
+
+boxplot(myfile$temp_opt.C.~myfile$temprange,
+        ylab="Temperature(°C)",
+        col=c("red","green","blue", "orange"),
+        cex.lab=2, cex.axis=1.5, cex.names=2)
+
+
+boxplot(myfile$temp_opt.C.~myfile$Group2,
+        xlab="Domain",ylab="Temperature(°C)",
+        col=rainbow(2), cex.lab=2, cex.axis=1.5, cex.names=2)
+
+boxplot(myfile$temp_opt.C.~myfile$oxotol,
+        xlab="Domain",ylab="Temperature(°C)",
+        col=rainbow(length(names(table(myfile$oxotol)))),
+        cex.lab=2, cex.axis=1.5, cex.names=2)
+
+par(mar=(c(bottom=5,left=5,top=5, right=5)))
+plot(myfile$temp_opt.C., log10(myfile$Genome_size)
+     , ylab="log10(Genome size)", xlab="Temperature(°C)"
+     , col="purple"
+     , cex.lab=2
+     , cex.axis=1.5
+     , pch=20
+     , ylim=c(5.5,7.5), xlim=c(0,100)
+     )
+
+plot(myfile$temp_opt.C., myfile$bG+myfile$bC
+     , ylab="GC-content", xlab="Temperature(°C)"
+     , col="red", cex.lab=2, cex.axis=1.5,pch=1
+     , ylim=c(0,1), xlim=c(0,100)
+     )
+
+plot(myfile$bG+myfile$bC, myfile$A
+     , ylab="Alanine content of proteins", xlab="GC-content of the genome"
+     , col="red" 
+     , cex.lab=2
+     , cex.axis=1.5
+     ,pch=1
+     , ylim=c(0,0.2), xlim=c(0.2,0.8)
+     )
+
+```
+
+### 4DV4NC3D UB3RK1NG PL0TT1NG SK1LLZ EX.
+
+```{r}
+AA_ALL=myfile[,19:39]
+Temp_ALL=myfile$temp_opt.C.
+GC_ALL=myfile$bG+myfile$bC
+
+# sajat szinskala letrehozasa RGB kodokkal
+colorsch=c("#0F820F", "#C8C8C8","#A9A9A9","#0F820F", "#E60A0A",
+           "#FA9600", "#0F820F","#145AFF","#145AFF", "#E60A0A",
+           "#FA9600", "#DC9682","#00DCDC","#00DCDC", "#3232AA",
+           "#3232AA", "#E6E600","#8282D2","#E6E600", "#B45AB4","#FF1493")
+
+aalist=c("L","A","G","V",
+         "E","S","I","K",
+         "R","D","T","P",
+         "N","Q","F","Y",
+         "M","H","C","W","TER")
+
+aalist=c("Leu","Ala","Gly","Val",
+         "Glu","Ser","Ile","Lys",
+         "Arg","Asp","Thr","Pro",
+         "Asn","Gln","Phe","Tyr",
+         "Met","His","Cys","Trp")  
+
+par(mfrow = c(4,5), mar=c(4,5,1,1),bg="white",new=FALSE)
+for (n in 1:20){#par(mar = c(4, 4, 4, 4) + 0.1) #PLOT
+  plot(Temp_ALL,AA_ALL[,n],xlab = "Temperature (°C)", ylab = "Proportion",
+       ylim = c(0,0.15),xlim=c(0,100),cex.lab=1.5,cex.axis=1.5,pch=".")
+  legend("topright", legend = aalist[n], lwd = 0,cex=1.5,
+         col = colorsch[n], ncol=1,
+         pt.bg = colorsch[n], pch = 21, bty = "n")}
+
+par(mfrow = c(4,5), mar=c(4,5,1,1),bg="white",new=FALSE)
+for (n in 1:20){#par(mar = c(4, 4, 4, 4) + 0.1) #PLOT
+  plot(GC_ALL,AA_ALL[,n],xlab = "GC-content", ylab = "Proportion",
+       ylim = c(0,0.15),xlim=c(0,1),cex.lab=1.5,cex.axis=1.5,pch=".")
+  legend("topright", legend = aalist[n], lwd = 0,cex=1.5,
+         col = colorsch[n], ncol=1,
+         pt.bg = colorsch[n], pch = 21, bty = "n")}
+
+par(mfrow = c(1,1), mar=c(4,5,1,1),bg="white",new=FALSE)
+```
+

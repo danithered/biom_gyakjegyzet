@@ -786,14 +786,14 @@ grid.arrange(plot1, plot2, ncol=2)
 
 ## Fischer féle F-eloszlás
 
-```{r feo, echo=FALSE, fig.cap="Exponenciális eloszlás PDF és CDF"}
-a=10
+```{r feo, echo=FALSE, fig.cap="F- eloszlás PDF és CDF"}
+a=2
 df1=20
 df2=20
-rm(df)
+if("df" %in% ls())rm(df)
 plot1 <- ggplot() +
 	stat_function(fun = df, args=list(df1=df1, df2=df2) 
-                , xlim = c(-5,a)
+                , xlim = c(0,a)
                 , geom = "area"
                 , fill="lightgreen"
                 ) +
@@ -827,4 +827,38 @@ grid.arrange(plot1, plot2, ncol=2)
 
 ## Student féle t-eloszlás
 
+```{r teo, echo=FALSE, fig.cap="t- eloszlás PDF és CDF"}
+a=-1
+df=20
+plot1 <- ggplot() +
+	stat_function(fun = dt, args=list(df=df) 
+                , xlim = c(-5,a)
+                , geom = "area"
+                , fill="lightgreen"
+                ) +
+	geom_step(aes(x, y), data=data.frame(	x= c(a, -Inf),	y= dt(c(a,a), df=df)), colour="lightblue", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(a, a),	y= c(-Inf, dt(a , df=df))), colour="coral", lwd=1.5)+
+	stat_function(fun=dt, args=list(df=df), xlim=c(-5,5)) +
+	#scale_x_continuous(labels=c("0", "df", "a"), breaks=c(0, df, a))+ 
+	theme(legend.position = "none")+
+	annotate(geom = "point", x = -Inf, y = dt(a, df=df), size = 2, color = 'blue')+
+	annotate(geom = "point", x = a, y = dt(a, df=df), size = 2)+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="f(X)", title="Probability Density Function")
 
+plot2 <- ggplot() +
+	geom_step(aes(x, y), data=data.frame(	x= c(a, -Inf),	y= pt(c(a,a), df=df)), colour="lightgreen", lwd=1.5)+
+	geom_step(aes(x, y), data=data.frame(	x= c(a, a),	y= c(-Inf,pt(a, df=df) )), colour="coral", lwd=1.5)+
+	stat_function(fun=pt, args=list(df=df), xlim=c(-5,5)) +
+	#scale_x_continuous(labels=c("0", "df", "a"), breaks=c(0, df, a))+ 
+	theme(legend.position = "none")+
+	annotate(geom = "point", x = -Inf, y = pt(a, df=df), size = 2, color = 'green')+
+	annotate(geom = "point", x = a, y = pt(a, df=df), size = 2)+
+	annotate(geom = "point", x = a, y = -Inf, size = 2, color = 'red')+
+	coord_cartesian(clip = 'off')+
+	labs(x="X", y="F(X)", title="Cumulative Density Function")
+
+
+grid.arrange(plot1, plot2, ncol=2)
+```
