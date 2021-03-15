@@ -46,6 +46,22 @@ knit_hooks$set(output = function(x, options) {
 
 ```
 
+<!---
+I added two custom environments:
+
+plusinfo: for additional informations. To start it please put:
+::: {.plusinfo data-latex=""}
+to end it put:
+:::
+
+elmelet: for additional informations. To start it please put:
+::: {.elmelet data-latex=""}
+to end it put:
+:::
+
+->
+
+
 <!-- 1. Bevezetés -->
 ```{r child="fejezetek/bevezetes.Rmd"}
 ```

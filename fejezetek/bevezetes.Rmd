@@ -19,15 +19,15 @@ pie(rep(1,3))
 ```
 
 
-\begin{plusinfo}
+::: {.plusinfo data-latex=""}
 A jegyzet tartalmaz plusz információkat is, ami ugyan nem lesz számonkérve (szigorúan véve nem tartozik a törzsanyaghoz) viszont **segíti a megértést**, illetve az **érdeklődő hallgatók**nak érdekes adalék lehet. Ezek az infromációk ilyen formában fognak megjelenni.
-\end{plusinfo}
+:::
 
-\begin{elmelet}
+::: {.elmelet data-latex=""}
 
 Néha az **elméleti anyag ismétlése** is előkerül, ilyen formában. Újfent kiemelendő: ez csak gyors összefoglaló, nem ad olyan bő ismeretanyagot, mint az előadás!
 
-\end{elmelet}
+:::
 
 ## Author contributions
 
