@@ -1,16 +1,28 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r}
+library(knitr)
+library(kableExtra)
+```
 
 # Hasznos táblázatok
 
 ## *z*-eloszlás
 
-```{r}
+```{r, fig.cap="z-table"}
 big <- round(seq(-3.9, 3.9, 0.1), 1)
 small <- seq(0, 0.09, 0.01)
   
 m <- outer(big, small, function(x, y) round(pnorm( ifelse(x<0, -1*(abs(x)+y), x+y )), digits=4))
 dimnames(m) <- list( big, small)
-kable(m) %>%
-  kable_styling(bootstrap_options = "striped") %>%
+kable(m, longtable=T, format="latex",caption = "z-table") %>%
+  kable_styling(latex_options = c("repeat_header", "striped"),
+                bootstrap_options = "striped",
+                stripe_color = "gray", #latex xcolors!
+                repeat_header_continued = "\\textit{(Folytatás a következő oldalon...)}") %>%
   column_spec(1, bold = T, border_right = T) %>%
   row_spec(0, bold = T, hline_after = T) 
 ```
@@ -23,8 +35,10 @@ df <- c(1:30, 40, 60, 120, Inf)
 
 m <- t(outer(alp, df, function(x, y) round(qt(x, y, lower.tail = FALSE), digits=4)))
 dimnames(m) <- list(df=df,alpha=alp)
-kable(m) %>%
-  kable_styling(bootstrap_options = "striped") %>%
+kable(m, longtable=T, format="latex",caption = "t-table") %>%
+  kable_styling(latex_options = c("repeat_header", "striped"),                
+                stripe_color = "teal", #latex xcolors!
+) %>%
   column_spec(1, bold = T, border_right = T) %>%
   row_spec(0, bold = T, hline_after = T) %>%
   add_header_above( c( "df", "alpha" = 10) )
@@ -38,8 +52,10 @@ df <- 1:80
 
 m <- t(outer(alp, df, function(x, y) round(qchisq(x, y), digits=4)))
 dimnames(m) <- list(df=df,alpha=alp)
-kable(m, row.names = T) %>%
-  kable_styling(bootstrap_options = "striped") %>%
+kable(m, longtable=T, format="latex",caption = "chi square-table", row.names = T) %>%
+  kable_styling(latex_options = c("repeat_header", "striped"),
+                stripe_color = "pink", #latex xcolors!
+                ) %>%
   column_spec(1, bold = T, border_right = T) %>%
   row_spec(0, bold = T, hline_after = T) %>%
   add_header_above( c( "df", "alpha" = 10 ) )

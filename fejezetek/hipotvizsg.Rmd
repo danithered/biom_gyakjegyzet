@@ -3,17 +3,18 @@
 
 Biológiai kísérleteket azért csinálunk / adatokat azért gyűjtünk, hogy segítségükkel megértsük a minket körülvevő világ működését. Eközben a kutatók felvetnek ötleteket, hogy szerintük mi - miért úgy működik ahogy. Ezek a felvetések a hipotézisek. Az adatok azért kellenek, hogy segítsenek ezeket a hipotéziseket elvetni / igazolni. Így a statisztika szerves része a kutatásoknak, azoktól el nem különíthető. A kutatások logikai felépítése:
 
-  1) Kérdés felvetése
-  2) Irodalmi adatok áttekintése
-  3) Hipotézisek felvetése
-  4) Kísérlet / adatvétel tervezése
-  5) Kísérlet / adatfelvétel elvégzése
-  6) Statisztikai elemzés
-  7) Döntés. Innentől két útvonal lehetséges:
+1) Kérdés felvetése
+2) Irodalmi adatok áttekintése
+3) Hipotézisek felvetése
+4) Kísérlet / adatvétel tervezése
+5) Kísérlet / adatfelvétel elvégzése
+6) Statisztikai elemzés
+7) Döntés. Innentől két útvonal lehetséges:
     a) Ha nem volt helyes az elképzelés $\rightarrow$ új hipotézis felállítása (3-as pont)
     b) Ha helyesnek tűnik az elképzelés $\rightarrow$ predikció felállítása (8-as pont)
-  8) Predikció felállítása és tesztelése
-  9) Publikáció (ha predikció helyes volt)
+
+8) Predikció felállítása és tesztelése
+9) Publikáció (ha predikció helyes volt)
   
 A statisztikai feladatok a fenti sémában már a 4-es pontnál előjönnek: meg kell tervezni milyen adatokat és hogy kell venni, hogy megfelelő statisztikai elemzéssel tudjuk igazolni / elvetni a hipotéziseinket. Már ekkor el kell dönteni, hogy milyen statisztikai módszereket alkalmazunk!  
 

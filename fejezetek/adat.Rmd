@@ -91,7 +91,7 @@ Ha *Asztal*-on vagy *Dokumentumok*-ban vannak a fájlok, akkor úgy kell kikeres
 
 A gyakorlat, valamint jövőbeli adatelemzéseitek során legtöbbször szöveges adattáblából kell az adataitokat beolvasni. Ezek (*.txt, .dat, .csv, .tsv*) kiterjesztésűek.
 
-Először is a beolvasandó fájl elérési útvonalát kell megkeresni. Két lehetőség van "OPCIÓ 1" es "OPCIÓ 2", mindenki azt válassza, amelyik számára szimpatikusabb! A jegyzet írói a további fejezetekben az "OPCIÓ 1"-et fogja használni.
+Először is a beolvasandó fájl elérési útvonalát kell megkeresni. Három lehetőség van "OPCIÓ 1", "OPCIÓ 2" és "OPCIO 3", mindenki azt válassza, amelyik számára szimpatikusabb! A jegyzet írói a további fejezetekben az "OPCIÓ 1"-et fogja használni.
 
 ### OPCIO 1 - elérési útvonallal - haladó megoldás
 
@@ -132,7 +132,28 @@ read.table("csor.csv")
 
 A `read.table()` függvény további argumentumai is szükségesek, hogy megfelelően beolvassuk a fájlt, ezek a "A táblázat beolvasása" fejezetben lesznek tárgyalva.
 
-### OPCIO 2 - `file.choose()` - kezdő megoldás
+### OPCIO 2 - operációs rendszer vágólap segítségével - középhaladó megoldás
+
+Megnyitjuk az operációs rendszerünk fájlböngészőjét! (**MS Windows**: *Tallózó* vagy *explorer.exe* - a "Win + E" billentyűkombinációval érhető el; **Linux**: *Konqueror* vagy *Dolphin*)  
+Itt kikeressük a megnyitandó fájlunkat. Kijelöljük, majd másoljuk a fájlt. Erre két lehetőség van: vagy Mouse2-vel (alapértelmezetten bal egérgomb) megnyitjuk a helyi menüt, majd kiválasztjuk a "Másolás" menüpontot a listából; vagy kijelölés után megnyomjuk a "CTRL + C" billentyűkombinációt.  
+Átmegyünk az **RStudio**-ba, majd kijelölünk egy üres sort és beillesztjük a fájlunkat. Erre két lehetőség van: vagy Mouse2-vel megnyitjuk a helyi menüt, majd kiválsztjuk a "Paste" menüpontot a listából; vagy megnyomjuk a "CTRL + V" billentyűkombinációt.  
+Ezt követően valami hasonlót látunk:
+
+```{r, eval=F}
+file://C://Users/myusername/Downloads/csor.csv #MS Windows
+file:///home/myusername/Downloads/csor.csv #Linux
+```
+
+Ez az elérési útvonalunk lesz. Ezt így ahogy van beletehetjük a `read.table()` függvénybe, nem kell a perjeleket se cserélgetni. Persze ne felejtsük el idézőjelek közé tenni, mivel szöveg!
+
+```{r , eval=FALSE}
+read.table("file:///home/myusername/Downloads/csor.csv") #Linux
+#read.table("file:///home/myusername/Downloads/csor.csv", sep=";", header=TRUE,	dec="." )
+```
+
+A `read.table()` függvény további argumentumai is szükségesek, hogy megfelelően beolvassuk a fájlt, ezek a "A táblázat beolvasása" fejezetben lesznek tárgyalva.
+
+### OPCIO 3 - `file.choose()` - kezdő megoldás
 
 A `file.choose()` függvény hatására megnyílik egy új ablak, ami a számítógép fájl rendszerét mutatja (pontosabban az aktuális munkakönyvtárat mutatja). Itt megkereshető a fájl, amivel dolgozni szeretnénk és kimásolja a fájl teljes elérési útvonalát szövegként. *Megjegyzés.* Gyakori, hogy a `file.choose()` hatásár megnyíló új ablak az **RStudio** ablaka mögé kerül.
 

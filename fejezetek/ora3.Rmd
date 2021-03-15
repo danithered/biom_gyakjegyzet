@@ -29,14 +29,14 @@ Régebben, mikor még nem állt elég számítási kapacitás rendelkezésre, a 
 
 |x intervallum                                                  |n            | p                                                      |
 |:-------------------------------------------------------------:|:-----------:|:------------------------------------------------------:|
-| \(\displaystyle [x_0; x_0 + \delta x] \)                      | n_1         | \(\displaystyle  p_1 = {n_1} / {\sum n_i} = n_1 / N \) |
-| \(\displaystyle [x_0 + \delta x; x_0 + 2 \delta x)] \)        | n_2         | \(\displaystyle  p_1 = {n_1} / {\sum n_i} = n_1 / N \) |
-| \(\displaystyle [x_0 + 2 \delta x; x_0 + 3 \delta x)] \)      | n_3         | \(\displaystyle  p_1 = {n_1} / {\sum n_i} = n_1 / N \) |
-| \(\displaystyle [x_0 + 3 \delta x; x_0 + 4 \delta x)] \)      | n_4         | \(\displaystyle  p_1 = {n_1} / {\sum n_i} = n_1 / N \) |
+| \(\displaystyle [x_0; x_0 + \delta x] \)                      | $n_1$         | \(\displaystyle  p_1 = {n_1} / {\sum n_i} = n_1 / N \) |
+| \(\displaystyle [x_0 + \delta x; x_0 + 2 \delta x)] \)        | $n_2$         | \(\displaystyle  p_1 = {n_2} / {\sum n_i} = n_2 / N \) |
+| \(\displaystyle [x_0 + 2 \delta x; x_0 + 3 \delta x)] \)      | $n_3$         | \(\displaystyle  p_1 = {n_3} / {\sum n_i} = n_3 / N \) |
+| \(\displaystyle [x_0 + 3 \delta x; x_0 + 4 \delta x)] \)      | $n_4$         | \(\displaystyle  p_1 = {n_4} / {\sum n_i} = n_4 / N \) |
 | $\vdots$                                                      | $\vdots$    | $\vdots$                                               |
-| \(\displaystyle [x_0 + (m-1) \delta x; x_0 + m \delta x)] \)  | n_m         | \(\displaystyle  p_1 = {n_1} / {\sum n_i} = n_1 / N \) |
+| \(\displaystyle [x_0 + (m-1) \delta x; x_0 + m \delta x)] \)  | $n_m$         | \(\displaystyle  p_1 = {n_m} / {\sum n_i} = n_m / N \) |
 
-Ennél bonyolultabb, ha a $\delta x$ értékek kategóriánként eltérnek, azaz a diszkrét csoportokat más-més szélességű intervallumok alkotják. A diszkretizált adatokkal való számolást nem tanuljuk a kurzus során (mivel a XXI. században az adna releváns gyakorlati tudást), de a diszkretizálás fogalmával tisztában kell lenni.  
+Ennél bonyolultabb, ha a $\delta x$ értékek kategóriánként eltérnek, azaz a diszkrét csoportokat más-más szélességű intervallumok alkotják. A diszkretizált adatokkal való számolást nem tanuljuk a kurzus során (mivel a XXI. században az nem adna releváns gyakorlati tudást), de a diszkretizálás fogalmával tisztában kell lenni.  
 
 
 Fontos megkülönböztetni, hogy adatokról vagy eloszlásokról beszélünk-e! A folytonos eloszlások elméleti fogalmak, azok a valós adatoktól függetlenek! Folytonos eloszlásokkal tudjuk **jellemezni** a valós adatokat, de azok nem egyeznek meg, ne keverjük össze a fogalmakat!  
@@ -46,69 +46,89 @@ Fontos megkülönböztetni, hogy adatokról vagy eloszlásokról beszélünk-e! 
 A diszkrét eloszlásokkal ellentétben a folytonos tömegfüggvényeket nem szoktuk valószínűségi tömegfüggvénnyel (PMF) jellemezni (hisz annak értéke mindig 0 lenne), cserébe **sűrűségfüggvénnyel** (PDF = **P**robability **D**ensity **F**unction) jellemezzük. A sűrűségfüggvény a valvált értékeihez olyan értékeket rendel, ami körülbelül azt mutatja meg, hogy mekkora a relatív esélye annak, hogy a valvált adott értékéhez közeli értéket húzunk ki. (Ne felejtsük el, annak az esélye, hogy pontosan egy adott számot húzunk ki 0!) Más megközelítéssel, mekkora az esélye annak, hogy egy random minta átlaga megegyezzen a valvált adott értékével más random mintákhoz képest.  
 A sűrűségfüggvény szemléletes megértésében segít, ha elképzeljük, hogy a folytonos valváltot diszkretizáljuk és megnézzünk annak PMF-ét. Ha nagy kategóriákat veszünk ($\delta x$ nagy, azaz a kategóriák száma $m$ kicsi) és összehasolítjuk az eredeti folytonos eloszlás PDF-ével, azt látjuk, hogy bár karakterisztikájában a két függvény hasonlít, azért vannak erős eltérések. Ha azonban kisebb kategóriákat veszünk ($\delta x$ kisebb, azaz a kategóriák száma $m$ nagyobb), a két függvény kezd hasonlítani egymásra. Könnyű elképzelni, hogy ahogy $\delta x$ egyre kisebb lesz, azaz tart a nullához (a valvált egyre inkább kezdi elveszteni diszkrét jellegét), a két függvény kezd egyre jobban hasonlítani egymáshoz. Azonban, míg a diszkrét függvény esetén az y-tengely a valószínűséget mutatta, a folytonos esetén a sűrűséget.  
 
-```{r , fig.cap="Normális (folytonos) eloszlás közelítése binomiális (diszkrét) eloszlással. Az első oszlopban a piros vonalak a normális eloszlás valválthoz tartozó sűrűségfüggvényét (PDF) rajzolják ki, míg a szürke oszlopok a binomiális eloszláshoz tartozó tömegfüggvényét (PMF). A második oszlopban a normális eloszláshoz (piros vonal) és a binomiális eloszláshoz (szürke oszlopok) tartozó eloszlásfüggvények (CDF) vannak. Fentről lefelé soronként nő a binomiális eloszlás mintamérete, azaz a diszkretizálás felbontása."}
+```{r , fig.cap="Normális (folytonos) eloszlás közelítése binomiális (diszkrét) eloszlással. Az első oszlopban a piros vonalak a normális eloszlás valválthoz tartozó sűrűségfüggvényét (PDF) rajzolják ki, míg a szürke oszlopok a binomiális eloszláshoz tartozó tömegfüggvényét (PMF). A második oszlopban a normális eloszláshoz (piros vonal) és a binomiális eloszláshoz (szürke oszlopok) tartozó eloszlásfüggvények (CDF) vannak. Fentről lefelé soronként nő a binomiális eloszlás mintamérete, azaz a diszkretizálás felbontása.", echo=F}
 prob=0.5
 size=3
-plot1 <- 
-	ggplot(data.frame(x = 0:size, y=dbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+ra=c(round((size*prob -3*sqrt(size*prob*(1-prob)))):round(size*prob +3*sqrt(size*prob*(1-prob))))
+pl <- list() 
+pl[[1]]<-	ggplot(data.frame(x = ra, y=dbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
     stat_function(fun=dnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red") +
-		labs(title="PMF/PDF" ) +
+		ylab("f(x)") +
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
-plot2 <- ggplot(data.frame(x = 0:size, y=pbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+pl[[2]]<- ggplot(data.frame(x = ra, y=pbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
     stat_function(fun=pnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
-		labs(title="CDF" ) +
+		ylab("f(x)") +
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
 size=4
-plot3 <- ggplot(data.frame(x = 0:size, y=dbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+ra=c(round((size*prob -3*sqrt(size*prob*(1-prob)))):round(size*prob +3*sqrt(size*prob*(1-prob))))
+pl[[3]]<- ggplot(data.frame(x = ra, y=dbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
+		ylab("f(x)") +
     stat_function(fun=dnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
-plot4 <- ggplot(data.frame(x = 0:size, y=pbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+pl[[4]]<- ggplot(data.frame(x = ra, y=pbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
+		ylab("f(x)") +
     stat_function(fun=pnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
 
 size=10
-plot5 <- ggplot(data.frame(x = 0:size, y=dbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+ra=c(round((size*prob -3*sqrt(size*prob*(1-prob)))):round(size*prob +3*sqrt(size*prob*(1-prob))))
+pl[[5]]<- ggplot(data.frame(x = ra, y=dbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
+		ylab("f(x)") +
     stat_function(fun=dnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
-plot6 <- ggplot(data.frame(x = 0:size, y=pbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+pl[[6]]<- ggplot(data.frame(x = ra, y=pbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
+		ylab("f(x)") +
     stat_function(fun=pnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
 
 size=50
-plot7 <- ggplot(data.frame(x = 0:size, y=dbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+ra=c(round((size*prob -3*sqrt(size*prob*(1-prob)))):round(size*prob +3*sqrt(size*prob*(1-prob))))
+pl[[7]]<- ggplot(data.frame(x = ra, y=dbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
+		ylab("f(x)") +
     stat_function(fun=dnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
-plot8 <- ggplot(data.frame(x = 0:size, y=pbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+pl[[8]]<- ggplot(data.frame(x = ra, y=pbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
+		ylab("f(x)") +
     stat_function(fun=pnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
 size=150
-plot9 <- ggplot(data.frame(x = 0:size, y=dbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+ra=c(round((size*prob -3*sqrt(size*prob*(1-prob)))):round(size*prob +3*sqrt(size*prob*(1-prob))))
+pl[[9]]<- ggplot(data.frame(x = ra, y=dbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
+		ylab("f(x)") +
     stat_function(fun=dnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
-plot10 <- ggplot(data.frame(x = 0:size, y=pbinom(0:size, size=size, prob=prob )), aes(x,y)) +
+pl[[10]]<- ggplot(data.frame(x = ra, y=pbinom(ra, size=size, prob=prob )), aes(x,y)) +
     geom_bar(stat="identity")  +
+		ylab("f(x)") +
     stat_function(fun=pnorm, args=list(mean=size*prob, sd=sqrt(size*prob*(1-prob))), col="red")+
 		theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank())
 
-grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, plot7, plot8, plot9, plot10, ncol=2)
+#grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, plot7, plot8, plot9, plot10, ncol=2)
+col.titles <- c("PMF/PDF", "CDF")
+ncol=length(col.titles)
+grid.arrange(
+  grobs=lapply(1:ncol, function(i) {
+    arrangeGrob(grobs=pl[0:(length(pl)/ncol-1)*ncol +i], top=col.titles, ncol=1)
+  }
+), ncol=ncol)
 
 
 ```
@@ -116,28 +136,28 @@ grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, plot7, plot8, plot9, plot
 
 Míg folytonos eloszlás esetén nincs értelme elemi valószínűségeket számolni, intervallumok valószínűségét tudjuk és érdemes kiszámolni. Ezt a sűrűségfüggvényből úgy tudjuk kiszámolni, hogy megnézzük a valvált kijelölt intervallumához tartozó függvény alatti terület nagyságát, azaz az integrálját. Az eloszlásfüggvény ($F(X)$) tehát valójában a sűrűségfüggvény ($f(X)$) integrálja.
 
-$$F(X,x)=\int_{- \infty}^{x} f(X) =P(X \le x)$$
+$$F(X,x)=\int_{- \infty}^{x} f(X) \, dx =P(X \le x)$$
 
 A sűrűségfüggvény határozott intergálja megmutatja, hogy egy véletleszerűen húzott valvált mekkora valószínűséggel vesz fel $a$ és $b$ közötti értéket.
 
-$$\int_A^B f(X) = P(a \le X \le b)$$
+$$\int_A^B f(X) \, dx= P(a \le X \le b)$$
 
 
 Ha a valvált teljes intervallumát nézzük (mínusz végtelentől plusz végtelenig), azt tudjuk, hogy az ahhoz tartozó valószínűség 1, azaz a sűrűségfüggvény határozatlan integrálja 1. (Vagyis a sűrűségfüggvény alatti terület nagysága = 1.)
 
-$$\int_{- \infty }^{+ \infty} f(X) = 1$$
+$$\int_{- \infty }^{+ \infty} f(X) \, dx = 1$$
 
 ### Valószínűségek számítása
 
 Ha meg akarjuk nézni, hogy egy valvált mekkora valószínűséggel vesz fel egy adott $a$ értéknél kisebbet, akkor így számoljuk ki:
 
-$$P(X \le a) =F(a) = \int_{- \infty}^{a} f(X)$$
+$$P(X \le a) =F(a) = \int_{- \infty}^{a} f(X) \, dx$$
 
 Ne felejtsük el, hogy mivel az elemi előfordulás valószínűsége 0 ($P(X=a)=0$), ezért $P(X \le a) = P(X < a)$!
 
 Előbbi valószínűséget a sűrűségfüggvényről úgy lehet "leolvasni", hogy x tengelyen kikeressük $a$ értékét (piros pont az ábrán) és megnézzük, hogy mekkora az $a$ pont előtt a függvény alatti (az ábrán zöld) terület nagysága. Természetesen ezt ténylegesen leolvasni nem tudjuk. A CDF-ről viszont igen, csak meg nézni, hogy a valvált adott értékéhez milyen érték tartozik az y-tengelyen (zöld pötty). 
 
-```{r}
+```{r plnorm, echo=F, fig.cap="Folytonos (normális) eloszlás PDF és CDF"}
 a=2
 plot1 <- ggplot() +
 	stat_function(fun = dnorm 
@@ -175,11 +195,11 @@ grid.arrange(plot1, plot2, ncol=2)
 
 Azonban, ha arra vagyunk kíváncsiak, hogy milyen valószínűséggel vesz fel egy adott $a$ értéknél nagyobb értéket, akkor ki kell használnunk, hogy 
 
-$$\int_{- \infty}^{+ \infty} f(X) =1$$
+$$\int_{- \infty}^{+ \infty} f(X) \, dx=1$$
 
 azaz, hogy a teljes eseménytér valószínűsége (a görbe alatti teljes terület) 1. Tehát 1-ből ha kivonjuk annak a térrésznek a nagyságát, ami az adott térrésznél kisebb (ábrán a zöld terület) - vagyis annak a valószínéségét, hogy $a$-t vagy kisebbet húzunk, akkor megkapjuk annak a valószínűségét, hogy $a$-nál nagyobbat húzunk (ábrán a görbe alatti nem színezett terület).
 
-$$P(X \ge a) = 1-P(X \le a) = 1- \int_{- \infty}^a f(X)$$
+$$P(X \ge a) = 1-P(X \le a) = 1- \int_{- \infty}^a f(X) \,dx$$
 
 Ha blokkokra / intervallumokra vagyunk kíváncsiak, akkor is úgy járunk el, hogy kivonjuk egymásból a valószínűségeket ("területeket"). Ha pl. arra vagyunk kíváncsiak, hogy mekkora eséllyel vesz fel egy valvált $a$ és $b$ közötti értéket először kiszámoljuk $P(X \le b)$-t (Step 1 zöld rész), majd kivonjuk belőle azt a részt, ami nem kell (Step 2 piros rész), vagyis $P(X \le a)$-t és ami marad az a végeredmény (Result zöld rész). 
 
@@ -240,10 +260,10 @@ plot3 <- ggplot() +
 grid.arrange(plot1, plot2, plot3, ncol=3)
 ```
 
-$$P(a \le X \le b) = P(X \le b) - P(X \le a)= \int_a^b f(X) = \int_{- \infty}^b f(X) - \int_{- \infty}^a f(X)$$
+$$P(a \le X \le b) = P(X \le b) - P(X \le a)= \int_a^b f(X) \, dx = \int_{- \infty}^b f(X) \, dx - \int_{- \infty}^a f(X) \, dx$$
 Ha annak a valószínűségét akarjuk kiszámolni, hogy egy valvált értéke **nem** esik $a$ és $b$ közé, azaz $a$-nál kisebb vagy $b$-nél nagyobb ( . ábra), az előző részben kiszámolt valószínűséget kivonjuk 1-ből.
 
-```{r}
+```{r , echo=F, fig.cap="Nem a és b között"}
 a=1
 b=2
 ggplot() +
@@ -271,7 +291,7 @@ ggplot() +
 
 $$P( X \le a ~ | ~ X \ge b) = 1-P(a \le X \le b) = 1- (P(X \le b) - P(X \le a)) = 1- P(X \le b) + P(X \le a)) $$
 
-$$\int_{-\infty}^a f(X) + \int_{b}^{+\infty} f(X) = 1- \left ( \int_{- \infty}^b f(X) - \int_{- \infty}^a f(X) \right ) = 1- \int_{- \infty}^b f(X) + \int_{- \infty}^a f(X) $$
+$$\int_{-\infty}^a f(X) \, dx + \int_{b}^{+\infty} f(X) \, dx = 1- \left ( \int_{- \infty}^b f(X) \, dx - \int_{- \infty}^a f(X) \, dx \right ) = 1- \int_{- \infty}^b f(X) \, dx + \int_{- \infty}^a f(X) \, dx$$
 
 Néha visszafelé is számolni kell: adott egy valószínűségi érték és ehhez kell kiszámolni, hogy a valvált melyik értéktartományához (intervallum alsó-, felső határának kiszámítása) tartozik. Ezt a reverz CDF-el tudjuk kiszámolni.
 
@@ -442,7 +462,7 @@ curve(exp(-x^2/2)/sqrt(2*pi), xlim=c(-2,2))
 
 Egy ábrán lásd: . ábra.
 
-```{r}
+```{r , fig.cap="Standard normális eloszlás sűrűségfüggvénye"}
 cols <- brewer.pal(4, "Set1")
 curve(exp(-x^2/2)/sqrt(2*pi), xlim=c(-2,2), ylim=c(-1.5,1), lwd=1.5, ylab="f(x)", las=1)
 abline(h=0, col="grey")
@@ -459,7 +479,7 @@ legend("bottom",
 			 				 expression(1/sqrt(2* pi )*e^{-1/2*x^2})),
 			 lty=c(2,2,2,2,1),
 			 col=c(rev(cols), "black"),
-			 lwd=1.5
+			 lwd=1.5, bg="white"
 )
 ```
 
@@ -529,7 +549,7 @@ Tehát, ha megkapjuk, hogy egy standard normális eloszlás egyik értéke $z=0.
 
 ### Valószínűségek számítása
 
-```{r norm, echo=FALSE, fig.cap="Normális eloszlás PDF és CDF"}
+```{r norm0, echo=FALSE, fig.cap="Normális eloszlás PDF és CDF"}
 a=2
 plot1 <- ggplot() +
 	stat_function(fun = dnorm 
@@ -576,7 +596,7 @@ pnorm(2, mean=0, sd=1)
 
 Ha arra vagyunk kíváncsiak, hogy mekkora az értékek középső 25% -át tartlamazó intervallum ( . ábrán kék terület), akkor először kikeressük az intervallum határait (ez ugye kettő érték!) reverz eloszlásfüggvénnyel. Az alsó határ meghatározáshoz tudnunk kell, hogy mekkora a valószínűsége az intervallumunk előtti értékekenek.
 
-```{r}
+```{r normkozepe, fig.cap="Normális eloszlás átlag közeli 25 százalék kiszámítása. Az ábrán látható százalékos értékek az adott intervallumokban a görbe alatti terület nagyságát jelölik százalékosan, $x_1$ és $x_2$ az intervallum határai.", echo=F}
 a=qnorm( (1-0.25)/2 )
 b=qnorm( 0.5+0.25/2   )
 ggplot() +
@@ -605,7 +625,7 @@ ggplot() +
 
 Az . ábrán ez az első zöld terület. Ha 0.25 a középső rész, akkor a maradék $1-0.25=0.75$. Azonban ez két egyenlő részre esik, szóval az intervallumunk előtti értékek kumulált valószínűsége $0.75/2=0.375$. Az intervallumunk felső határánál kisebb értékekhez tartozó kumulált valószínűséget ( . ábrán lila terület) pedig úgy kaphatjuk meg, hogy kivonjuk az 1-ből (a teljes eseménytér öszzesített valószínűsége) az adott intervallum feletti értékek kumulált valószínűségét ( . ábrán a zöld terület), az pedig, mint az imént kiszámítottuk $0.75/2=0.375$. Így a keresett valószínűség $1-0.75/2 = 0.625$.
 
-```{r}
+```{r normmasodik25, fig.cap="Normális eloszlás átlag közeli 25 százalék felső határának kiszámítása. Az ábrán látható százalékos értékek az adott intervallumokban a görbe alatti terület nagyságát jelölik százalékosan, $x_1$ és $x_2$ az intervallum határai.", echo=F}
 a=qnorm( (1-0.25)/2 )
 b=qnorm( 0.5+0.25/2   )
 ggplot() +
@@ -725,7 +745,7 @@ Az eloszlásfüggvényt a `pexp(..., rate)` függvénnyel lehet kiszámítani, a
 Számoljuk ki mekkora az esélye, hogy egy véletlenszerűen kiválasztott hangya levegőtől elzártan 10 perc múlva nem lesz életben, ha a hangyák várhatóan 15 percig élnek ilyen környezetben!
 Ezt leolvashatjuk az ábráról is: kikerssük a CDF-en a 10 percet az x-tengelyen (piros pötty), majd megnézzük milyen y-tengely értéket vesz fel (zöld pötty).  
 Ha ki akarjuk számolni, először is meg találnunk $\lambda$-t. Azt tudjuk, hogy a várható érték 15 perc, így $\lambda=1/15$ lesz.
-A kiszámoláshoz behelyettesíthetjük a fenti függvénybe is: $ 1-e^{-1/15 \cdot 10}= 0.49$
+A kiszámoláshoz behelyettesíthetjük a fenti függvénybe is: $1-e^{-1/15 \cdot 10}= 0.49$
 
 Azért **R**-ben ez jóval egyszerűbb:
 
@@ -742,13 +762,13 @@ $$-ln(1-0.7) \cdot 15 = x$$
 Tehát $x=18.06$. Ez **R**-ben:
 
 ```{r}
-qexp(0.7, rate=1./15)
+qexp(0.7, rate=1/15)
 ```
 
 ## $\chi^2$ eloszlás
 
 
-```{r chisq, echo=FALSE, fig.cap="Exponenciális eloszlás PDF és CDF"}
+```{r chisq, echo=FALSE, fig.cap="Khí négyzet eloszlás PDF és CDF"}
 a=30
 df=20
 plot1 <- ggplot() +

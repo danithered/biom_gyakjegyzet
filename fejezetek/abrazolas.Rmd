@@ -386,6 +386,8 @@ Kördiagramot csak nagyon speciális esetekben alkalmazzunk, mert használata so
 Ha mondjuk ábrázolni akarjuk a csőr adatbázisunk csőrhossz kategóriának arányát kördiagramon, akkor először is meg kell számolnunk hány egyed esik az egyes kategóriákba.
 
 ```{r}
+csoradat <- read.table("csor.csv", sep=";", header=TRUE,	dec="." ) 
+
 table(csoradat$Csorhossz_kat)
 ```
 
