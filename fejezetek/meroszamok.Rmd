@@ -129,6 +129,7 @@ ss <- sum((beka$thossz-mean(beka$thossz))^2)
 ss/(length(beka$thossz))
 ```
 
+Ha elbizonytalanodnátok arról, hogy $n-1$ -el vagy $n$ -el kell lesosztani variancia számításakor, gondoljatok arra, hogy mintával vagy poulációval dolgoztok-e! Ha minta varianciáját számoljátok (szinte mindig), akkor $n-1$-el osszatok, ha populációét akkor $n$-el.
 
 ## Szórás
 

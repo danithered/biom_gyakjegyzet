@@ -3,11 +3,14 @@
 
 ## Folytonos eloszlások általános jellemzése
 
+::: {.elmelet data-latex=""}
+
 ### Mi az, hogy folytonos?
 
 A diszkrét eloszlásokkal ellentétben a folytonos eloszlások kategóriáit nem tudjuk nevesíteni (értékkészletük határozottan nem megszámlálható!), a valvált **minden** kiválasztott két értéke között tudunk találni végtelen számú más értéket. (Mondhatjuk azt is, hogy folytonos eloszlás esetén a kategóriák "egymásba csúsznak".) Skálájukat tekintve ezek az intervallum és arányskálás változók. Szóval ezek legalább valós számok ($X \in  \mathbb{R}$). Például ide tartoznak minden - nem kategorizáltan - mért hosszúság, idő vagy térfogat adatok. Gondoljunk bele, hogy ha emberek magasságát mérjük, akkor ha van egy 177.01 cm és egy 177.02 cm magas emberünk, attól még megvan a lehetősége annak, hogy találunk egy olyan embert, aki a kettő közözzi magasságú, például 177.014 cm magas. Persze el kell fogadnunk, hogy a mérési hibahatárok miatt nem tudunk végtelen tizedesjegy pontosságig mérni, de a lényeg az, hogy tudjuk, hogy elméletben mérhetnénk addig (vagyis inkább közelíthetően mérhetünk addig).  
 Ebből adódik, hogy egy folytonos eloszlás esetén az elemi előfordulás valószínűsége 0 ($P(X=x) = 0$). Például annak a valószínűsége, hogy egy véletlenszerűen kiválasztott ember magassága pontosan 177.02 cm nulla, ugyanis, ha megnéznénk egy sokkal jobb mérési módszerrel, láthatnánk, hogy ez az ember valójában 172.02000000000000000001 cm magas, csak nem tudunk addig mérni.
 
+:::
 
 ### Folytonos adatokkal való számolás
 
@@ -43,8 +46,12 @@ Fontos megkülönböztetni, hogy adatokról vagy eloszlásokról beszélünk-e! 
 
 ### PDF és CDF
 
+::: {.plusinfo data-latex=""}
+
 A diszkrét eloszlásokkal ellentétben a folytonos tömegfüggvényeket nem szoktuk valószínűségi tömegfüggvénnyel (PMF) jellemezni (hisz annak értéke mindig 0 lenne), cserébe **sűrűségfüggvénnyel** (PDF = **P**robability **D**ensity **F**unction) jellemezzük. A sűrűségfüggvény a valvált értékeihez olyan értékeket rendel, ami körülbelül azt mutatja meg, hogy mekkora a relatív esélye annak, hogy a valvált adott értékéhez közeli értéket húzunk ki. (Ne felejtsük el, annak az esélye, hogy pontosan egy adott számot húzunk ki 0!) Más megközelítéssel, mekkora az esélye annak, hogy egy random minta átlaga megegyezzen a valvált adott értékével más random mintákhoz képest.  
 A sűrűségfüggvény szemléletes megértésében segít, ha elképzeljük, hogy a folytonos valváltot diszkretizáljuk és megnézzünk annak PMF-ét. Ha nagy kategóriákat veszünk ($\delta x$ nagy, azaz a kategóriák száma $m$ kicsi) és összehasolítjuk az eredeti folytonos eloszlás PDF-ével, azt látjuk, hogy bár karakterisztikájában a két függvény hasonlít, azért vannak erős eltérések. Ha azonban kisebb kategóriákat veszünk ($\delta x$ kisebb, azaz a kategóriák száma $m$ nagyobb), a két függvény kezd hasonlítani egymásra. Könnyű elképzelni, hogy ahogy $\delta x$ egyre kisebb lesz, azaz tart a nullához (a valvált egyre inkább kezdi elveszteni diszkrét jellegét), a két függvény kezd egyre jobban hasonlítani egymáshoz. Azonban, míg a diszkrét függvény esetén az y-tengely a valószínűséget mutatta, a folytonos esetén a sűrűséget.  
+
+:::
 
 ```{r , fig.cap="Normális (folytonos) eloszlás közelítése binomiális (diszkrét) eloszlással. Az első oszlopban a piros vonalak a normális eloszlás valválthoz tartozó sűrűségfüggvényét (PDF) rajzolják ki, míg a szürke oszlopok a binomiális eloszláshoz tartozó tömegfüggvényét (PMF). A második oszlopban a normális eloszláshoz (piros vonal) és a binomiális eloszláshoz (szürke oszlopok) tartozó eloszlásfüggvények (CDF) vannak. Fentről lefelé soronként nő a binomiális eloszlás mintamérete, azaz a diszkretizálás felbontása.", echo=F}
 prob=0.5
@@ -132,7 +139,6 @@ grid.arrange(
 
 
 ```
-
 
 Míg folytonos eloszlás esetén nincs értelme elemi valószínűségeket számolni, intervallumok valószínűségét tudjuk és érdemes kiszámolni. Ezt a sűrűségfüggvényből úgy tudjuk kiszámolni, hogy megnézzük a valvált kijelölt intervallumához tartozó függvény alatti terület nagyságát, azaz az integrálját. Az eloszlásfüggvény ($F(X)$) tehát valójában a sűrűségfüggvény ($f(X)$) integrálja.
 
@@ -308,7 +314,12 @@ $$
 
 ### Általános leírás
 
-Az egyenletes eloszlás az, amikor minden érték egyforma valószínűséggel fordul elő egy adott intervallumban. Ez leggyakrabban leggyakrabban mint elméleti feltevés fordul elő.  
+::: {.elmelet data-latex=""}
+
+Az egyenletes eloszlás az, amikor minden érték egyforma valószínűséggel fordul elő egy adott intervallumban. Ez leggyakrabban mint elméleti feltevés fordul elő.  
+
+:::
+
 Az egyenletes eloszlás két paramétere a *minimum* és *maximum* érték. A sűrűségfüggvény képlete:
 
 $$f(X) = \frac {1}{max-min} \text{, ha } a \le X \le b$$
@@ -396,9 +407,13 @@ Azért $1-1/3$ -ra számoltuk, mert a harmadik harmadra voltunk kíváncsiak.
 
 ### Általános leírás
 
+::: {.elmelet data-latex=""}
+
 A normális eloszlás (Gauss eloszlás, haranggörbe) a természetben leggyakrabban előforduló eloszlás. Ennek okairól lásd az előadás centrális határeloszlás tételről szóló részét!  
 Az eloszlást valahogy úgy kell elképzelni, hogy van egy érték ($\mu$ - várható érték) ami jelöli, hogy az értékek leggyakrabban arrafelé, annak közvetlen környezetében vannak, ettől az értéktől távol meg ugyan előfordulhatnak értékek, de csak nagyon ritkán. Ezért hívják haranggörbének is, mert harang alakú. Ez az eloszlás a várható értékére **szimmetrikus** és csak 1 csúcsa van!
 Gondoljuk például az emberek magasságára! Ugyan mi látjuk a különbségeket egymás közt, de a többség körülbelül egyforma magas. Ha pedig találkozunk egy 0.5 méter vagy egy 2,3 m méter magas emberrel, akkor csodálkozunk, mert ugyan előfordulhat, de nagyon-nagyon ritkán.  
+
+:::
 
 A normális eloszlás paraméterei:
 
@@ -409,6 +424,8 @@ A normális eloszlás paraméterei:
 
 
 Ha több normális eloszlást össze akarunk hasonlítani, kell lennie egy alapnak, amihez minden mást viszonyítunk. Ez lesz a standard. Definíció szerint a standard normális eloszlás várható értéke 0 ($\mu=0$), szórása 1 ($\sigma=1$). Sok más eloszlásnak, így sok statisztikai módszernek/próbának ez lesz az alapja, így érdemes az eloszlás főbb jellegzetességeit eszünkbe vésni!
+
+::: {.plusinfo data-latex=""}
 
 A standard normális eloszlás ($\Phi(x)$ - görög fí) képletét akár magunknak is levezethetjük. Először is vegyük a főbb jellegzetességeket: 0-ra szimmetrikus, valahogyan "görbülő" függvény. Erre a legegyszerűbb példa a négyzet függvény:
 
@@ -456,6 +473,7 @@ Szóval $a$ helyére beírjuk az integrál értékét és kész is a standard no
 
 $$\Phi(x) = \frac{1}{\sqrt{2 \pi}} e^{-x^2 \frac{1}{2}}$$
 
+
 ```{r}
 curve(exp(-x^2/2)/sqrt(2*pi), xlim=c(-2,2))
 ```
@@ -482,10 +500,15 @@ legend("bottom",
 			 lwd=1.5, bg="white"
 )
 ```
+:::
 
 ### Általános normális eloszlás
 
-A standard normális eloszláshoz képest annyi a különbség, hogy az x-tengelyen eltoljuk a függvényt ($\mu$-t megváltoztatjuk 0-ról) és megváltoztatjuk a szórását. Ax x-tengelyen való eltoláshoz a képletben $x$ -et megváltoztatjuk $x+\mu$ -re. A szórás megváltoztatásához pedig (standard norm esetén $\sigma=1$) x-et leosztjuk $\sigma$-val. Mivel ezt megtettük, így az első tag is változik $1/(\sigma \sqrt {2 \pi})$ -re:
+::: {.plusinfo data-latex=""}
+
+A standard normális eloszláshoz képest annyi a különbség, hogy az x-tengelyen eltoljuk a függvényt ($\mu$-t megváltoztatjuk 0-ról) és megváltoztatjuk a szórását. Az x-tengelyen való eltoláshoz a képletben $x$ -et megváltoztatjuk $x+\mu$ -re. A szórás megváltoztatásához pedig (standard norm esetén $\sigma=1$) x-et leosztjuk $\sigma$-val. Mivel ezt megtettük, így az első tag is változik $1/(\sigma \sqrt {2 \pi})$ -re:
+
+:::
 
 $$f(x) = \frac{1}{\sigma\sqrt{2 \pi}} e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2 }$$
 
@@ -588,7 +611,15 @@ A . ábrán látható a normális eloszlás sűrűségfüggvénye és eloszlásf
 Az eloszlásfüggvényt a `pnorm(..., mean, sd)` függvénnyel lehet kiszámítani, ahol a `mean` a várható érték, azaz $\mu$, az `sd` pedig az eloszlás szórása, tehát $\sigma$. Az eloszlásfüggvény inverzét a `qnorm(..., mean, sd)` függvénnyel tudjuk kiszámítani. Ha elfelejtenénk, hogy a függvény paraméterei mit jelentenek futtassuk le a `?pnorm` parancsot az **R**-ben és a helpből kikereshetjük.
 
 Számoljuk ki mekkora az esélye egy standard normális eloszlás ($\sigma=1$, $\mu=0$) esetén, hogy $X \le 2$! 
-Ezt leolvashatjuk az ábráról is: kikerssük a CDF-en a 2-t az x-tengelyen (piros pötty), majd megnézzük milyen y-tengely értéket vesz fel (zöld pötty). Az ilyen számolásokat egyébként régebben a z-táblázatból számítottuk ki. Ehhez először is a keresett értéket z-transzformációval át kell alakítani standard normális eloszlás értékévé (jelen esetben ez megvan), majd az oszlopok és sor fejlécekből kikeressük a $z$ értéket (egyik fejléc tartalmazza általában egy tizedesjegyig a számokat, a másik a 2. tizedesjegyet tartalmazza), majd a megfelelő sor és oszlop metszetében lévő értéket leolvassuk. Azért **R**-ben ez jóval egyszerűbb:
+Ezt leolvashatjuk az ábráról is: kikerssük a CDF-en a 2-t az x-tengelyen (piros pötty), majd megnézzük milyen y-tengely értéket vesz fel (zöld pötty).  
+
+::: {.plusinfo data-latex=""}
+
+Az ilyen számolásokat egyébként régebben a z-táblázatból számítottuk ki. Ehhez először is a keresett értéket z-transzformációval át kell alakítani standard normális eloszlás értékévé (jelen esetben ez megvan), majd az oszlopok és sor fejlécekből kikeressük a $z$ értéket (egyik fejléc tartalmazza általában egy tizedesjegyig a számokat, a másik a 2. tizedesjegyet tartalmazza), majd a megfelelő sor és oszlop metszetében lévő értéket leolvassuk. 
+
+:::
+
+Azért **R**-ben ez jóval egyszerűbb:
 
 ```{r}
 pnorm(2, mean=0, sd=1)
@@ -666,9 +697,15 @@ felso-also
 
 ### Általános leírás
 
+::: {.elmelet data-latex=""}
+
 Exponenciális eloszlás a természetben akkor fordul elő, amikor valaminek van valami állandó megjelenési / eltűnési / átalakulási rátája és mi ennek a valaminek az időbeli előfordulását nézzük. Az exponenciális eloszlás úgy néz ki, hogy valami 0 időpontban teljes mennyiségében előfordul, majd az idő múlásával (az x-tengelyen haladva) ez exponenciálisan csökken. Ez az eloszlás **asszimetrikus**, 1 csúcsa van $f(0)$ -nál és csak 0-tól értelmezzük. Exponenciális eloszlásra példa a radioaktív izotópok bomlása.
 
+:::
+
 Egy paramétere van: $\lambda$, a változás rátája.  
+
+::: {.plusinfo data-latex=""}
 
 Ha $\lambda=0$, az exponenciális függvény sűrűségfüggvénye ( . ábra):
 
@@ -677,7 +714,11 @@ $$e^{-X}$$
 curve(exp(-x), xlim=c(0,4))
 ```
 
-Azonban, hogy más rátákhoz is igazíthassuk, a $\lambda$ tagot be kell építeni a függvénybe. Így az exponenciális eloszlás sűrűségfüggvénye:
+Azonban, hogy más rátákhoz is igazíthassuk, a $\lambda$ tagot be kell építeni a függvénybe. 
+
+:::
+
+Így az exponenciális eloszlás sűrűségfüggvénye:
 
 $$f(X)=\lambda e^{-\lambda X}$$
 
